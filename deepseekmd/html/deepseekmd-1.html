@@ -1,0 +1,2154 @@
+<!DOCTYPE html><html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="deepseekide.com 鲸IDE">
+<meta name="author" content="齐庄">
+<meta name="keywords" content="naoyuyan.com deepseekmd.com deepseekide.com xuniren.com 虚拟人 asi7.com 卷王">
+<meta name="description" content="《用2500单字统一命名》：创作不易，使用本源码需要保留这些版权声明，谢谢您的支持！">
+<title>DeepSeekMD (基于脑语言1.3.6） · 可卷可运行的markdown</title>
+<style>
+:root{--主:#19319d;--主深:#c4401a;--主浅:#eef2fc;--背:#fafbfc;--纸:#fff;--板:#f3f5f8;--线:#dde2ea;--字:#1f2937;--次:#6b7280;--软:#edf0f4;--警:#d97706;--好:#059669;--错:#dc2626;--蓝:#2563eb;--紫:#7c3aed;--青:#0891b2;--阴:0 1px 3px rgba(0,0,0,.08);--阴大:0 4px 16px rgba(0,0,0,.12);--圆:4px;--圆大:8px;--时:.15s}
+.暗{--主:#79a6ff;--主深:#ffa37a;--主浅:#2a3a5c;--背:#1c1e22;--纸:#252830;--板:#2d3038;--线:#3a3f48;--字:#e8eaed;--次:#b0b6c0;--软:#353944;--警:#fbbf24;--好:#34d399;--错:#f87171;--蓝:#60a5fa;--紫:#a78bfa;--青:#22d3ee}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:宋体,SimSun,serif;font-size:12px;background:var(--背);color:var(--字);overflow:hidden;transition:background var(--时),color var(--时)}
+button,input,select,textarea{font-family:宋体,SimSun,serif;font-size:12px;color:var(--字)}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--软);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--线)}
+.席{display:grid;grid-template-rows:30px 32px 1fr 24px;height:100vh}
+.顶{display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:var(--纸);border-bottom:1px solid var(--线)}
+.徽{display:flex;align-items:center;gap:6px;font-weight:700}
+.徽 .点{width:12px;height:12px;background:linear-gradient(135deg,var(--主),var(--主深));border-radius:50%;box-shadow:0 0 6px var(--主)}
+.徽 .名{color:var(--主);font-size:12px;letter-spacing:.5px}
+.徽 .号{color:var(--次);font-size:12px;font-weight:400}
+.组{display:flex;align-items:center;gap:4px}
+.菜{position:relative}
+.菜>button{background:none;border:none;padding:4px 10px;cursor:pointer;border-radius:var(--圆);color:var(--字);font-size:12px;transition:background var(--时);font-family:inherit}
+.菜>button:hover,.菜.开>button{background:var(--主浅);color:var(--主)}
+.菜 .下{position:absolute;top:100%;left:0;min-width:200px;background:var(--纸);border:1px solid var(--线);border-radius:var(--圆);box-shadow:var(--阴大);display:none;z-index:200;overflow:hidden;margin-top:2px}
+.菜.开 .下{display:block}
+.菜 .项菜{padding:6px 12px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;color:var(--字)}
+.菜 .项菜:hover{background:var(--软)}
+.菜 .线{height:1px;background:var(--线);margin:4px 0}
+.键{color:var(--次);font-size:12px;font-family:monospace;padding:1px 4px;background:var(--软);border-radius:2px}
+.工{display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:var(--板);border-bottom:1px solid var(--线);gap:8px}
+.钮{width:26px;height:24px;display:inline-flex;align-items:center;justify-content:center;background:none;border:1px solid transparent;border-radius:var(--圆);cursor:pointer;color:var(--字);transition:all var(--时);font-size:12px;font-family:inherit}
+.钮:hover{background:var(--纸);border-color:var(--线)}
+.钮.主{background:var(--主);color:#fff;border-color:var(--主)}
+.钮.主:hover{background:var(--主深);border-color:var(--主深)}
+.钮.活{background:var(--主浅);color:var(--主);border-color:var(--主)}
+.隔{width:1px;height:16px;background:var(--线);margin:0 4px}
+input[type=search],input[type=text],input[type=password],select{padding:3px 8px;border:1px solid var(--线);border-radius:var(--圆);background:var(--纸);outline:none;transition:border var(--时);font-family:inherit;font-size:12px}
+input:focus,select:focus{border-color:var(--主)}
+.主{display:flex;flex-direction:row;overflow:hidden;height:100%}
+.栏{display:flex;flex-direction:column;overflow:hidden;background:var(--纸);flex-shrink:0;min-width:120px}
+.栏.左{width:260px}
+.栏.右{width:240px}
+.栏.隐{display:none!important}
+.中{flex:1 1 auto;display:flex;flex-direction:column;overflow:hidden;min-width:300px;height:100%}
+.中上{flex:1 1 auto;display:flex;flex-direction:row;overflow:hidden;min-height:100px}
+.块{display:flex;flex-direction:column;overflow:hidden;background:var(--纸);flex:1 1 auto;min-height:60px}
+.块.隐{display:none!important}
+.编辑块{width:50%;flex:0 0 auto;min-width:200px}
+.预览块{flex:1 1 auto;min-width:200px}
+.聊块{height:180px;flex:0 0 auto;border-top:1px solid var(--线);min-height:60px}
+#功能块{flex:1 1 auto;min-height:120px}
+#终端块{flex:0 0 240px;min-height:240px}
+.块头{display:flex;align-items:center;justify-content:space-between;padding:5px 10px;background:var(--板);border-bottom:1px solid var(--线);min-height:26px;user-select:none}
+.标{font-weight:700;font-size:12px;display:flex;align-items:center;gap:6px}
+.标 .首{color:var(--主);font-size:12px}
+.块内{flex:1 1 auto;overflow:auto;padding:8px;min-height:0}
+.块内.满{padding:0;display:flex;flex-direction:column}
+.头工{display:flex;gap:2px;align-items:center}
+.头工 .钮{width:20px;height:20px;font-size:12px}
+.头工 .关{color:var(--错)}
+.垂直分{width:5px;background:transparent;cursor:ew-resize;flex-shrink:0;flex-grow:0;flex-basis:5px;position:relative;transition:background var(--时);z-index:10}
+.垂直分:hover,.垂直分.拖{background:var(--主)}
+.水平分{height:5px;background:transparent;cursor:ns-resize;flex-shrink:0;flex-grow:0;flex-basis:5px;position:relative;transition:background var(--时);z-index:10}
+.水平分:hover,.水平分.拖{background:var(--主)}
+.垂直分.隐,.水平分.隐{display:none!important}
+body.拖中{cursor:ew-resize!important;user-select:none!important}
+body.拖中.竖{cursor:ns-resize!important}
+body.拖中 iframe,body.拖中 .monaco-editor,body.拖中 textarea,body.拖中 input{pointer-events:none!important}
+body.拖中 *{user-select:none!important}
+.浮按{position:fixed;width:30px;height:30px;background:var(--主);color:#fff;border-radius:50%;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:500;box-shadow:var(--阴大);font-weight:700;font-size:12px;transition:all var(--时);user-select:none;font-family:inherit}
+.浮按:hover{transform:scale(1.18);background:var(--主深)}
+.浮按.显{display:flex;animation:浮入 .3s}
+@keyframes 浮入{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+#浮_左栏{left:6px;top:50%;transform:translateY(-50%)}
+#浮_右栏{right:6px;top:50%;transform:translateY(-50%)}
+#浮_终端块{left:10px;bottom:34px}
+#浮_功能块{left:10px;top:74px}
+#浮_速查块{right:10px;bottom:34px}
+#浮_大纲块{right:10px;top:74px}
+#浮_聊块{left:50%;bottom:34px;transform:translateX(-50%)}
+#浮_编辑块{left:30%;top:50%;transform:translateY(-50%)}
+#浮_预览块{right:30%;top:50%;transform:translateY(-50%)}
+#编辑器{width:100%;flex:1;min-height:100px}
+#预览框{width:100%;flex:1;border:none;background:#fff;min-height:100px}
+.源码容器{width:100%;height:100%;position:relative}
+#源码编辑器{width:100%;height:100%}
+.底{display:flex;justify-content:space-between;align-items:center;padding:0 12px;background:var(--主);color:#fff;font-size:12px}
+.底 .组{gap:12px}
+.底 .圆{padding:1px 6px;background:rgba(255,255,255,.18);border-radius:8px}
+.底 a{color:#fff;text-decoration:none;padding:1px 6px;background:rgba(0,0,0,.2);border-radius:8px}
+.类{margin-bottom:2px}
+.类头{padding:5px 8px;cursor:pointer;display:flex;align-items:center;gap:6px;font-weight:700;color:var(--主);background:var(--软);border-radius:var(--圆);user-select:none;transition:background var(--时);font-size:12px}
+.类头:hover{background:var(--主浅)}
+.类头 .箭{transition:transform .2s;font-size:12px;display:inline-block}
+.类头 .计{margin-left:auto;color:var(--次);font-weight:400;font-size:12px;background:var(--纸);padding:0 5px;border-radius:8px}
+.类.合 .箭{transform:rotate(-90deg)}
+.类.合 .类内{display:none}
+.类.扩展 .类头{background:linear-gradient(90deg,var(--主),var(--主深));color:#fff}
+.类.扩展 .类头 .计{background:rgba(255,255,255,.3);color:#fff}
+.类内{padding:3px 0 3px 4px}
+.项{display:grid;grid-template-columns:22px 1fr 110px 20px;gap:4px;align-items:center;padding:3px 4px;border-radius:var(--圆);transition:background var(--时);margin:1px 0}
+.项.可删{grid-template-columns:22px 1fr 90px 20px 20px}
+.项:hover{background:var(--主浅)}
+.项 .符{width:22px;height:22px;background:var(--主);color:#fff;border-radius:3px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;cursor:pointer;transition:transform var(--时);user-select:none;font-family:inherit}
+.项 .符:hover{transform:scale(1.15);box-shadow:0 2px 4px rgba(25,49,157,.4)}
+.项.可删 .符{background:linear-gradient(135deg,var(--主),var(--主深))}
+.项 .名{cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;padding:2px 0}
+.项 .名:hover{color:var(--主);font-weight:700}
+.项 .参{padding:2px 4px;border:1px solid var(--线);border-radius:3px;background:var(--板);font-size:12px;min-width:0;width:100%;outline:none;color:var(--字);font-family:monospace}
+.项 .参:focus{border-color:var(--主);background:var(--纸)}
+.项 .运{width:20px;height:20px;background:none;border:1px solid transparent;border-radius:3px;cursor:pointer;color:var(--主);display:flex;align-items:center;justify-content:center;font-size:12px;padding:0;font-family:inherit}
+.项 .运:hover{background:var(--主);color:#fff;border-color:var(--主)}
+.项 .删{width:20px;height:20px;background:none;border:1px solid transparent;border-radius:3px;cursor:pointer;color:var(--错);display:flex;align-items:center;justify-content:center;font-size:12px;padding:0;font-family:inherit}
+.项 .删:hover{background:var(--错);color:#fff;border-color:var(--错)}
+.视图切{display:flex;background:var(--软);border-radius:var(--圆);padding:1px;gap:1px}
+.视图切 button{background:none;border:none;padding:2px 8px;cursor:pointer;border-radius:3px;color:var(--次);transition:all var(--时);font-size:12px;font-family:inherit}
+.视图切 button.活{background:var(--纸);color:var(--主);box-shadow:var(--阴)}
+.终{font-family:monospace;font-size:12px;line-height:1.6}
+.终 .时{color:var(--次)}
+.终 .好{color:var(--好)}
+.终 .错{color:var(--错)}
+.终 .警{color:var(--警)}
+.终 .信{color:var(--蓝)}
+.聊{display:flex;flex-direction:column;height:100%;overflow:hidden}
+.聊区{flex:1;overflow-y:auto;padding:6px}
+.消息{margin:5px 0;max-width:85%;padding:6px 10px;border-radius:10px;line-height:1.5;word-wrap:break-word;font-size:12px}
+.消息.我{background:var(--主);color:#fff;margin-left:auto;border-bottom-right-radius:2px}
+.消息.AI{background:var(--软);border:1px solid var(--线);margin-right:auto;border-bottom-left-radius:2px}
+.消息.系{background:transparent;color:var(--次);text-align:center;font-size:12px;max-width:100%;margin:4px 0}
+.消息 h1,.消息 h2,.消息 h3{margin:5px 0;font-size:12px}
+.消息 pre{background:rgba(0,0,0,.06);padding:5px;border-radius:3px;overflow-x:auto;font-size:12px}
+.消息.我 pre{background:rgba(255,255,255,.18)}
+.消息 code{background:rgba(0,0,0,.07);padding:1px 4px;border-radius:2px;font-family:monospace;font-size:12px}
+.消息 .注册钮{display:inline-block;margin:4px 4px 0 0;padding:4px 10px;background:var(--主);color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:12px;font-family:inherit}
+.消息 .注册钮:hover{background:var(--主深)}
+.消息 .注册钮:disabled{background:var(--好);opacity:.7;cursor:default}
+.提示组{padding:4px 6px;display:flex;gap:4px;flex-wrap:wrap;border-top:1px solid var(--线);background:var(--板)}
+.提示组 button{background:var(--纸);border:1px solid var(--线);padding:2px 8px;border-radius:10px;cursor:pointer;font-size:12px;color:var(--次);transition:all var(--时);font-family:inherit}
+.提示组 button:hover{background:var(--主);color:#fff;border-color:var(--主)}
+.输区{padding:5px;display:flex;gap:5px;background:var(--板);border-top:1px solid var(--线)}
+.输区 textarea{flex:1;padding:5px 7px;border:1px solid var(--线);border-radius:var(--圆);resize:none;background:var(--纸);min-height:28px;max-height:80px;outline:none;transition:border var(--时);font-size:12px;font-family:inherit}
+.输区 textarea:focus{border-color:var(--主)}
+.纲项{padding:3px 8px;cursor:pointer;border-radius:var(--圆);font-size:12px}
+.纲项:hover{background:var(--主浅)}
+.纲项.h1{font-weight:700;color:var(--主)}
+.纲项.h2{padding-left:16px}
+.纲项.h3{padding-left:24px;color:var(--次)}
+.纲项.h4{padding-left:32px;color:var(--次)}
+.提示{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);padding:8px 16px;background:rgba(0,0,0,.85);color:#fff;border-radius:var(--圆大);z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none;backdrop-filter:blur(8px);font-size:12px;box-shadow:var(--阴大)}
+.提示.显{opacity:1}
+.幕{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.幕.显{display:flex}
+.弹{background:var(--纸);border-radius:var(--圆大);max-width:90%;max-height:85%;width:640px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--阴大);animation:弹入 .2s}
+@keyframes 弹入{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.弹头{padding:12px 16px;border-bottom:1px solid var(--线);display:flex;justify-content:space-between;align-items:center;background:var(--板);color:var(--字)}
+.弹头 span{font-weight:700;font-size:12px}
+.弹内{padding:16px;overflow:auto;flex:1;color:var(--字);font-size:12px}
+.弹内 h3,.弹内 h4{color:var(--主);margin:8px 0 4px;font-size:12px}
+.弹内 table{width:100%;border-collapse:collapse;font-size:12px}
+.弹内 td,.弹内 th{padding:4px 8px;border-bottom:1px solid var(--线);text-align:left}
+.弹内 pre{background:var(--软);padding:8px;border-radius:4px;font-size:12px;overflow-x:auto}
+.弹内 code{background:var(--软);padding:1px 4px;border-radius:2px;font-family:monospace}
+.弹内 textarea,.弹内 input{background:var(--纸);color:var(--字);font-family:monospace;font-size:12px}
+.monaco-editor,.monaco-editor .overflow-guard{width:100%!important}
+@keyframes 脉{0%,100%{opacity:1}50%{opacity:.4}}
+.脉{animation:脉 1.4s ease infinite}
+.卡{background:var(--纸);border:1px solid var(--线);border-radius:var(--圆);padding:8px;margin:4px 0;color:var(--字);font-size:12px}
+.切{display:inline-flex;background:var(--软);border-radius:var(--圆);padding:2px;gap:2px}
+.切 button{background:none;border:none;padding:3px 10px;border-radius:var(--圆);cursor:pointer;color:var(--次);transition:all var(--时);font-size:12px;font-family:inherit}
+.切 button.活{background:var(--纸);color:var(--主);box-shadow:var(--阴)}
+a{text-decoration:none}
+a:hover{color: #ff0000}
+</style>
+</head>
+<body>
+<div class="席">
+<div class="顶">
+<div class="组">
+<div class="徽"><div class="点"></div><div class="名">DeepSeekMD v1.3.6</div></div>
+<div style="width:12px"></div>
+<div class="菜" data-菜="文件"><button>文件</button><div class="下">
+<div class="项菜" data-做="新建">新建<span class="键">Ctrl+N</span></div>
+<div class="项菜" data-做="打开">打开本地文件<span class="键">Ctrl+O</span></div>
+<div class="线"></div>
+<div class="项菜" data-做="保存">保存<span class="键">Ctrl+S</span></div>
+<div class="项菜" data-做="另存">另存为</div>
+<div class="线"></div>
+<div class="项菜" data-做="导出HTML">导出为 HTML</div>
+<div class="项菜" data-做="导出MD">导出为 Markdown</div>
+<div class="项菜" data-做="打印">打印预览<span class="键">Ctrl+P</span></div>
+</div></div>
+<div class="菜" data-菜="编辑"><button>编辑</button><div class="下">
+<div class="项菜" data-做="撤销">撤销<span class="键">Ctrl+Z</span></div>
+<div class="项菜" data-做="重做">重做<span class="键">Ctrl+Y</span></div>
+<div class="线"></div>
+<div class="项菜" data-做="查找">查找<span class="键">Ctrl+F</span></div>
+<div class="项菜" data-做="替换">替换<span class="键">Ctrl+H</span></div>
+<div class="项菜" data-做="格式化">格式化代码</div>
+</div></div>
+<div class="菜" data-菜="视图"><button>视图</button><div class="下">
+<div class="项菜" data-做="切换主题">切换明暗主题<span class="键">Ctrl+T</span></div>
+<div class="项菜" data-做="切换左栏">左侧栏</div>
+<div class="项菜" data-做="切换右栏">右侧栏</div>
+<div class="项菜" data-做="切换聊天">AI 聊天</div>
+<div class="项菜" data-做="重置布局">重置布局</div>
+<div class="线"></div>
+<div class="项菜" data-做="全屏">全屏<span class="键">F11</span></div>
+<div class="项菜" data-做="刷新预览">刷新预览<span class="键">F5</span></div>
+</div></div>
+<div class="菜" data-菜="运行"><button>运行</button><div class="下">
+<div class="项菜" data-做="运行">运行当前文档<span class="键">Ctrl+↵</span></div>
+<div class="项菜" data-做="运行全部">运行全部示例<span class="键">F9</span></div>
+<div class="项菜" data-做="清空终端">清空终端</div>
+</div></div>
+<div class="菜" data-菜="工具"><button>工具</button><div class="下">
+<div class="项菜" data-做="插入模板">插入精美模板</div>
+<div class="项菜" data-做="汉符音示例">汉符音 · 小星星</div>
+<div class="项菜" data-做="生成示例">生成完整示例</div>
+<div class="项菜" data-做="扩展函数">扩展新函数</div>
+<div class="项菜" data-做="管理扩展">管理 deepseek 扩展</div>
+<div class="项菜" data-做="字数统计">字数统计</div>
+</div></div>
+<div class="菜" data-菜="帮助"><button>帮助</button><div class="下">
+<div class="项菜" data-做="使用指南">使用指南</div>
+<div class="项菜" data-做="语法手册">语法手册</div>
+<div class="项菜" data-做="函数手册">函数手册</div>
+<div class="项菜" data-做="汉符音手册">汉符音手册</div>
+<div class="项菜" data-做="快捷键表">快捷键表</div>
+<div class="项菜" data-做="关于">关于 DeepSeekMD</div>
+</div></div>
+</div>
+<div class="组">
+<div class="号">Ctrl+U 看源码 /</div>
+<a href="http://deepseekmd.com/" download="deepseekmd-1.html" target="_blank" rel="noopener noreferrer">下源码 /</a>
+<a href="https://platform.deepseek.com/" target="_blank">访 DeepSeek 取key /</a>
+<input type="search" id="密钥" placeholder="DeepSeek API Key" style="width:120px">
+<select id="模型">
+<option value="deepseek-v4-pro">deepseek-v4-pro</option>
+<option value="deepseek-v4-flash">deepseek-v4-flash</option>
+<option value="deepseek-chat">deepseek-chat</option>
+</select>
+</div>
+</div>
+<div class="工">
+<div class="组">
+<button class="钮" data-做="新建" title="新建 Ctrl+N">建</button>
+<button class="钮" data-做="打开" title="打开 Ctrl+O">开</button>
+<button class="钮" data-做="保存" title="保存 Ctrl+S">存</button>
+<span class="隔"></span>
+<button class="钮" data-做="撤销" title="撤销">撤</button>
+<button class="钮" data-做="重做" title="重做">再</button>
+<span class="隔"></span>
+<button class="钮" data-做="运行" title="运行 Ctrl+Enter">运</button>
+<button class="钮" data-做="运行全部" title="运行全部 F9">执</button>
+<button class="钮" data-做="刷新预览" title="刷新 F5">刷</button>
+<span class="隔"></span>
+<button class="钮" data-做="插入模板" title="插入模板">板</button>
+<button class="钮" data-做="汉符音示例" title="汉符音">乐</button>
+<button class="钮" data-做="扩展函数" title="扩展新函数">扩</button>
+</div>
+<div class="组">
+<button class="钮" data-做="切换主题" title="切换主题">🌓</button>
+<button class="钮" data-做="全屏" title="全屏">⛶</button>
+</div>
+</div>
+<div class="主">
+<div class="栏 左" id="左栏">
+<div class="块" id="功能块">
+<div class="块头">
+<input type="search" id="搜索框" placeholder="🔍 搜索功能..." style="width:160px">
+<div class="头工">
+<button class="钮" data-做="展开全部" title="展开">＋</button>
+<button class="钮" data-做="折叠全部" title="折叠">−</button>
+<button class="钮 关" data-关="功能块" title="关闭">✕</button>
+</div>
+</div>
+<div class="块内" id="功能列表"></div>
+</div>
+<div class="水平分" id="水平分左" title="拖动调整 / 双击折叠"></div>
+<div class="块" id="终端块">
+<div class="块头">
+<span class="标"><span class="首">终</span>端</span>
+<div class="头工">
+<div class="视图切">
+<button data-视图="日志" class="活">日志</button>
+<button data-视图="源码">源码</button>
+</div>
+<button class="钮" data-做="清空终端" title="清空">🗑</button>
+<button class="钮 关" data-关="终端块" title="关闭">✕</button>
+</div>
+</div>
+<div class="块内 终" id="终端"></div>
+<div class="块内 满 源码容器" id="源码容器" style="display:none">
+<div id="源码编辑器"></div>
+</div>
+</div>
+</div>
+<div class="垂直分" id="垂直分左" title="拖动调整 / 双击隐藏左栏"></div>
+<div class="中" id="中部">
+<div class="中上" id="中上">
+<div class="块 编辑块" id="编辑块">
+<div class="块头">
+<div class="组">
+<span id="文件名" style="color:var(--次);font-size:12px">可卷可运行的markdown.md</span>
+<div class="切" id="模式切1">
+<button class="活" data-模式="分屏">分屏</button>
+<button data-模式="代码">代码</button>
+<button data-模式="预览">预览</button>
+</div>
+<button class="钮 关" data-关="编辑块" title="关闭">✕</button>
+</div>
+<span class="标"><span class="首">编</span>辑器</span>
+</div>
+<div class="块内 满" id="编辑器"></div>
+</div>
+<div class="垂直分" id="垂直分中" title="拖动调整 / 双击隐藏预览"></div>
+<div class="块 预览块" id="预览块">
+<div class="块头">
+<div class="切" id="模式切2">
+<button class="活" data-模式="分屏">分屏</button>
+<button data-模式="代码">代码</button>
+<button data-模式="预览">预览</button>
+</div>
+<span class="标"><span class="首">预</span>览</span>
+<div class="头工">
+<button class="钮" data-做="打印" title="打印">印</button>
+<button class="钮" data-做="刷新预览" title="刷新">刷</button>
+<button class="钮 关" data-关="预览块" title="关闭">✕</button>
+</div>
+</div>
+<div class="块内 满">
+<iframe id="预览框" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-presentation allow-downloads" allow="camera;microphone;display-capture;fullscreen;geolocation;clipboard-write;clipboard-read"></iframe>
+</div>
+</div>
+</div>
+<div class="水平分" id="水平分中" title="拖动调整 / 双击隐藏聊天"></div>
+<div class="块 聊块" id="聊块">
+<div class="块头">
+<span class="标"><span class="首">聊</span>AI 助手 · <span id="模型显" style="color:var(--次)">deepseek-chat</span></span>
+<div class="头工">
+<button class="钮" data-做="新对话" title="新对话">新</button>
+<button class="钮" data-做="清空对话" title="清空">清</button>
+<button class="钮" data-做="导出对话" title="导出">吐</button>
+<button class="钮 关" data-关="聊块" title="关闭">✕</button>
+</div>
+</div>
+<div class="聊">
+<div class="聊区" id="消息区">
+<div class="消息 系">💬 DeepSeek AI 就绪 — 在右上角输入 API Key 即可开始对话 <a href="https://platform.deepseek.com/" target="_blank">点击访问 DeepSeek 平台获取key</a></div>
+</div>
+<div class="提示组" id="提示组"></div>
+<div class="输区">
+<textarea id="问话" placeholder="问点什么吧… 例：增加【告】字 (Ctrl+Enter 发送)" rows="2"></textarea>
+<button class="钮" id="发送" title="发送 Ctrl+Enter">发</button>
+</div>
+</div>
+</div>
+</div>
+<div class="垂直分" id="垂直分右" title="拖动调整 / 双击隐藏右栏"></div>
+<div class="栏 右" id="右栏">
+<div class="块" id="大纲块">
+<div class="块头">
+<span class="标"><span class="首">纲</span>文档大纲</span>
+<div class="头工">
+<button class="钮 关" data-关="大纲块" title="关闭">✕</button>
+</div>
+</div>
+<div class="块内" id="大纲">
+<div style="color:var(--次);text-align:center;padding:16px">暂无内容</div>
+</div>
+</div>
+<div class="水平分" id="水平分右" title="拖动调整 / 双击折叠"></div>
+<div class="块" id="速查块">
+<div class="块头">
+<span class="标"><span class="首">速</span>速查</span>
+<div class="头工">
+<button class="钮 关" data-关="速查块" title="关闭">✕</button>
+</div>
+</div>
+<div class="块内" id="速查"></div>
+</div>
+</div>
+</div>
+<div class="底">
+<div class="组">
+<span id="状态">● 就绪</span>
+<span id="保存态">已保存</span>
+<span class="圆" id="字数">字数 0</span>
+<span class="圆" id="扩展数">扩展 0</span>
+</div>
+<div class="组">
+<span id="光标">行:1 列:1</span>
+<span class="圆">UTF-8</span>
+<span class="圆">Markdown</span>
+<a href="https://beian.miit.gov.cn/" target="_blank">微我 粤ICP备14090940号</a>
+<span>© 2026 DeepSeekMD (非官方 基于脑语言1.3.6）</span><a href="http://2500.ai">http://2500.ai</a>
+</div>
+</div>
+</div>
+<div class="浮按" id="浮_左栏" data-恢复="左栏" title="恢复左栏">西</div>
+<div class="浮按" id="浮_右栏" data-恢复="右栏" title="恢复右栏">东</div>
+<div class="浮按" id="浮_功能块" data-恢复="功能块" title="恢复功能面板">北</div>
+<div class="浮按" id="浮_终端块" data-恢复="终端块" title="恢复终端">南</div>
+<div class="浮按" id="浮_大纲块" data-恢复="大纲块" title="恢复大纲">摩</div>
+<div class="浮按" id="浮_速查块" data-恢复="速查块" title="恢复速查">侧</div>
+<div class="浮按" id="浮_编辑块" data-恢复="编辑块" title="恢复编辑器">心</div>
+<div class="浮按" id="浮_预览块" data-恢复="预览块" title="恢复预览">旁</div>
+<div class="浮按" id="浮_聊块" data-恢复="聊块" title="恢复聊天">聊</div>
+<div class="提示" id="提示"></div>
+<div class="幕" id="幕" onclick="if(event.target===this)关闭弹()"><div class="弹" id="弹"></div></div>
+<script src="https://unpkg.com/monaco-editor@0.52.2/min/vs/loader.js"></script>
+<script>
+/**
+ * asimarkdown.js v1.3.6 - 可卷可运行的markdown
+ * 基于脑语言 1.3.6 规范
+ * 作者: 齐庄
+ * 在这里卷： http://deepseekmd.com
+ * 这有示例： http://asimarkdown.com
+ * 官网:  http://2500.ai
+ * 使用方法:
+ * <script src="https://asiide.com/js/asimarkdown.js"><\/script>
+ * const html = asimarkdown(markdownText);
+ * 支持三种语法:
+ * 1. 标准式: 【符】`参数,参数2`
+ * 2. 简略式: 符`参数,参数2`
+ * 3. 行首式: 符 参数,参数2 (无需反引号)
+ * 鸣谢：markdown创造者、一致班、cc、deepseek、豆包
+ * 20260525 齐庄
+ */
+var 脑=null,源码脑=null,对话=[],当前文件='可卷可运行的markdown.md',已改=false,暗=false,音上下文=null,防抖时;
+var deepseek扩展函数=[];
+function $(id){return document.getElementById(id)}
+function 卜(){return '元_'+Math.random().toString(36).slice(2,9)}
+function 参解(参){
+  var 默认=Array.prototype.slice.call(arguments,1);
+  if(参===undefined||参===null||参==='')return 默认.slice();
+  var 数组=String(参).split(',').map(function(s){return s.trim()});
+  return 默认.map(function(d,i){return 数组[i]!==undefined&&数组[i]!==''?数组[i]:d});
+}
+function 解项(参,默){
+  var 项=(参||默).split(',').map(function(s){return s.trim()});
+  var id=项.shift()||'图_'+卜();
+  return {id:id,项:项};
+}
+function 转义HTML(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function 提(文,时长){
+  时长=时长||2000;
+  var e=$('提示');e.textContent=文;e.classList.add('显');
+  clearTimeout(提.t);提.t=setTimeout(function(){e.classList.remove('显')},时长);
+}
+function 终(消,类型){
+  类型=类型||'信';
+  var t=$('终端');
+  var 时=new Date().toLocaleTimeString('zh-CN',{hour12:false});
+  var 行=document.createElement('div');
+  行.innerHTML='<span class="时">'+时+'</span> <span class="'+类型+'">'+转义HTML(消)+'</span>';
+  t.appendChild(行);t.scrollTop=t.scrollHeight;
+}
+function 状(s){$('状态').textContent='● '+s}
+function 打弹(标题,HTML){
+  $('弹').innerHTML='<div class="弹头"><span>'+标题+'</span><button class="钮" onclick="关闭弹()">✕</button></div><div class="弹内">'+HTML+'</div>';
+  $('幕').classList.add('显');
+}
+function 关闭弹(){$('幕').classList.remove('显')}
+window.关闭弹=关闭弹;
+function 广(参){var p=参解(参,'一级标题');return '# '+p[0]}
+function 文(参){var p=参解(参,'二级标题');return '## '+p[0]}
+function 章(参){var p=参解(参,'三级标题');return '### '+p[0]}
+function 节(参){var p=参解(参,'四级标题');return '#### '+p[0]}
+function 题(参){var p=参解(参,'五级标题');return '##### '+p[0]}
+function 滤(参){var p=参解(参,'六级标题');return '###### '+p[0]}
+function 突(参){var p=参解(参,'粗体文本');return '**'+p[0]+'**'}
+function 斜(参){var p=参解(参,'斜体文本');return '*'+p[0]+'*'}
+function 划(参){var p=参解(参,'删除线');return '~~'+p[0]+'~~'}
+function 码(参){var p=参解(参,'code');return '`'+p[0]+'`'}
+function 链(参){var p=参解(参,'链接文本','https://example.com');return '[<a href="'+p[1]+'" target="_blank">'+转义HTML(p[0])+'</a>]'}
+function 图(参){var p=参解(参,'图片描述','https://picsum.photos/400/200');return '<img src="'+p[1]+'" alt="'+转义HTML(p[0])+'" style="max-width:100%;border-radius:6px">'}
+function 引(参){var p=参解(参,'这是一段引用文字');return '<blockquote>'+转义HTML(p[0])+'</blockquote>'}
+function 楼(){return '<hr>'}
+function 列(参){
+  var p=(参||'列表id,第一项,第二项,第三项').split(',').map(function(s){return s.trim()});
+  var id=p.shift()||'列_'+卜();
+  var 项=p.filter(Boolean);
+  if(项.length===0)项=['第一项','第二项','第三项'];
+  return '<ul id="'+id+'">'+项.map(function(x){return '<li>'+转义HTML(x)+'</li>'}).join('')+'</ul>';
+}
+function 序(参){
+  var p=(参||'序表id,第一步,第二步,第三步').split(',').map(function(s){return s.trim()});
+  var id=p.shift()||'序_'+卜();
+  var 项=p.filter(Boolean);
+  if(项.length===0)项=['第一步','第二步','第三步'];
+  return '<ol id="'+id+'">'+项.map(function(x){return '<li>'+转义HTML(x)+'</li>'}).join('')+'</ol>';
+}
+function 表(参){
+  var p=参解(参,'信息表');
+  var id=p[0];
+  return '<table id="'+id+'"><thead><tr><th>姓名</th><th>年龄</th><th>职业</th></tr></thead><tbody><tr><td>李四</td><td>25</td><td>工程师</td></tr><tr><td>齐庄</td><td>30</td><td>设计师</td></tr><tr><td>张三</td><td>28</td><td>产品经理</td></tr></tbody></table>';
+}
+function 入(参){var p=参解(参,'文本id','请输入文本','');return '<input type="text" id="'+p[0]+'" value="'+转义HTML(p[2])+'" placeholder="'+转义HTML(p[1])+'" class="輸">'}
+function 密(参){var p=参解(参,'密码id','请输入密码','');return '<input type="password" id="'+p[0]+'" value="'+转义HTML(p[2])+'" placeholder="'+转义HTML(p[1])+'" class="輸">'}
+function 邮(参){var p=参解(参,'邮箱id','name@example.com','');return '<input type="email" id="'+p[0]+'" value="'+转义HTML(p[2])+'" placeholder="'+转义HTML(p[1])+'" class="輸">'}
+function 电(参){var p=参解(参,'电话id','138-0000-0000','');return '<input type="tel" id="'+p[0]+'" value="'+转义HTML(p[2])+'" placeholder="'+转义HTML(p[1])+'" class="輸">'}
+function 数(参){var p=参解(参,'数字id','0','100','50');return '<input type="number" id="'+p[0]+'" min="'+p[1]+'" max="'+p[2]+'" value="'+p[3]+'" class="輸">'}
+function 滑(参){var p=参解(参,'滑动id','0','100','50');return '<div class="滑組"><input type="range" id="'+p[0]+'" min="'+p[1]+'" max="'+p[2]+'" value="'+p[3]+'" oninput="document.getElementById(\''+p[0]+'_v\').textContent=this.value" class="滑條"><span id="'+p[0]+'_v" class="滑值">'+p[3]+'</span></div>'}
+function 期(参){var p=参解(参,'日期id','2026-06-01');return '<input type="date" id="'+p[0]+'" value="'+p[1]+'" class="輸">'}
+function 刻(参){var p=参解(参,'时间id','12:00');return '<input type="time" id="'+p[0]+'" value="'+p[1]+'" class="輸">'}
+function 颜(参){var p=参解(参,'颜色id','#19319d');return '<input type="color" id="'+p[0]+'" value="'+p[1]+'" class="輸色">'}
+function 盼(参){
+  var 项=(参||'下拉id,选项一,选项二,选项三').split(',').map(function(s){return s.trim()});
+  var id=项.shift()||'盼_'+卜();
+  if(项.length===0)项=['选项一','选项二','选项三'];
+  return '<select id="'+id+'" class="輸">'+项.map(function(o){return '<option value="'+转义HTML(o)+'">'+转义HTML(o)+'</option>'}).join('')+'</select>';
+}
+function 复(参){
+  var 项=(参||'复选id,选项一,选项二,选项三').split(',').map(function(s){return s.trim()});
+  var id=项.shift()||'复_'+卜();
+  if(项.length===0)项=['选项一','选项二','选项三'];
+  return '<div class="輸組" id="'+id+'">'+项.map(function(o,i){return '<label class="選"><input type="checkbox" name="'+id+'" value="'+转义HTML(o)+'" id="'+id+'_'+i+'"> '+转义HTML(o)+'</label>'}).join('')+'</div>';
+}
+function 单(参){
+  var 项=(参||'单选id,选项一,选项二,选项三').split(',').map(function(s){return s.trim()});
+  var id=项.shift()||'单_'+卜();
+  if(项.length===0)项=['选项一','选项二','选项三'];
+  return '<div class="輸組" id="'+id+'">'+项.map(function(o,i){return '<label class="選"><input type="radio" name="'+id+'" value="'+转义HTML(o)+'" id="'+id+'_'+i+'"> '+转义HTML(o)+'</label>'}).join('')+'</div>';
+}
+function 域(参){var p=参解(参,'文域id','请输入多行内容','4');return '<textarea id="'+p[0]+'" rows="'+p[2]+'" placeholder="'+转义HTML(p[1])+'" class="輸"></textarea>'}
+function 钮(参){var p=参解(参,'按钮id','点击按钮','alert("已点击!")');return '<button id="'+p[0]+'" onclick="'+转义HTML(p[2])+'" class="鈕">'+转义HTML(p[1])+'</button>'}
+function 进(参){var p=参解(参,'进度id','50','100');var pct=(Number(p[1])/Number(p[2]))*100;return '<div class="進條" id="'+p[0]+'"><div class="進填" style="width:'+pct+'%"></div><span class="進文">'+p[1]+'/'+p[2]+'</span></div>'}
+function 量(参){var p=参解(参,'量值id','70','100','0');return '<meter id="'+p[0]+'" value="'+p[1]+'" min="'+p[3]+'" max="'+p[2]+'" low="'+(Number(p[2])*0.3)+'" high="'+(Number(p[2])*0.7)+'" optimum="'+(Number(p[2])*0.8)+'" style="width:100%"></meter> '+p[1]+'/'+p[2]}
+function 页(参){
+  var 项=(参||'页签id,首页,文档,关于').split(',').map(function(s){return s.trim()});
+  var id=项.shift()||'页_'+卜();
+  if(项.length===0)项=['首页','文档','关于'];
+  var 籤=项.map(function(t,i){return '<div class="頁籤'+(i===0?' 活':'')+'" onclick="切页(\''+id+'\','+i+',this)">'+转义HTML(t)+'</div>'}).join('');
+  var 內=项.map(function(t,i){return '<div class="頁內'+(i===0?' 活':'')+'" id="'+id+'_'+i+'">📄 这是「'+转义HTML(t)+'」标签页的内容。</div>'}).join('');
+  return '<div class="頁容" id="'+id+'"><div class="頁組">'+籤+'</div>'+內+'</div>';
+}
+function 树(参){
+  var p=参解(参,'树id');
+  return '<div class="樹" id="'+p[0]+'"><div class="樹項"><div class="樹頭" onclick="this.parentElement.classList.toggle(\'合\')"><span>▾</span>📁 项目</div><div class="樹子"><div class="樹項"><div class="樹頭" onclick="this.parentElement.classList.toggle(\'合\')"><span>▾</span>📁 src</div><div class="樹子"><div class="樹項"><div class="樹頭">📄 index.js</div></div><div class="樹項"><div class="樹頭">📄 app.js</div></div></div></div><div class="樹項"><div class="樹頭">📄 README.md</div></div><div class="樹項"><div class="樹頭">📄 package.json</div></div></div></div></div>';
+}
+function 折(参){var p=参解(参,'折叠id','点击展开查看详情','这里是折叠面板的内容,支持任何 HTML。');return '<details class="折疊" id="'+p[0]+'" open><summary>'+转义HTML(p[1])+'</summary><div>'+转义HTML(p[2])+'</div></details>'}
+function 愿(参){var p=参解(参,'愿id','# 你好');return '<div id="'+p[0]+'">'+解析MD(p[1])+'</div>'}
+function 建(参){var p=参解(参,'建id','<b style="color:red">红字</b>');return '<div id="'+p[0]+'">'+p[1]+'</div>'}
+function 样(参){var p=参解(参,'样id','body{color:#19319d}');return '<style id="'+p[0]+'">'+p[1]+'</style>'}
+function 玖(参){
+  var p=参解(参,'玖id','1+1');
+  try{
+    var 果=new Function('return ('+p[1]+')')();
+    return '<div class="碼塊" id="'+p[0]+'"><div class="碼頭">JS 输出</div><pre>'+转义HTML(String(果))+'</pre></div>';
+  }catch(e){return '<div class="碼塊 错" id="'+p[0]+'"><div class="碼頭">JS 错误</div><pre>'+转义HTML(e.message)+'</pre></div>'}
+}
+function 绘(参){var p=参解(参,'绘id','<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#19319d"/></svg>');return '<div id="'+p[0]+'">'+p[1]+'</div>'}
+function 画(参){
+  var p=参解(参,'画id','ctx.fillStyle="#19319d";ctx.fillRect(20,20,100,80);');
+  return '<canvas id="'+p[0]+'" width="400" height="260" class="帆布"></canvas><script>(function(){var canvas=document.getElementById("'+p[0]+'");if(!canvas)return;var ctx=canvas.getContext("2d");try{'+p[1]+'}catch(e){console.error(e)}})();<'+'/script>';
+}
+function 查(参){
+  var p=参解(参,'查id','SELECT * FROM users LIMIT 3;');
+  return '<div class="碼塊" id="'+p[0]+'"><div class="碼頭">SQL 查询</div><pre><code>'+转义HTML(p[1])+'</code></pre><div class="碼頭">模拟结果</div><table class="表模" style="margin:4px 0"><thead><tr><th>id</th><th>name</th><th>age</th><th>city</th></tr></thead><tbody><tr><td>1</td><td>李四</td><td>28</td><td>北京</td></tr><tr><td>2</td><td>齐庄</td><td>32</td><td>上海</td></tr><tr><td>3</td><td>张三</td><td>26</td><td>深圳</td></tr></tbody></table></div>';
+}
+var 图颜=['#19319d','#2563eb','#059669','#d97706','#7c3aed','#db2777','#0891b2','#65a30d','#e11d48','#0284c7'];
+function 柱(参){
+  var x=解项(参,'柱id,一月:65,二月:59,三月:80,四月:81,五月:56,六月:70');
+  var id=x.id,项=x.项;
+  if(项.length===0)项=['一月:65','二月:59','三月:80','四月:81','五月:56','六月:70'];
+  var 数据=项.map(function(s,i){var kv=s.split(':');return{名:kv[0]||String(i+1),值:Number(kv[1])||50}});
+  var W=420,H=260,内左=40,内下=30,内上=20,内右=10;
+  var 最大=Math.max.apply(null,数据.map(function(d){return d.值}))||1;
+  var 条宽=(W-内左-内右)/数据.length*0.7,步=(W-内左-内右)/数据.length;
+  var svg='<svg id="'+id+'" class="图表" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+  svg+='<rect width="'+W+'" height="'+H+'" fill="transparent" rx="6"/>';
+  for(var i=0;i<=5;i++){
+    var y=内上+(H-内上-内下)*i/5;
+    svg+='<line x1="'+内左+'" y1="'+y+'" x2="'+(W-内右)+'" y2="'+y+'" stroke="#e0e0e0" stroke-dasharray="2,2"/>';
+    svg+='<text x="'+(内左-4)+'" y="'+(y+3)+'" text-anchor="end" font-size="9" fill="#888">'+Math.round(最大*(5-i)/5)+'</text>';
+  }
+  数据.forEach(function(d,i){
+    var bx=内左+i*步+(步-条宽)/2;
+    var h=(d.值/最大)*(H-内上-内下);
+    var by=H-内下-h;
+    svg+='<rect x="'+bx+'" y="'+by+'" width="'+条宽+'" height="'+h+'" fill="url(#柱渐_'+id+')" rx="2"><animate attributeName="height" from="0" to="'+h+'" dur=".6s"/><animate attributeName="y" from="'+(H-内下)+'" to="'+by+'" dur=".6s"/></rect>';
+    svg+='<text x="'+(bx+条宽/2)+'" y="'+(by-4)+'" text-anchor="middle" font-size="9" fill="#333">'+d.值+'</text>';
+    svg+='<text x="'+(bx+条宽/2)+'" y="'+(H-12)+'" text-anchor="middle" font-size="9" fill="#666">'+转义HTML(d.名)+'</text>';
+  });
+  svg+='<defs><linearGradient id="柱渐_'+id+'" x2="0" y2="1"><stop offset="0%" stop-color="#19319d"/><stop offset="100%" stop-color="#c4401a"/></linearGradient></defs>';
+  return svg+'</svg>';
+}
+function 饼(参){
+  var x=解项(参,'饼id,Chrome:65,Firefox:15,Safari:12,Edge:5,其他:3');
+  var id=x.id,项=x.项;
+  if(项.length===0)项=['Chrome:65','Firefox:15','Safari:12','Edge:5','其他:3'];
+  var 数据=项.map(function(s,i){var kv=s.split(':');return{名:kv[0]||String(i+1),值:Number(kv[1])||20}});
+  var W=420,H=260,CX=120,CY=130,R=90;
+  var 总=数据.reduce(function(a,b){return a+b.值},0)||1,当前=-Math.PI/2;
+  var svg='<svg id="'+id+'" class="图表" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+  数据.forEach(function(d,i){
+    var 色=图颜[i%图颜.length];
+    var 角=(d.值/总)*2*Math.PI,终=当前+角;
+    var x1=CX+R*Math.cos(当前),y1=CY+R*Math.sin(当前);
+    var x2=CX+R*Math.cos(终),y2=CY+R*Math.sin(终);
+    var 大=角>Math.PI?1:0;
+    svg+='<path d="M '+CX+' '+CY+' L '+x1+' '+y1+' A '+R+' '+R+' 0 '+大+' 1 '+x2+' '+y2+' Z" fill="'+色+'" stroke="#fff" stroke-width="2"/>';
+    svg+='<rect x="250" y="'+(30+i*28)+'" width="14" height="14" fill="'+色+'" rx="2"/>';
+    svg+='<text x="272" y="'+(42+i*28)+'" font-size="11" fill="#333">'+转义HTML(d.名)+' '+Math.round(d.值/总*100)+'%</text>';
+    当前=终;
+  });
+  return svg+'</svg>';
+}
+function 线(参){
+  var p=参解(参,'线id');
+  var id=p[0];
+  var 组=[{名:'销售',值:[65,59,80,81,56,70,85],色:'#19319d'},{名:'利润',值:[28,48,40,19,86,27,60],色:'#2563eb'}];
+  var 标签=['一','二','三','四','五','六','七'];
+  var W=420,H=260,内左=35,内下=30,内上=20,内右=20;
+  var 最=Math.max.apply(null,[].concat.apply([],组.map(function(g){return g.值})));
+  var 步=(W-内左-内右)/(标签.length-1);
+  var svg='<svg id="'+id+'" class="图表" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+  for(var i=0;i<=5;i++){
+    var y=内上+(H-内上-内下)*i/5;
+    svg+='<line x1="'+内左+'" y1="'+y+'" x2="'+(W-内右)+'" y2="'+y+'" stroke="#e0e0e0" stroke-dasharray="2,2"/>';
+    svg+='<text x="'+(内左-4)+'" y="'+(y+3)+'" text-anchor="end" font-size="9" fill="#888">'+Math.round(最*(5-i)/5)+'</text>';
+  }
+  标签.forEach(function(l,i){svg+='<text x="'+(内左+i*步)+'" y="'+(H-12)+'" text-anchor="middle" font-size="9" fill="#666">'+l+'</text>'});
+  组.forEach(function(g,gi){
+    var 路='';
+    g.值.forEach(function(v,i){var px=内左+i*步,py=H-内下-(v/最)*(H-内上-内下);路+=(i===0?'M':'L')+' '+px+' '+py+' '});
+    svg+='<path d="'+路+'" fill="none" stroke="'+g.色+'" stroke-width="2.5" stroke-linejoin="round"/>';
+    g.值.forEach(function(v,i){var px=内左+i*步,py=H-内下-(v/最)*(H-内上-内下);svg+='<circle cx="'+px+'" cy="'+py+'" r="3.5" fill="#fff" stroke="'+g.色+'" stroke-width="2"/>'});
+    svg+='<circle cx="'+(W-100)+'" cy="'+(20+gi*18)+'" r="5" fill="'+g.色+'"/><text x="'+(W-88)+'" y="'+(24+gi*18)+'" font-size="10" fill="#333">'+g.名+'</text>';
+  });
+  return svg+'</svg>';
+}
+function 雷(参){
+  var p=参解(参,'雷id');
+  var id=p[0];
+  var 轴=['速度','力量','防御','魔法','敏捷','运气'];
+  var 组=[{名:'战士',值:[60,90,80,30,50,40],色:'rgba(25,49,157,.5)',边:'#19319d'},{名:'法师',值:[40,30,40,90,60,70],色:'rgba(37,99,235,.4)',边:'#2563eb'}];
+  var W=280,H=260,CX=140,CY=130,R=90,步=2*Math.PI/轴.length;
+  var svg='<svg id="'+id+'" class="图表" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+  for(var i=1;i<=5;i++){
+    var 点='';
+    for(var j=0;j<轴.length;j++){var a=j*步-Math.PI/2;var rx=CX+(R*i/5)*Math.cos(a);var ry=CY+(R*i/5)*Math.sin(a);点+=rx+','+ry+' '}
+    svg+='<polygon points="'+点+'" fill="none" stroke="#e0e0e0" stroke-dasharray="2,2"/>';
+  }
+  轴.forEach(function(l,i){
+    var a=i*步-Math.PI/2;var rx=CX+R*Math.cos(a),ry=CY+R*Math.sin(a);
+    svg+='<line x1="'+CX+'" y1="'+CY+'" x2="'+rx+'" y2="'+ry+'" stroke="#e0e0e0"/>';
+    var tx=CX+(R+14)*Math.cos(a),ty=CY+(R+14)*Math.sin(a);
+    svg+='<text x="'+tx+'" y="'+(ty+3)+'" text-anchor="middle" font-size="10" fill="#333">'+l+'</text>';
+  });
+  组.forEach(function(g){
+    var 点='';
+    g.值.forEach(function(v,i){var a=i*步-Math.PI/2,r=R*v/100;点+=(CX+r*Math.cos(a))+','+(CY+r*Math.sin(a))+' '});
+    svg+='<polygon points="'+点+'" fill="'+g.色+'" stroke="'+g.边+'" stroke-width="2"/>';
+  });
+  return svg+'</svg>';
+}
+function 环(参){
+  var p=参解(参,'环id','72');
+  var id=p[0],值=Number(p[1])||72;
+  var W=220,H=220,CX=110,CY=110,R=80,内R=56;
+  var 总=100,当前=-Math.PI/2;
+  var 数据=[{值:值,色:'#059669'},{值:100-值,色:'#e5e7eb'}];
+  var svg='<svg id="'+id+'" class="图表" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+  数据.forEach(function(d){
+    var 角=(d.值/总)*2*Math.PI,终=当前+角;
+    var x1=CX+R*Math.cos(当前),y1=CY+R*Math.sin(当前);
+    var x2=CX+R*Math.cos(终),y2=CY+R*Math.sin(终);
+    var x3=CX+内R*Math.cos(终),y3=CY+内R*Math.sin(终);
+    var x4=CX+内R*Math.cos(当前),y4=CY+内R*Math.sin(当前);
+    var 大=角>Math.PI?1:0;
+    svg+='<path d="M '+x1+' '+y1+' A '+R+' '+R+' 0 '+大+' 1 '+x2+' '+y2+' L '+x3+' '+y3+' A '+内R+' '+内R+' 0 '+大+' 0 '+x4+' '+y4+' Z" fill="'+d.色+'"/>';
+    当前=终;
+  });
+  svg+='<text x="'+CX+'" y="'+(CY-4)+'" text-anchor="middle" font-size="28" font-weight="bold" fill="#059669">'+值+'%</text>';
+  svg+='<text x="'+CX+'" y="'+(CY+18)+'" text-anchor="middle" font-size="11" fill="#888">完成度</text>';
+  return svg+'</svg>';
+}
+function 仪(参){
+  var p=参解(参,'仪id','68');
+  var id=p[0],值=Math.max(0,Math.min(100,Number(p[1])||68));
+  var W=260,H=160,CX=130,CY=130,R=100;
+  var 角度=-Math.PI+(值/100)*Math.PI;
+  var 针x=CX+(R-15)*Math.cos(角度),针y=CY+(R-15)*Math.sin(角度);
+  var svg='<svg id="'+id+'" class="图表" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+  function 画弧(起,终,色){var x1=CX+R*Math.cos(起),y1=CY+R*Math.sin(起);var x2=CX+R*Math.cos(终),y2=CY+R*Math.sin(终);return '<path d="M '+x1+' '+y1+' A '+R+' '+R+' 0 0 1 '+x2+' '+y2+'" stroke="'+色+'" stroke-width="16" fill="none" stroke-linecap="round"/>'}
+  svg+=画弧(-Math.PI,-Math.PI*2/3,'#059669')+画弧(-Math.PI*2/3,-Math.PI/3,'#d97706')+画弧(-Math.PI/3,0,'#dc2626');
+  svg+='<line x1="'+CX+'" y1="'+CY+'" x2="'+针x+'" y2="'+针y+'" stroke="#333" stroke-width="3" stroke-linecap="round"/>';
+  svg+='<circle cx="'+CX+'" cy="'+CY+'" r="8" fill="#333"/><circle cx="'+CX+'" cy="'+CY+'" r="4" fill="#fff"/>';
+  svg+='<text x="'+CX+'" y="'+(CY-25)+'" text-anchor="middle" font-size="22" font-weight="bold" fill="#333">'+值+'</text>';
+  svg+='<text x="'+CX+'" y="'+(CY+45)+'" text-anchor="middle" font-size="10" fill="#666">仪表值 %</text>';
+  return svg+'</svg>';
+}
+function 积(参){
+  var p=参解(参,'积id');
+  var id=p[0];
+  var 数据=[20,45,30,55,40,70,55,80,65,90,75,100];
+  var W=420,H=240,内左=30,内下=30,内上=20,内右=20;
+  var 最=Math.max.apply(null,数据),步=(W-内左-内右)/(数据.length-1);
+  var svg='<svg id="'+id+'" class="图表" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+  svg+='<defs><linearGradient id="积渐_'+id+'" x2="0" y2="1"><stop offset="0%" stop-color="#19319d" stop-opacity=".6"/><stop offset="100%" stop-color="#19319d" stop-opacity="0"/></linearGradient></defs>';
+  var 线段='',区='M '+内左+' '+(H-内下)+' ';
+  数据.forEach(function(v,i){var px=内左+i*步,py=H-内下-(v/最)*(H-内上-内下);线段+=(i===0?'M':'L')+' '+px+' '+py+' ';区+='L '+px+' '+py+' '});
+  区+='L '+(内左+(数据.length-1)*步)+' '+(H-内下)+' Z';
+  svg+='<path d="'+区+'" fill="url(#积渐_'+id+')"/>';
+  svg+='<path d="'+线段+'" fill="none" stroke="#19319d" stroke-width="2.5"/>';
+  return svg+'</svg>';
+}
+function 散(参){
+  var p=参解(参,'散id');
+  var id=p[0],W=420,H=240,点数=50;
+  var svg='<svg id="'+id+'" class="图表" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+  for(var i=0;i<点数;i++){
+    var px=20+((i*73+30)%400),py=20+((i*43+50)%200),r=3+((i*7)%6),色=图颜[i%图颜.length];
+    svg+='<circle cx="'+px+'" cy="'+py+'" r="'+r+'" fill="'+色+'" fill-opacity=".6"/>';
+  }
+  return svg+'</svg>';
+}
+function 气(参){
+  var p=参解(参,'气id');
+  var id=p[0];
+  var 数据=[{名:'A',x:30,y:60,r:18,色:'#19319d'},{名:'B',x:120,y:100,r:26,色:'#2563eb'},{名:'C',x:200,y:40,r:14,色:'#059669'},{名:'D',x:260,y:140,r:22,色:'#d97706'},{名:'E',x:330,y:80,r:30,色:'#7c3aed'}];
+  var W=420,H=240;
+  var svg='<svg id="'+id+'" class="图表" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+  svg+='<rect width="'+W+'" height="'+H+'" fill="transparent"/>';
+  for(var i=1;i<5;i++){svg+='<line x1="0" y1="'+(i*H/5)+'" x2="'+W+'" y2="'+(i*H/5)+'" stroke="#eee"/><line x1="'+(i*W/5)+'" y1="0" x2="'+(i*W/5)+'" y2="'+H+'" stroke="#eee"/>'}
+  数据.forEach(function(d){
+    svg+='<circle cx="'+d.x+'" cy="'+d.y+'" r="'+d.r+'" fill="'+d.色+'" fill-opacity=".6" stroke="'+d.色+'" stroke-width="1.5"/>';
+    svg+='<text x="'+d.x+'" y="'+(d.y+4)+'" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold">'+d.名+'</text>';
+  });
+  return svg+'</svg>';
+}
+function 热(参){
+  var p=参解(参,'热id');
+  var id=p[0],行=7,列=24,W=420,H=180,格宽=W/列,格高=H/行,周=['日','一','二','三','四','五','六'];
+  var svg='<svg id="'+id+'" class="图表" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+  for(var r=0;r<行;r++){
+    for(var c=0;c<列;c++){
+      var v=Math.sin((r*5+c*3)*0.7)*0.5+0.5;
+      var 色='rgba(25,49,157,'+v+')';
+      svg+='<rect x="'+(c*格宽)+'" y="'+(r*格高)+'" width="'+(格宽-1)+'" height="'+(格高-1)+'" fill="'+色+'" rx="1"/>';
+    }
+    svg+='<text x="-5" y="'+(r*格高+格高/2+3)+'" text-anchor="end" font-size="9" fill="#666">'+周[r]+'</text>';
+  }
+  return svg+'</svg>';
+}
+function 云(参){
+  var p=参解(参,'云id');
+  var id=p[0];
+  var 词表=[{词:'DeepSeekMD',值:60,色:'#19319d'},{词:'Markdown',值:50,色:'#2563eb'},{词:'AI',值:45,色:'#059669'},{词:'DeepSeek',值:40,色:'#d97706'},{词:'创新',值:38,色:'#7c3aed'},{词:'文档',值:35,色:'#db2777'},{词:'编辑器',值:32,色:'#0891b2'},{词:'实时',值:28,色:'#65a30d'},{词:'渲染',值:25,色:'#19319d'},{词:'组件',值:22,色:'#2563eb'},{词:'可视化',值:20,色:'#059669'},{词:'汉符音',值:18,色:'#d97706'}];
+  var W=420,H=200;
+  var svg='<svg id="'+id+'" class="图表" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+  词表.forEach(function(d,i){
+    var x=40+((i*67+30)%(W-80));
+    var y=30+((i*43+50)%(H-40));
+    svg+='<text x="'+x+'" y="'+y+'" font-size="'+d.值/2.5+'" fill="'+d.色+'" font-weight="bold" text-anchor="middle">'+d.词+'</text>';
+  });
+  return svg+'</svg>';
+}
+function 漏(参){
+  var p=参解(参,'漏id');
+  var id=p[0];
+  var 数据=[{名:'访问',值:1000},{名:'注册',值:800},{名:'激活',值:600},{名:'下单',值:400},{名:'付款',值:200}];
+  var W=420,H=260,CX=W/2,最大=数据[0].值,阶高=H/数据.length-4;
+  var svg='<svg id="'+id+'" class="图表" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+  数据.forEach(function(d,i){
+    var w=(d.值/最大)*(W*0.6),y=i*(阶高+4),x=CX-w/2;
+    svg+='<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+阶高+'" fill="'+图颜[i%图颜.length]+'" rx="3"/>';
+    svg+='<text x="'+CX+'" y="'+(y+阶高/2+4)+'" text-anchor="middle" font-size="12" fill="#fff" font-weight="bold">'+d.名+': '+d.值+'</text>';
+  });
+  return svg+'</svg>';
+}
+function 瀑(参){
+  var p=参解(参,'瀑id');
+  var id=p[0];
+  var 数据=[{名:'初始',值:100,类:'始'},{名:'收入',值:50,类:'正'},{名:'投资',值:-20,类:'负'},{名:'利润',值:30,类:'正'},{名:'税费',值:-15,类:'负'},{名:'结余',值:145,类:'终'}];
+  var W=420,H=260,内=30,累=0,最大=0;
+  数据.forEach(function(d){if(d.类==='始'||d.类==='终')累=d.值;else 累+=d.值;if(累>最大)最大=累});
+  var 步宽=(W-2*内)/数据.length*0.7,步距=(W-2*内)/数据.length;
+  var svg='<svg id="'+id+'" class="图表" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+  累=0;
+  数据.forEach(function(d,i){
+    var x=内+i*步距+(步距-步宽)/2,色,顶,底;
+    if(d.类==='始'){累=d.值;色='#64748b';顶=H-内-(d.值/最大)*(H-2*内);底=H-内;}
+    else if(d.类==='终'){色='#19319d';顶=H-内-(d.值/最大)*(H-2*内);底=H-内;}
+    else if(d.类==='正'){色='#059669';底=H-内-(累/最大)*(H-2*内);累+=d.值;顶=H-内-(累/最大)*(H-2*内);}
+    else{色='#dc2626';顶=H-内-(累/最大)*(H-2*内);累+=d.值;底=H-内-(累/最大)*(H-2*内);}
+    svg+='<rect x="'+x+'" y="'+顶+'" width="'+步宽+'" height="'+(底-顶)+'" fill="'+色+'" rx="2"/>';
+    svg+='<text x="'+(x+步宽/2)+'" y="'+(顶-3)+'" text-anchor="middle" font-size="10" fill="#333">'+(d.值>0?'+':'')+d.值+'</text>';
+    svg+='<text x="'+(x+步宽/2)+'" y="'+(H-12)+'" text-anchor="middle" font-size="9" fill="#666">'+d.名+'</text>';
+  });
+  return svg+'</svg>';
+}
+function 音(参){
+  var p=参解(参,'音id','１１５５６６５');
+  var id=p[0],谱=p[1];
+  return '<div class="音樂" id="'+id+'"><div class="音譜">'+谱.split('').map(function(c){return '<span>'+转义HTML(c)+'</span>'}).join('')+'</div><button onclick="父演奏(\''+谱+'\')" class="鈕 主">▶ 演奏</button><button onclick="父停奏()" class="鈕">■ 停止</button><span style="color:#888;font-size:12px;margin-left:8px">壹贰叁肆伍陆柒 / 一二三四五六七 / １２３４５６７ / ①②③④⑤⑥⑦ / ㈠㈡㈢㈣㈤㈥㈦</span></div>';
+}
+function 声(参){var p=参解(参,'声id','');var src=p[1];return '<audio id="'+p[0]+'" controls preload="metadata"'+(src?' src="'+转义HTML(src)+'"':'')+' style="width:100%">您的浏览器不支持音频</audio>'+(src?'':'<div style="font-size:12px;color:#888;margin-top:4px">💡 在参数中填入 MP3 文件 URL</div>')}
+function 影(参){var p=参解(参,'影id','');var src=p[1];return '<video id="'+p[0]+'" controls preload="metadata"'+(src?' src="'+转义HTML(src)+'"':'')+' style="width:100%;border-radius:4px;background:#000">您的浏览器不支持视频</video>'+(src?'':'<div style="font-size:12px;color:#888;margin-top:4px">💡 在参数中填入视频 URL</div>')}
+function 视(参){var p=参解(参,'视id','');var src=p[1];return '<div class="視頻容"><video id="'+p[0]+'" controls preload="metadata"'+(src?' src="'+转义HTML(src)+'"':'')+' style="width:100%;max-width:560px;border-radius:8px;background:#000;display:block"></video><div style="margin-top:4px;font-size:12px;color:#888">🎬 MP4 视频播放器'+(src?'':'，请在参数中填入 MP4 URL')+'</div></div>'}
+function 录(参){
+  var p=参解(参,'录id');var id=p[0];
+  return '<div class="錄容" id="'+id+'"><video id="'+id+'_預" autoplay muted playsinline style="width:100%;max-width:400px;border-radius:6px;background:#000;display:block"></video><div id="'+id+'_態" style="margin:4px 0;font-size:12px;color:#19319d">● 待机</div><div><button class="鈕 主" onclick="父录开(\''+id+'\')">⏺ 开始录制</button><button class="鈕" onclick="父录停(\''+id+'\')">⏹ 停止</button><button class="鈕" onclick="父录下(\''+id+'\')">⬇ 下载</button></div><video id="'+id+'_播" controls style="width:100%;max-width:400px;margin-top:6px;border-radius:6px;display:none"></video></div>';
+}
+function 屏(参){
+  var p=参解(参,'屏id');var id=p[0];
+  return '<div class="屏容" id="'+id+'"><video id="'+id+'_預" autoplay muted playsinline style="width:100%;max-width:500px;border-radius:6px;background:#000;display:block"></video><div id="'+id+'_態" style="margin:4px 0;font-size:12px;color:#19319d">● 待机(录屏)</div><div><button class="鈕 主" onclick="父屏开(\''+id+'\')">⏺ 开始录屏</button><button class="鈕" onclick="父屏停(\''+id+'\')">⏹ 停止</button><button class="鈕" onclick="父屏下(\''+id+'\')">⬇ 下载</button></div><video id="'+id+'_播" controls style="width:100%;max-width:500px;margin-top:6px;border-radius:6px;display:none"></video></div>';
+}
+function 话(参){
+  var p=参解(参,'话id');var id=p[0];
+  return '<div class="話容" id="'+id+'"><div id="'+id+'_態" style="margin:4px 0;font-size:12px;color:#19319d">🎤 麦克风录音</div><canvas id="'+id+'_波" width="400" height="60" style="background:#f5f5f5;border-radius:6px;display:block;max-width:100%"></canvas><div style="margin-top:6px"><button class="鈕 主" onclick="父话开(\''+id+'\')">⏺ 开始录音</button><button class="鈕" onclick="父话停(\''+id+'\')">⏹ 停止</button><button class="鈕" onclick="父话下(\''+id+'\')">⬇ 下载</button></div><audio id="'+id+'_播" controls style="width:100%;max-width:400px;margin-top:6px;display:none"></audio></div>';
+}
+function 签(参){
+  var p=参解(参,'签id');var id=p[0];
+  return '<div class="簽名容"><canvas id="'+id+'" width="400" height="160" style="border:2px dashed #ccc;border-radius:6px;background:#fff;cursor:crosshair;display:block;max-width:100%;touch-action:none"></canvas><div style="margin-top:4px"><button class="鈕" onclick="父签清(\''+id+'\')">🧹 清空</button><button class="鈕 主" onclick="父签存(\''+id+'\')">💾 下载</button></div><script>父签初("'+id+'");<'+'/script></div>';
+}
+function 艺(参){
+  var p=参解(参,'艺id','   /\\_/\\\n  ( o.o )\n   > ^ <');
+  return '<pre class="藝術" id="'+p[0]+'">'+转义HTML(p[1])+'</pre>';
+}
+function 维(参){
+  var p=参解(参,'维id','https://github.com');
+  var id=p[0],文=p[1],大小=25;
+  var svg='<svg class="維碼" id="'+id+'" viewBox="0 0 '+大小+' '+大小+'" width="180" height="180">';
+  svg+='<rect width="'+大小+'" height="'+大小+'" fill="#fff"/>';
+  function 定位(x,y){svg+='<rect x="'+x+'" y="'+y+'" width="7" height="7" fill="#000"/><rect x="'+(x+1)+'" y="'+(y+1)+'" width="5" height="5" fill="#fff"/><rect x="'+(x+2)+'" y="'+(y+2)+'" width="3" height="3" fill="#000"/>'}
+  定位(0,0);定位(大小-7,0);定位(0,大小-7);
+  var h=0;for(var i=0;i<文.length;i++)h=(h*31+文.charCodeAt(i))&0xFFFFFF;
+  for(var y=0;y<大小;y++){for(var x=0;x<大小;x++){if((x<8&&y<8)||(x>=大小-8&&y<8)||(x<8&&y>=大小-8))continue;if(((h+x*7+y*13)&7)>3)svg+='<rect x="'+x+'" y="'+y+'" width="1" height="1" fill="#000"/>'}}
+  return svg+'</svg><div style="font-size:12px;color:#888;text-align:center;margin-top:4px">'+转义HTML(文)+'</div>';
+}
+function 徽(参){var p=参解(参,'徽id','标签','#19319d');return '<span class="徽章" id="'+p[0]+'" style="background:'+p[2]+'">'+转义HTML(p[1])+'</span>'}
+function 通(参){var p=参解(参,'通id','通知标题','这是一条通知内容');return '<button id="'+p[0]+'" onclick="父通知(\''+转义HTML(p[1])+'\',\''+转义HTML(p[2])+'\')" class="鈕">📢 发送通知 "'+转义HTML(p[1])+'"</button>'}
+function 说(参){var p=参解(参,'说id','你好,这是语音合成测试');var 文=p[1].replace(/'/g,"\\'");return '<button id="'+p[0]+'" onclick="父朗读(\''+文+'\')" class="鈕">🔊 朗读: '+转义HTML(p[1].slice(0,12))+'…</button>'}
+function 听(参){var p=参解(参,'听id');var id=p[0];return '<button id="'+id+'_钮" onclick="父听(\''+id+'\')" class="鈕">🎤 开始语音识别</button><div id="'+id+'" style="margin-top:8px;color:#666;padding:6px;background:#f5f5f5;border-radius:4px;min-height:20px">等待识别...</div>'}
+function 拍(参){var p=参解(参,'拍id');var id=p[0];return '<div id="'+id+'_容"><video id="'+id+'_摄" autoplay style="width:100%;max-width:320px;border-radius:4px;background:#000"></video><div style="margin-top:6px"><button onclick="父开摄(\''+id+'\')" class="鈕">📷 开启摄像头</button><button onclick="父拍照(\''+id+'\')" class="鈕">📸 拍照</button><button onclick="父关摄(\''+id+'\')" class="鈕">⏹ 关闭</button></div><canvas id="'+id+'" style="display:none;max-width:320px;margin-top:8px;border-radius:4px"></canvas></div>'}
+function 位(参){var p=参解(参,'位id');var id=p[0];return '<button onclick="父位(\''+id+'\')" class="鈕">📍 获取位置</button><div id="'+id+'" style="margin-top:8px;padding:8px;background:#fff1ea;border-radius:4px;min-height:20px">点击按钮获取位置...</div>'}
+function 贴(参){var p=参解(参,'贴id','Hello DeepSeekMD');var 文=p[1].replace(/'/g,"\\'");return '<button id="'+p[0]+'" onclick="父贴(\''+文+'\')" class="鈕">📋 复制 "'+转义HTML(p[1])+'"</button>'}
+function 幕(参){var p=参解(参,'幕id');return '<button id="'+p[0]+'" onclick="父幕()" class="鈕">⛶ 切换全屏</button>'}
+function 随(参){
+  var p=参解(参,'随id','1','100');
+  var id=p[0],v=Math.floor(Math.random()*(+p[2]-+p[1]+1))+(+p[1]);
+  return '<div class="卡片" id="'+id+'">🎲 随机数 ['+p[1]+', '+p[2]+']: <strong style="color:var(--主,#19319d);font-size:16px">'+v+'</strong></div>';
+}
+function 唯(参){
+  var p=参解(参,'唯id');
+  var u='xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0;return (c==='x'?r:(r&0x3|0x8)).toString(16)});
+  return '<div class="卡片" id="'+p[0]+'">🔑 UUID: <code>'+u+'</code></div>';
+}
+function 编(参){var p=参解(参,'编id','Hello DeepSeekMD');return '<div class="卡片" id="'+p[0]+'">🔒 Base64 编码: <code>'+btoa(unescape(encodeURIComponent(p[1])))+'</code></div>'}
+function 解(参){
+  var p=参解(参,'解id','SGVsbG8=');
+  try{return '<div class="卡片" id="'+p[0]+'">🔓 解码: <code>'+转义HTML(decodeURIComponent(escape(atob(p[1]))))+'</code></div>'}
+  catch(e){return '<div class="卡片 错" id="'+p[0]+'">解码失败</div>'}
+}
+function 格(参){
+  var p=参解(参,'格id','{"name":"李四","age":25,"hobbies":["读书","旅行"]}');
+  try{var o=JSON.parse(p[1]);return '<pre class="碼塊" id="'+p[0]+'">'+转义HTML(JSON.stringify(o,null,2))+'</pre>'}
+  catch(e){return '<div class="卡片 错" id="'+p[0]+'">JSON 错误: '+e.message+'</div>'}
+}
+function 戳(参){var p=参解(参,'戳id');var t=Date.now(),d=new Date(t).toLocaleString('zh-CN');return '<div class="卡片" id="'+p[0]+'">⏱ 当前时间戳: <code>'+t+'</code><br>📅 对应日期: <strong>'+d+'</strong></div>'}
+function 算(参){
+  var p=参解(参,'算id','2+3*4');
+  try{var r=Function('"use strict";return('+p[1]+')')();return '<div class="卡片" id="'+p[0]+'">🧮 <code>'+转义HTML(p[1])+'</code> = <strong style="color:var(--主,#19319d);font-size:16px">'+r+'</strong></div>'}
+  catch(e){return '<div class="卡片 错" id="'+p[0]+'">表达式错误: '+e.message+'</div>'}
+}
+function 骰(参){
+  var p=参解(参,'骰id','2');
+  var 数=Number(p[1])||2,面=['⚀','⚁','⚂','⚃','⚄','⚅'],结='',总=0;
+  for(var i=0;i<数;i++){var v=Math.floor(Math.random()*6);结+=面[v]+' ';总+=v+1}
+  return '<div class="卡片" id="'+p[0]+'" style="font-size:24px;text-align:center">🎲 '+结+'<div style="font-size:14px;color:#666;margin-top:4px">点数总和: <strong>'+总+'</strong></div></div>';
+}
+function 钟(参){
+  var p=参解(参,'钟id');var id=p[0];
+  return '<div id="'+id+'" class="鐘">00:00:00</div><script>(function(){function 刷(){var d=new Date();var s=[d.getHours(),d.getMinutes(),d.getSeconds()].map(function(n){return String(n).padStart(2,"0")}).join(":");var e=document.getElementById("'+id+'");if(e)e.textContent=s}刷();setInterval(刷,1000)})();<'+'/script>';
+}
+function 历(参){
+  var p=参解(参,'历id');
+  var id=p[0],今=new Date(),年=今.getFullYear(),月=今.getMonth();
+  var 第一=new Date(年,月,1).getDay(),天数=new Date(年,月+1,0).getDate();
+  var 月名=['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+  var h='<div class="日歷" id="'+id+'"><div class="日頭">'+年+'年 '+月名[月]+'</div><div class="日格"><div class="日周">日</div><div class="日周">一</div><div class="日周">二</div><div class="日周">三</div><div class="日周">四</div><div class="日周">五</div><div class="日周">六</div>';
+  for(var i=0;i<第一;i++)h+='<div class="日天空"></div>';
+  for(var d=1;d<=天数;d++){var 今天=d===今.getDate();h+='<div class="日天'+(今天?' 今':'')+'">'+d+'</div>'}
+  return h+'</div></div>';
+}
+function 办(参){
+  var p=参解(参,'办id');var id=p[0];
+  var 事项=['学习 DeepSeekMD','写一篇博客','完成周报','健身30分钟'];
+  return '<div class="待辦" id="'+id+'"><div class="待頭">📋 待办清单 <input id="'+id+'_新" class="輸" placeholder="添加新任务" style="width:150px;margin-left:8px"><button onclick="父加办(\''+id+'\')" class="鈕">＋</button></div><ul id="'+id+'_表" class="待表">'+事项.map(function(e){return '<li><label><input type="checkbox" onchange="this.parentElement.parentElement.classList.toggle(\'done\',this.checked)"> '+转义HTML(e)+'</label></li>'}).join('')+'</ul></div>';
+}
+function 评(参){
+  var p=参解(参,'评id','4');
+  var 分=Number(p[1])||4,h='<div class="評分" id="'+p[0]+'">';
+  for(var i=1;i<=5;i++)h+='<span style="color:'+(i<=分?'#f59e0b':'#ddd')+';font-size:22px">★</span>';
+  return h+' <span style="color:#666;margin-left:8px">'+分+'/5</span></div>';
+}
+function 轴(参){
+  var p=参解(参,'轴id');var id=p[0];
+  return '<div class="時軸" id="'+id+'"><div class="時項"><div class="時點"></div><div class="時內"><strong>2024 · 春</strong><p>项目启动</p></div></div><div class="時項"><div class="時點"></div><div class="時內"><strong>2024 · 夏</strong><p>v1.0 发布</p></div></div><div class="時項"><div class="時點 亮"></div><div class="時內"><strong>2026 · 春</strong><p>1.3.6 默默发布</p></div></div><div class="時項"><div class="時點"></div><div class="時內"><strong>未来</strong><p>继续进化</p></div></div></div>';
+}
+function 卡(参){var p=参解(参,'卡id','DeepSeekMD','可卷可运行的markdown','🎨');return '<div class="信息卡" id="'+p[0]+'"><div class="信息圖">'+转义HTML(p[3])+'</div><div class="信息體"><h4>'+转义HTML(p[1])+'</h4><p>'+转义HTML(p[2])+'</p></div></div>'}
+function 存(参){
+  var p=参解(参,'myKey','myValue');
+  try{localStorage.setItem('脑'+p[0],p[1]);return '<div class="卡片">💾 已保存 <code>'+转义HTML(p[0])+'</code> = <code>'+转义HTML(p[1])+'</code> 到本地存储</div>'}
+  catch(e){return '<div class="卡片 错">保存失败: '+e.message+'</div>'}
+}
+function 取(参){
+  var p=参解(参,'myKey');
+  try{var v=localStorage.getItem('脑'+p[0]);if(v===null)return '<div class="卡片">🗃️ 键 <code>'+转义HTML(p[0])+'</code> 不存在</div>';return '<div class="卡片">📖 <code>'+转义HTML(p[0])+'</code> = <strong>'+转义HTML(v)+'</strong></div>'}
+  catch(e){return '<div class="卡片 错">读取失败: '+e.message+'</div>'}
+}
+function 翻(参){var p=参解(参,'翻id','DeepSeekMD很棒');var 反=p[1].split('').reverse().join('');return '<div class="卡片" id="'+p[0]+'">🔄 原文: <code>'+转义HTML(p[1])+'</code><br>🔃 反转: <strong style="color:var(--主,#19319d)">'+转义HTML(反)+'</strong></div>'}
+function 大(参){var p=参解(参,'大id','hello world');return '<div class="卡片" id="'+p[0]+'">🔠 大写: <strong style="color:var(--主,#19319d)">'+转义HTML(p[1].toUpperCase())+'</strong></div>'}
+function 小(参){var p=参解(参,'小id','HELLO WORLD');return '<div class="卡片" id="'+p[0]+'">🔡 小写: <strong style="color:var(--主,#19319d)">'+转义HTML(p[1].toLowerCase())+'</strong></div>'}
+function 哈(参){var p=参解(参,'哈id','Hello');var h=0;for(var i=0;i<p[1].length;i++)h=((h<<5)-h+p[1].charCodeAt(i))|0;return '<div class="卡片" id="'+p[0]+'">🔐 字符串 <code>'+转义HTML(p[1])+'</code> 的 hash: <strong>'+(h>>>0).toString(16)+'</strong></div>'}
+function 镜(参){var p=参解(参,'镜id','DeepSeekMD');return '<div class="卡片" id="'+p[0]+'">🪞 镜像: <span style="display:inline-block;transform:scaleX(-1);font-size:18px;color:var(--主,#19319d)">'+转义HTML(p[1])+'</span></div>'}
+function 旦(参){
+  var p=参解(参,'旦id','SOS');
+  var 码表={A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..','0':'-----','1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....','7':'--...','8':'---..','9':'----.'};
+  var 文=p[1].toUpperCase(),码=文.split('').map(function(c){return 码表[c]||c}).join(' ');
+  return '<div class="卡片" id="'+p[0]+'">📡 原文: <code>'+转义HTML(文)+'</code><br>📻 摩尔斯: <strong style="font-family:monospace;color:var(--主,#19319d);font-size:16px;letter-spacing:2px">'+码+'</strong></div>';
+}
+function 秒(参){
+  var p=参解(参,'秒id');var id=p[0];
+  return '<div class="計時" id="'+id+'"><div class="計時顯" id="'+id+'_顯">00:00.00</div><div style="margin-top:8px"><button class="鈕 主" onclick="父秒开(this,\''+id+'\')">▶ 开始/暂停</button><button class="鈕" onclick="父秒重(\''+id+'\')">↺ 重置</button></div></div>';
+}
+function 倒(参){
+  var p=参解(参,'倒id','60');var id=p[0],秒数=Number(p[1])||60;
+  return '<div class="倒計" id="'+id+'" data-总="'+秒数+'"><div class="倒顯" id="'+id+'_顯">'+秒数+'</div><div style="margin-top:8px"><button class="鈕 主" onclick="父倒开(\''+id+'\')">▶ 开始</button><button class="鈕" onclick="父倒停(\''+id+'\')">⏸ 暂停</button><button class="鈕" onclick="父倒重(\''+id+'\','+秒数+')">↺ 重置</button></div></div>';
+}
+function 抽(参){
+  var 项=(参||'抽奖id,一等奖,二等奖,三等奖,谢谢参与,五等奖,再接再厉').split(',').map(function(s){return s.trim()});
+  var id=项.shift()||'抽_'+卜();
+  if(项.length===0)项=['一等奖','二等奖','三等奖','参与奖','五等奖','六等奖'];
+  var CX=120,CY=120,R=100,步=2*Math.PI/项.length;
+  var svg='<svg id="'+id+'_盘" viewBox="0 0 240 240" width="240" height="240" style="transition:transform 4s cubic-bezier(.1,.9,.3,1)">';
+  项.forEach(function(s,i){
+    var a1=i*步-Math.PI/2,a2=(i+1)*步-Math.PI/2;
+    var x1=CX+R*Math.cos(a1),y1=CY+R*Math.sin(a1);
+    var x2=CX+R*Math.cos(a2),y2=CY+R*Math.sin(a2);
+    var 色=图颜[i%图颜.length];
+    svg+='<path d="M '+CX+' '+CY+' L '+x1+' '+y1+' A '+R+' '+R+' 0 0 1 '+x2+' '+y2+' Z" fill="'+色+'" stroke="#fff" stroke-width="2"/>';
+    var ta=(a1+a2)/2,tx=CX+(R*0.65)*Math.cos(ta),ty=CY+(R*0.65)*Math.sin(ta);
+    svg+='<text x="'+tx+'" y="'+ty+'" text-anchor="middle" font-size="11" fill="#fff" font-weight="bold" transform="rotate('+(ta*180/Math.PI+90)+' '+tx+' '+ty+')">'+转义HTML(s)+'</text>';
+  });
+  svg+='</svg>';
+  return '<div class="抽獎容" id="'+id+'" style="text-align:center;position:relative;display:inline-block"><div style="position:absolute;left:50%;top:-10px;transform:translateX(-50%);width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:20px solid #19319d;z-index:2"></div>'+svg+'<div style="margin-top:8px"><button class="鈕 主" onclick="父抽(\''+id+'\','+项.length+')">🎰 开始抽奖</button></div><div id="'+id+'_果" style="margin-top:8px;font-size:16px;font-weight:bold;color:#19319d;min-height:22px"></div></div>';
+}
+function 键(参){
+  var 项=(参||'键盘id,Ctrl+S,Ctrl+Enter,F9,F11,Alt+Tab').split(',').map(function(s){return s.trim()});
+  var id=项.shift()||'键_'+卜();
+  if(项.length===0)项=['Ctrl+S','Ctrl+Enter','F9','F11'];
+  return '<div class="鍵容" id="'+id+'">'+项.map(function(k){var 片=k.split('+');return '<div class="鍵組">'+片.map(function(pp){return '<kbd class="鍵位">'+转义HTML(pp.trim())+'</kbd>'}).join('<span class="鍵加">+</span>')+'</div>'}).join('')+'</div>';
+}
+function 叠(参){
+  var p=参解(参,'叠id','https://picsum.photos/400/200?1','https://picsum.photos/400/200?2','https://picsum.photos/400/200?3');
+  var id=p[0];
+  var 图=p.slice(1).filter(Boolean);
+  if(图.length===0)图=['https://picsum.photos/400/200?1','https://picsum.photos/400/200?2','https://picsum.photos/400/200?3'];
+  return '<div class="輪播" id="'+id+'" style="position:relative;overflow:hidden;border-radius:8px;max-width:400px;height:200px">'+图.map(function(s,i){return '<img src="'+转义HTML(s)+'" class="輪張'+(i===0?' 活':'')+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:'+(i===0?1:0)+';transition:opacity .5s">'}).join('')+'<button onclick="父叠(\''+id+'\',-1,'+图.length+')" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);color:#fff;border:none;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px">‹</button><button onclick="父叠(\''+id+'\',1,'+图.length+')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);color:#fff;border:none;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px">›</button><div class="輪點" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:4px">'+图.map(function(_,i){return '<span class="輪星'+(i===0?' 活':'')+'" style="width:8px;height:8px;background:rgba(255,255,255,'+(i===0?1:0.5)+');border-radius:50%"></span>'}).join('')+'</div></div>';
+}
+function 玩(参){
+  var p=参解(参,'玩id');var id=p[0];
+  return '<div class="遊戲容" id="'+id+'_容" style="text-align:center"><canvas id="'+id+'" width="300" height="300" tabindex="0" style="background:#1a1a1a;border-radius:6px;display:block;outline:none;cursor:pointer;margin:0 auto"></canvas><div style="margin-top:4px;font-size:12px;color:#666">🎮 方向键/WSAD/点击屏幕控制 · 分数: <span id="'+id+'_分">0</span></div><button class="鈕 主" onclick="父玩(\''+id+'\')">▶ 开始 / 重开</button><div style="margin-top:4px;font-size:12px;color:#999">💡 点击画布获取焦点后才能操作</div></div>';
+}
+function 骨(参){
+  var p=参解(参,'骨id');
+  var d1=Math.floor(Math.random()*6)+1,d2=Math.floor(Math.random()*6)+1;
+  var 色1=['#dc2626','#059669','#2563eb','#d97706','#7c3aed','#db2777'];
+  return '<div class="骨骰" id="'+p[0]+'"><div class="骨一" style="background:'+色1[d1-1]+'">'+d1+'</div><div class="骨一" style="background:'+色1[d2-1]+'">'+d2+'</div><div style="font-size:14px;margin-top:8px">总点: <strong>'+(d1+d2)+'</strong></div></div>';
+}
+function 色(参){
+  var p=参解(参,'色id','#19319d');
+  function 调(hex,差){var n=parseInt(hex.slice(1),16);var r=Math.max(0,Math.min(255,((n>>16)&255)+差));var g=Math.max(0,Math.min(255,((n>>8)&255)+差));var b=Math.max(0,Math.min(255,(n&255)+差));return '#'+((r<<16)|(g<<8)|b).toString(16).padStart(6,'0')}
+  var 序列=[-80,-40,0,40,80].map(function(d){return 调(p[1],d)});
+  return '<div class="色板" id="'+p[0]+'">'+序列.map(function(c){return '<div class="色塊" style="background:'+c+'"><span>'+c+'</span></div>'}).join('')+'</div>';
+}
+function 式(参){
+  var p=参解(参,'式id','E = mc^2');
+  var 显=p[1].replace(/\^(\{[^}]+\}|\w)/g,function(m,s){return '<sup>'+s.replace(/[{}]/g,'')+'</sup>'}).replace(/_(\{[^}]+\}|\w)/g,function(m,s){return '<sub>'+s.replace(/[{}]/g,'')+'</sub>'}).replace(/\\sqrt\{([^}]+)\}/g,'√<span style="border-top:1px solid;padding-top:1px">$1</span>').replace(/\\alpha/g,'α').replace(/\\beta/g,'β').replace(/\\gamma/g,'γ').replace(/\\pi/g,'π').replace(/\\sum/g,'Σ').replace(/\\int/g,'∫').replace(/\\infty/g,'∞').replace(/\\ne/g,'≠').replace(/\\le/g,'≤').replace(/\\ge/g,'≥');
+  return '<div class="公式" id="'+p[0]+'"><span style="font-family:Georgia,serif;font-size:22px;font-style:italic">'+显+'</span></div>';
+}
+function 棋(参){
+  var p=参解(参,'棋id');var id=p[0];
+  var 行=['♜♞♝♛♚♝♞♜','♟♟♟♟♟♟♟♟','        ','        ','        ','        ','♙♙♙♙♙♙♙♙','♖♘♗♕♔♗♘♖'];
+  var h='<div class="棋盤" id="'+id+'">';
+  for(var r=0;r<8;r++){for(var c=0;c<8;c++){var 深=(r+c)%2===1;h+='<div class="棋格" style="background:'+(深?'#b58863':'#f0d9b5')+'">'+行[r][c]+'</div>'}}
+  return h+'</div>';
+}
+function 灯(参){
+  var p=参解(参,'灯id','绿');
+  var id=p[0],灯号=p[1];
+  return '<div class="紅綠燈" id="'+id+'"><div class="燈泡" style="background:'+(灯号==='红'?'#dc2626':'#3a3a3a')+';box-shadow:'+(灯号==='红'?'0 0 16px #dc2626':'none')+'"></div><div class="燈泡" style="background:'+(灯号==='黄'?'#f59e0b':'#3a3a3a')+';box-shadow:'+(灯号==='黄'?'0 0 16px #f59e0b':'none')+'"></div><div class="燈泡" style="background:'+(灯号==='绿'?'#10b981':'#3a3a3a')+';box-shadow:'+(灯号==='绿'?'0 0 16px #10b981':'none')+'"></div></div>';
+}
+function 框(参){
+  var p=参解(参,'框id','装饰边框内容');
+  return '<div class="裝飾框" id="'+p[0]+'"><span class="飾角 左上">◆</span><span class="飾角 右上">◆</span><span class="飾角 左下">◆</span><span class="飾角 右下">◆</span><div class="裝飾內">'+转义HTML(p[1])+'</div></div>';
+}
+function 宴(参){
+  var p=参解(参,'宴id');var id=p[0];
+  var 菜=[{名:'招牌牛排',价:'¥128',说:'肉质鲜嫩'},{名:'意式披萨',价:'¥88',说:'现烤芝香'},{名:'海鲜意面',价:'¥98',说:'精选食材'},{名:'香草奶昔',价:'¥28',说:'口感丰富'}];
+  return '<div class="菜單" id="'+id+'">'+菜.map(function(m){return '<div class="菜項"><div><div class="菜名">'+m.名+'</div><div class="菜說">'+m.说+'</div></div><div class="菜價">'+m.价+'</div></div>'}).join('')+'</div>';
+}
+function 标(参){
+  var 项=(参||'标签id,热门,新品,限时,特价,推荐').split(',').map(function(s){return s.trim()});
+  var id=项.shift()||'标_'+卜();
+  if(项.length===0)项=['热门','新品','限时','特价','推荐'];
+  return '<div class="標容" id="'+id+'">'+项.map(function(t,i){return '<span class="標籤" style="background:'+图颜[i%图颜.length]+'">'+转义HTML(t)+'</span>'}).join('')+'</div>';
+}
+function 海(参){var p=参解(参,'海id','🎨 DeepSeekMD','1.3.6 可运行的 Markdown');return '<div class="橫幅" id="'+p[0]+'"><h1 style="margin:0;font-size:26px">'+转义HTML(p[1])+'</h1><p style="margin-top:6px;opacity:.9;font-size:13px">'+转义HTML(p[2])+'</p></div>'}
+function 局(参){
+  var p=参解(参,'局id');var id=p[0];
+  var 题=[[5,3,0,0,7,0,0,0,0],[6,0,0,1,9,5,0,0,0],[0,9,8,0,0,0,0,6,0],[8,0,0,0,6,0,0,0,3],[4,0,0,8,0,3,0,0,1],[7,0,0,0,2,0,0,0,6],[0,6,0,0,0,0,2,8,0],[0,0,0,4,1,9,0,0,5],[0,0,0,0,8,0,0,7,9]];
+  var h='<div class="數獨" id="'+id+'">';
+  for(var r=0;r<9;r++){for(var c=0;c<9;c++){var 值=题[r][c],类='數格';if(c%3===0)类+=' 左';if(r%3===0)类+=' 上';if(c===8)类+=' 右';if(r===8)类+=' 下';h+='<div class="'+类+'">'+(值||'')+'</div>'}}
+  return h+'</div>';
+}
+function 迷(参){
+  var p=参解(参,'迷id');
+  var 行=10,列=15,H=180,W=270,格宽=W/列,格高=H/行;
+  var svg='<svg id="'+p[0]+'" class="迷宫" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+  svg+='<rect width="'+W+'" height="'+H+'" fill="#fafafa"/>';
+  var s=12345;function 伪随(){s=(s*9301+49297)%233280;return s/233280}
+  for(var r=0;r<行;r++){for(var c=0;c<列;c++){if(伪随()>0.6)svg+='<rect x="'+(c*格宽)+'" y="'+(r*格高)+'" width="'+格宽+'" height="'+格高+'" fill="#333"/>'}}
+  svg+='<circle cx="'+(格宽/2)+'" cy="'+(格高/2)+'" r="'+(格宽/3)+'" fill="#10b981"/>';
+  svg+='<circle cx="'+(W-格宽/2)+'" cy="'+(H-格高/2)+'" r="'+(格宽/3)+'" fill="#dc2626"/>';
+  return svg+'</svg>';
+}
+function 盒(参){var p=参解(参,'盒id','ℹ️','信息提示','这是一个信息盒子');return '<div class="信息盒" id="'+p[0]+'"><div class="盒圖">'+转义HTML(p[1])+'</div><div class="盒容"><strong>'+转义HTML(p[2])+'</strong><p>'+转义HTML(p[3])+'</p></div></div>'}
+function 盘(参){
+  var p=参解(参,'盘id');var id=p[0];
+  return '<div class="儀表板" id="'+id+'"><div class="儀板卡"><div class="儀板數">1,248</div><div class="儀板標">访问量</div><div class="儀板升">↑ 12%</div></div><div class="儀板卡"><div class="儀板數">356</div><div class="儀板標">新用户</div><div class="儀板升">↑ 8%</div></div><div class="儀板卡"><div class="儀板數">¥5,420</div><div class="儀板標">营收</div><div class="儀板降">↓ 3%</div></div><div class="儀板卡"><div class="儀板數">89%</div><div class="儀板標">满意度</div><div class="儀板升">↑ 5%</div></div></div>';
+}
+function 书(参){var p=参解(参,'书id','书籍标题','作者','这里是一段摘要描述文字,展示本书的主要内容与亮点。');return '<div class="書卡" id="'+p[0]+'"><div class="書封">📖</div><div class="書容"><h4>'+转义HTML(p[1])+'</h4><p class="書作">作者: '+转义HTML(p[2])+'</p><p class="書簡">'+转义HTML(p[3])+'</p></div></div>'}
+function 弹(参){var p=参解(参,'弹id','Hello DeepSeekMD!');return '<button id="'+p[0]+'" class="鈕 主" onclick="alert(\''+转义HTML(p[1]).replace(/'/g,"\\'")+'\')">🪟 点击弹出对话框</button>'}
+function 地(参){var p=参解(参,'地id','39.9042','116.4074');return '<div class="地圖" id="'+p[0]+'"><div style="font-size:40px">📍</div><div>纬度: <strong>'+p[1]+'</strong></div><div>经度: <strong>'+p[2]+'</strong></div><div style="font-size:12px;color:#888;margin-top:6px">地图示意图(占位符)</div></div>'}
+function 波(参){
+  var p=参解(参,'波id');
+  var W=400,H=60,点='';
+  for(var i=0;i<=40;i++){var x=(i/40)*W,h=Math.abs(Math.sin(i*0.5)*Math.cos(i*0.3))*H*0.4;点+='<rect x="'+(x-2)+'" y="'+(H/2-h)+'" width="3" height="'+(h*2)+'" fill="#19319d" rx="1"/>'}
+  return '<svg id="'+p[0]+'" class="波形" viewBox="0 0 '+W+' '+H+'" width="100%" style="max-width:'+W+'px;background:#f5f5f5;border-radius:4px">'+点+'</svg>';
+}
+function 花(参){
+  var 项=(参||'花id,#19319d,#db2777,#7c3aed').split(',').map(function(s){return s.trim()});
+  var id=项.shift()||'花_'+卜();
+  if(项.length===0)项=['#19319d','#db2777','#7c3aed'];
+  var W=200,H=200,svg='<svg id="'+id+'" viewBox="0 0 '+W+' '+H+'" width="200" height="200">';
+  for(var f=0;f<5;f++){
+    var cx=30+f*35,cy=50+(f%2)*30;
+    for(var i=0;i<6;i++){var a=i*Math.PI/3;svg+='<circle cx="'+(cx+10*Math.cos(a))+'" cy="'+(cy+10*Math.sin(a))+'" r="10" fill="'+项[f%项.length]+'" fill-opacity=".6"/>'}
+    svg+='<circle cx="'+cx+'" cy="'+cy+'" r="5" fill="#ffc107"/><line x1="'+cx+'" y1="'+cy+'" x2="'+cx+'" y2="'+(H-10)+'" stroke="#059669" stroke-width="2"/>';
+  }
+  return svg+'</svg>';
+}
+function 段(参){var p=参解(参,'段id','这是一个段落');return '<p id="'+p[0]+'" style="line-height:1.8;margin:8px 0">'+转义HTML(p[1])+'</p>'}
+function 警(参){var p=参解(参,'警id','警告内容');return '<div id="'+p[0]+'" class="提醒 警告">⚠️ '+转义HTML(p[1])+'</div>'}
+function 错(参){var p=参解(参,'错id','错误信息');return '<div id="'+p[0]+'" class="提醒 错误">❌ '+转义HTML(p[1])+'</div>'}
+function 好(参){var p=参解(参,'好id','操作成功');return '<div id="'+p[0]+'" class="提醒 成功">✅ '+转义HTML(p[1])+'</div>'}
+function 信(参){var p=参解(参,'信id','提示信息');return '<div id="'+p[0]+'" class="提醒 信息">ℹ️ '+转义HTML(p[1])+'</div>'}
+function 行(参){
+  var 项=(参||'行id,项一,项二,项三').split(',').map(function(s){return s.trim()});
+  var id=项.shift()||'行_'+卜();
+  if(项.length===0)项=['项一','项二','项三'];
+  return '<div class="行容" id="'+id+'">'+项.map(function(t){return '<div class="行單">'+转义HTML(t)+'</div>'}).join('')+'</div>';
+}
+function 网(参){
+  var 项=(参||'网id,A,B,C,D,E,F').split(',').map(function(s){return s.trim()});
+  var id=项.shift()||'网_'+卜();
+  if(项.length===0)项=['A','B','C','D','E','F'];
+  return '<div class="網格" id="'+id+'">'+项.map(function(t,i){return '<div class="網格項" style="background:'+图颜[i%图颜.length]+'">'+转义HTML(t)+'</div>'}).join('')+'</div>';
+}
+function 巨(参){var p=参解(参,'巨id','2026');return '<div class="巨數" id="'+p[0]+'">'+转义HTML(p[1])+'</div>'}
+function 微(参){var p=参解(参,'微id','small text');return '<small class="微文" id="'+p[0]+'">'+转义HTML(p[1])+'</small>'}
+function 闪(参){var p=参解(参,'闪id','闪烁文字');return '<span class="閃文" id="'+p[0]+'">'+转义HTML(p[1])+'</span>'}
+function 滚(参){var p=参解(参,'滚id','这是滚动字幕,从右向左移动');return '<div class="滾條" id="'+p[0]+'"><div class="滾內">'+转义HTML(p[1])+'</div></div>'}
+function 渐(参){var p=参解(参,'渐id','渐变文字','#19319d+#db2777');return '<span class="漸文" id="'+p[0]+'" style="background:linear-gradient(135deg,'+p[2].replace(/\+/g,',')+');-webkit-background-clip:text;background-clip:text;color:transparent">'+转义HTML(p[1])+'</span>'}
+function 圈(参){var p=参解(参,'圈id','1');return '<span class="圈標" id="'+p[0]+'">'+转义HTML(p[1])+'</span>'}
+function 旋(参){var p=参解(参,'旋id','◐');return '<span class="旋轉" id="'+p[0]+'">'+转义HTML(p[1])+'</span>'}
+function 跳(参){var p=参解(参,'跳id','跳动');return '<span class="跳動" id="'+p[0]+'">'+转义HTML(p[1])+'</span>'}
+function 摇(参){var p=参解(参,'摇id','摇晃');return '<span class="搖晃" id="'+p[0]+'">'+转义HTML(p[1])+'</span>'}
+function 飞(参){var p=参解(参,'飞id','✈️');return '<span class="飛動" id="'+p[0]+'">'+转义HTML(p[1])+'</span>'}
+function 印(参){var p=参解(参,'印id','已认证');return '<span class="印章" id="'+p[0]+'">'+转义HTML(p[1])+'</span>'}
+function 旗(参){var p=参解(参,'旗id','旗帜内容');return '<div class="旗幟" id="'+p[0]+'">🚩 '+转义HTML(p[1])+'</div>'}
+function 票(参){var p=参解(参,'票id','演唱会','2026-06-01','VIP-001');return '<div class="票券" id="'+p[0]+'"><div class="票左"><div class="票名">'+转义HTML(p[1])+'</div><div class="票期">'+转义HTML(p[2])+'</div></div><div class="票虚"></div><div class="票右"><div class="票座">'+转义HTML(p[3])+'</div></div></div>'}
+function 牌(参){var p=参解(参,'牌id','张三','工程师');return '<div class="名牌" id="'+p[0]+'"><div class="牌名">'+转义HTML(p[1])+'</div><div class="牌職">'+转义HTML(p[2])+'</div></div>'}
+function 头(参){var p=参解(参,'头id','头像');var 字符=p[1].charAt(0)||'A',色=图颜[字符.charCodeAt(0)%图颜.length];return '<div class="頭像" id="'+p[0]+'" style="background:'+色+'">'+转义HTML(字符.toUpperCase())+'</div>'}
+function 群(参){
+  var 项=(参||'群id,张三,李四,王五,赵六').split(',').map(function(s){return s.trim()});
+  var id=项.shift()||'群_'+卜();
+  if(项.length===0)项=['张三','李四','王五','赵六'];
+  return '<div class="頭群" id="'+id+'">'+项.map(function(n){var 字符=n.charAt(0),色=图颜[字符.charCodeAt(0)%图颜.length];return '<div class="頭像 小" style="background:'+色+'" title="'+转义HTML(n)+'">'+转义HTML(字符)+'</div>'}).join('')+'</div>';
+}
+function 投(参){
+  var 项=(参||'投票id,选项一,选项二,选项三').split(',').map(function(s){return s.trim()});
+  var id=项.shift()||'投_'+卜();
+  if(项.length===0)项=['选项一','选项二','选项三'];
+  return '<div class="投票" id="'+id+'"><div style="font-weight:bold;color:#19319d;margin-bottom:6px">📊 请投票</div>'+项.map(function(t,i){var 数=Math.floor(Math.random()*100);return '<div class="投項" onclick="父投(\''+id+'\','+i+')"><div class="投標">'+转义HTML(t)+' <span style="float:right;color:#19319d">'+数+'%</span></div><div class="投條"><div class="投填" style="width:'+数+'%;background:'+图颜[i%图颜.length]+'"></div></div></div>'}).join('')+'</div>';
+}
+function 学(参){
+  var p=参解(参,'学id','HTML 的全称是什么?','Hyper Text Markup Language');
+  var id=p[0];
+  return '<div class="測驗" id="'+id+'"><div class="測題">❓ '+转义HTML(p[1])+'</div><input id="'+id+'_答" class="輸" placeholder="输入答案" style="width:200px"><button class="鈕 主" onclick="父学(\''+id+'\',\''+转义HTML(p[2]).replace(/\\/g,'\\\\').replace(/\'/g,"\\\'")+'\')">提交</button><div id="'+id+'_果" style="margin-top:6px"></div></div>';
+}
+function 答(参){var p=参解(参,'答id','点我查看答案','这是答案内容');return '<details class="答案" id="'+p[0]+'"><summary>'+转义HTML(p[1])+'</summary><div style="padding:6px;background:#fff1ea;border-radius:4px;margin-top:4px">'+转义HTML(p[2])+'</div></details>'}
+function 问(参){var p=参解(参,'问id','你的问题是什么?');return '<div class="提問" id="'+p[0]+'">❓ '+转义HTML(p[1])+'</div>'}
+function 集(参){
+  var 项=(参||'集id,2026预算,任务清单,会议纪要,资料库').split(',').map(function(s){return s.trim()});
+  var id=项.shift()||'集_'+卜();
+  if(项.length===0)项=['2026预算','任务清单','会议纪要','资料库'];
+  return '<div class="集合" id="'+id+'">'+项.map(function(t,i){return '<div class="集項" style="border-left:3px solid '+图颜[i%图颜.length]+'">📦 '+转义HTML(t)+'</div>'}).join('')+'</div>';
+}
+function 念(参){var p=参解(参,'念id','💭 想法','这是一个想法气泡');return '<div class="想法" id="'+p[0]+'"><div class="想內">'+转义HTML(p[2])+'</div><div class="想角"></div><strong style="margin-top:6px;display:block">'+转义HTML(p[1])+'</strong></div>'}
+function 思(参){var p=参解(参,'思id','人不可有傲气,但不可无傲骨');return '<div class="名言" id="'+p[0]+'">💭 「'+转义HTML(p[1])+'」</div>'}
+function 心(参){var p=参解(参,'心id','♥');return '<span class="心動" id="'+p[0]+'">'+转义HTML(p[1])+'</span>'}
+function 喜(参){var p=参解(参,'喜id','恭喜!');return '<div class="慶賀 喜" id="'+p[0]+'">🎉 '+转义HTML(p[1])+'</div>'}
+function 字(参){var p=参解(参,'字id','样式文字','#19319d','16');return '<span id="'+p[0]+'" style="color:'+p[2]+';font-size:'+p[3]+'px;font-weight:bold;display:inline-block;padding:2px 4px">'+转义HTML(p[1])+'</span>'}
+function 圆(参){var p=参解(参,'圆id','#19319d','60');return '<div id="'+p[0]+'" style="display:inline-block;width:'+p[2]+'px;height:'+p[2]+'px;border-radius:50%;background:'+p[1]+';margin:4px;box-shadow:0 2px 8px rgba(0,0,0,.2);vertical-align:middle"></div>'}
+function 方(参){var p=参解(参,'方id','#19319d','60');return '<div id="'+p[0]+'" style="display:inline-block;width:'+p[2]+'px;height:'+p[2]+'px;background:'+p[1]+';margin:4px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.2);vertical-align:middle"></div>'}
+function 三(参){var p=参解(参,'三id','#19319d','60');var 大=Number(p[2])||60;return '<div id="'+p[0]+'" style="display:inline-block;width:0;height:0;border-left:'+(大/2)+'px solid transparent;border-right:'+(大/2)+'px solid transparent;border-bottom:'+大+'px solid '+p[1]+';margin:4px;vertical-align:middle"></div>'}
+function 横(参){var p=参解(参,'横id','分隔标题','#19319d');return '<div id="'+p[0]+'" style="display:flex;align-items:center;margin:12px 0;color:'+p[2]+'"><div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,'+p[2]+')"></div><div style="margin:0 12px;font-weight:bold;font-size:12px;letter-spacing:2px">❖ '+转义HTML(p[1])+' ❖</div><div style="flex:1;height:1px;background:linear-gradient(90deg,'+p[2]+',transparent)"></div></div>'}
+function 竖(参){var p=参解(参,'竖id','#19319d','40');return '<div id="'+p[0]+'" style="display:inline-block;width:2px;height:'+p[2]+'px;background:'+p[1]+';margin:0 8px;vertical-align:middle"></div>'}
+function 距(参){var p=参解(参,'距id','20');return '<div id="'+p[0]+'" style="height:'+p[1]+'px"></div>'}
+function 空(参){var p=参解(参,'空id','200','100');return '<div id="'+p[0]+'" style="display:inline-block;width:'+p[1]+'px;height:'+p[2]+'px;border:1px dashed #ccc;border-radius:4px;text-align:center;color:#999;font-size:12px;line-height:'+p[2]+'px">空白占位 '+p[1]+'×'+p[2]+'</div>'}
+function 注(参){var p=参解(参,'注id','这是注释内容');return '<sup id="'+p[0]+'" style="color:#19319d;cursor:help;font-size:12px;border-bottom:1px dotted #19319d;padding:0 2px" title="'+转义HTML(p[1])+'">[注]</sup>'}
+function 释(参){var p=参解(参,'释id','1','这是注释解释内容,通常用于文末引用说明');return '<div id="'+p[0]+'" style="border-left:3px solid #19319d;padding:6px 10px;margin:8px 0;background:#eef2fc;font-size:12px;border-radius:0 4px 4px 0"><sup style="font-weight:bold;color:#19319d;font-size:12px">['+转义HTML(p[1])+']</sup> '+转义HTML(p[2])+'</div>'}
+function 春(参){var p=参解(参,'春id','桃红柳绿万物苏');return '<div id="'+p[0]+'" style="padding:16px;background:linear-gradient(135deg,#ffcdd2,#f8bbd0);border-radius:8px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.2);text-align:center;margin:6px 0;box-shadow:0 4px 12px rgba(248,187,208,.4);display:inline-block;min-width:180px"><div style="font-size:32px">🌸</div><div style="font-size:18px;font-weight:bold;margin-top:4px">春</div><div style="font-size:12px;margin-top:4px">'+转义HTML(p[1])+'</div></div>'}
+function 夏(参){var p=参解(参,'夏id','蝉鸣荷绿暑炎天');return '<div id="'+p[0]+'" style="padding:16px;background:linear-gradient(135deg,#81d4fa,#4fc3f7);border-radius:8px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.2);text-align:center;margin:6px 0;box-shadow:0 4px 12px rgba(79,195,247,.4);display:inline-block;min-width:180px"><div style="font-size:32px">☀️</div><div style="font-size:18px;font-weight:bold;margin-top:4px">夏</div><div style="font-size:12px;margin-top:4px">'+转义HTML(p[1])+'</div></div>'}
+function 秋(参){var p=参解(参,'秋id','枫红菊黄稻浪香');return '<div id="'+p[0]+'" style="padding:16px;background:linear-gradient(135deg,#ffb74d,#ff8a65);border-radius:8px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.2);text-align:center;margin:6px 0;box-shadow:0 4px 12px rgba(255,138,101,.4);display:inline-block;min-width:180px"><div style="font-size:32px">🍂</div><div style="font-size:18px;font-weight:bold;margin-top:4px">秋</div><div style="font-size:12px;margin-top:4px">'+转义HTML(p[1])+'</div></div>'}
+function 冬(参){var p=参解(参,'冬id','梅雪松柏迎新春');return '<div id="'+p[0]+'" style="padding:16px;background:linear-gradient(135deg,#90caf9,#b3e5fc);border-radius:8px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.2);text-align:center;margin:6px 0;box-shadow:0 4px 12px rgba(144,202,249,.4);display:inline-block;min-width:180px"><div style="font-size:32px">❄️</div><div style="font-size:18px;font-weight:bold;margin-top:4px">冬</div><div style="font-size:12px;margin-top:4px">'+转义HTML(p[1])+'</div></div>'}
+function 月(参){var p=参解(参,'月id','满月');var 阶段={'新月':'🌑','残月':'🌘','下弦':'🌗','峨眉':'🌖','满月':'🌕','凸月':'🌔','上弦':'🌓','蛾眉':'🌒'};return '<div id="'+p[0]+'" style="display:inline-block;text-align:center;padding:12px;background:#1a1a2e;border-radius:8px;color:#fff;margin:4px;box-shadow:0 4px 12px rgba(26,26,46,.4)"><div style="font-size:48px">'+(阶段[p[1]]||'🌕')+'</div><div style="font-size:12px;margin-top:4px">'+转义HTML(p[1])+'</div></div>'}
+function 日(参){var p=参解(参,'日id','晴');var 天气={'晴':'☀️','多云':'⛅','阴':'☁️','雨':'🌧','雪':'❄️','雷':'⛈','雾':'🌫'};return '<div id="'+p[0]+'" style="display:inline-block;text-align:center;padding:12px;background:linear-gradient(135deg,#fff59d,#ffeb3b);border-radius:8px;color:#5d4037;margin:4px;box-shadow:0 4px 12px rgba(255,235,59,.3)"><div style="font-size:48px">'+(天气[p[1]]||'☀️')+'</div><div style="font-size:12px;margin-top:4px;font-weight:bold">'+转义HTML(p[1])+'</div></div>'}
+function 星(参){var p=参解(参,'星id','5');var 数=Math.max(1,Math.min(10,Number(p[1])||5));var html='';for(var i=0;i<数;i++){html+='<span style="font-size:24px;color:#ffc107;animation:闪烁 1.5s ease infinite;animation-delay:'+(i*0.1)+'s;display:inline-block;margin:0 2px;text-shadow:0 0 8px rgba(255,193,7,.5)">⭐</span>'}return '<div id="'+p[0]+'">'+html+'</div>'}
+function 天(参){var p=参解(参,'天id','蓝天白云');return '<div id="'+p[0]+'" style="position:relative;height:140px;background:linear-gradient(180deg,#87ceeb 0%,#b0e0e6 100%);border-radius:8px;overflow:hidden;margin:6px 0;box-shadow:0 4px 12px rgba(135,206,235,.4)"><div style="position:absolute;font-size:48px;top:10px;right:30px">☁️</div><div style="position:absolute;font-size:32px;top:60px;left:40px">☁️</div><div style="position:absolute;font-size:48px;top:20px;left:20px">☀️</div><div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-weight:bold;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.3);font-size:14px">'+转义HTML(p[1])+'</div></div>'}
+function 雨(参){
+  var p=参解(参,'雨id');
+  var html='<div id="'+p[0]+'" style="position:relative;height:140px;background:linear-gradient(180deg,#546e7a,#78909c);border-radius:8px;overflow:hidden;margin:6px 0;box-shadow:0 4px 12px rgba(84,110,122,.4)">';
+  for(var i=0;i<25;i++){
+    html+='<span style="position:absolute;left:'+(i*4)+'%;top:-10px;color:#cfd8dc;animation:雨落 '+(0.7+(i%3)*0.3)+'s linear infinite;animation-delay:'+((i%10)*0.15)+'s;font-size:14px">|</span>';
+  }
+  html+='<div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.3);font-size:14px">🌧️ 雨</div></div>';
+  return html;
+}
+function 雪(参){
+  var p=参解(参,'雪id');
+  var html='<div id="'+p[0]+'" style="position:relative;height:140px;background:linear-gradient(180deg,#e3f2fd,#f5f5f5);border-radius:8px;overflow:hidden;margin:6px 0;box-shadow:0 4px 12px rgba(227,242,253,.6)">';
+  for(var i=0;i<20;i++){
+    html+='<span style="position:absolute;left:'+(i*5)+'%;top:-10px;color:#fff;animation:雪落 '+(2+(i%4)*0.5)+'s linear infinite;animation-delay:'+((i%8)*0.4)+'s;font-size:16px;text-shadow:0 0 2px rgba(0,0,0,.1)">❄</span>';
+  }
+  html+='<div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);color:#37474f;font-size:14px;font-weight:bold">❄️ 雪</div></div>';
+  return html;
+}
+function 风(参){var p=参解(参,'风id','清风徐来');return '<div id="'+p[0]+'" style="position:relative;height:80px;background:linear-gradient(135deg,#a5d6a7,#c8e6c9);border-radius:8px;overflow:hidden;margin:6px 0;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(165,214,167,.4)"><span style="font-size:32px;animation:摇 1s ease infinite">🍃</span><span style="font-size:16px;margin-left:12px;color:#2e7d32;font-weight:bold">'+转义HTML(p[1])+'</span><span style="font-size:32px;margin-left:12px;animation:摇 1.2s ease infinite reverse">🌿</span></div>'}
+function 龙(参){var p=参解(参,'龙id');return '<div id="'+p[0]+'" style="display:inline-block;text-align:center;padding:12px;background:linear-gradient(135deg,#ffd700,#ff8f00);border-radius:8px;margin:4px;box-shadow:0 4px 12px rgba(255,143,0,.4)"><div style="font-size:48px;animation:飞 3s ease infinite">🐉</div><div style="color:#fff;font-weight:bold;text-shadow:0 1px 2px rgba(0,0,0,.3)">飞龙在天</div></div>'}
+function 凤(参){var p=参解(参,'凤id');return '<div id="'+p[0]+'" style="display:inline-block;text-align:center;padding:12px;background:linear-gradient(135deg,#e91e63,#f06292);border-radius:8px;margin:4px;box-shadow:0 4px 12px rgba(233,30,99,.4)"><div style="font-size:48px;animation:飞 2.5s ease infinite">🦅</div><div style="color:#fff;font-weight:bold;text-shadow:0 1px 2px rgba(0,0,0,.3)">凤鸣朝阳</div></div>'}
+function 福(参){var p=参解(参,'福id');return '<div id="'+p[0]+'" style="display:inline-block;background:linear-gradient(135deg,#d32f2f,#b71c1c);color:#ffd700;font-size:60px;font-weight:bold;padding:20px;border-radius:8px;font-family:楷体,serif;text-shadow:0 2px 4px rgba(0,0,0,.3);box-shadow:0 4px 12px rgba(211,47,47,.4);margin:4px;border:3px solid #ffd700">福</div>'}
+function 财(参){var p=参解(参,'财id','发');return '<div id="'+p[0]+'" style="display:inline-block;background:linear-gradient(135deg,#ffc107,#ff8f00);color:#fff;font-size:24px;font-weight:bold;padding:16px 24px;border-radius:8px;font-family:楷体,serif;text-shadow:0 2px 4px rgba(0,0,0,.3);box-shadow:0 4px 12px rgba(255,143,0,.4);margin:4px;border:2px solid #fff">💰 财源滚滚 '+转义HTML(p[1])+'</div>'}
+function 寿(参){var p=参解(参,'寿id');return '<div id="'+p[0]+'" style="display:inline-block;background:linear-gradient(135deg,#5d4037,#3e2723);color:#ffd700;font-size:60px;font-weight:bold;padding:20px;border-radius:8px;font-family:楷体,serif;text-shadow:0 2px 4px rgba(0,0,0,.3);box-shadow:0 4px 12px rgba(93,64,55,.4);margin:4px;border:3px solid #ffd700">寿</div>'}
+function 五(参){
+  var p=参解(参,'五id');var id=p[0];
+  return '<div class="五子棋容" id="'+id+'_容" style="display:inline-block;text-align:center;margin:6px 0"><canvas id="'+id+'" width="360" height="360" style="background:#dcb27a;border:2px solid #8b4513;display:block;cursor:crosshair;border-radius:4px"></canvas><div id="'+id+'_態" style="margin:6px 0;font-size:12px;color:#19319d">⚫ 黑棋先手</div><button class="鈕 主" onclick="父五重(\''+id+'\')">↺ 重开</button> <button class="鈕" onclick="父五撤(\''+id+'\')">⟲ 悔棋</button><script>父五初("'+id+'");<'+'/script></div>';
+}
+function 笑(参){var p=参解(参,'笑id','😀');return '<span id="'+p[0]+'" style="font-size:48px;display:inline-block;animation:跳 1s ease infinite">'+转义HTML(p[1])+'</span>'}
+function 哭(参){var p=参解(参,'哭id','😭');return '<span id="'+p[0]+'" style="font-size:48px;display:inline-block;animation:摇 0.5s ease infinite">'+转义HTML(p[1])+'</span>'}
+function 怒(参){var p=参解(参,'怒id','😡');return '<span id="'+p[0]+'" style="font-size:48px;display:inline-block;animation:摇 0.2s ease infinite">'+转义HTML(p[1])+'</span>'}
+function 困(参){var p=参解(参,'困id','😴');return '<span id="'+p[0]+'" style="font-size:48px;display:inline-block;animation:跳 2s ease infinite">'+转义HTML(p[1])+'</span>'}
+var 单字函数='广文章节题滤突斜划码链图引楼列序表入密邮电数滑期刻颜盼复单域钮进量页树折愿建样玖绘画查柱饼线雷环仪积散气热云漏瀑音声影视录屏话签艺维徽通说听拍位贴幕随唯编解格戳算骰钟历办评轴卡存取翻大小哈镜旦秒倒抽键叠玩骨色式棋灯框宴标海局迷盒盘书弹地波花段警错好信行网巨微闪滚渐圈旋跳摇飞印旗票牌头群投学答问集念思心喜字圆方三横竖距空注释春夏秋冬月日星天雨雪风龙凤福财寿五笑哭怒困'.split('');
+var 已注册函数={};
+单字函数.forEach(function(c){已注册函数[c]=true});
+function 解析MD(文本){
+  if(!文本)return '';
+  var 果=文本;
+  var 代码块=[];
+  果=果.replace(/```(\w*)\n([\s\S]*?)```/g,function(m,语,码){代码块.push({语:语,码:码});return '§§代§§'+(代码块.length-1)+'§§'});
+  果=果.replace(/【([^】\s]+)】`([^`\n]*)`/g,function(m,符,参){return 调用函数(符,参)});
+  果=果.replace(/(^|[^\u4e00-\u9fa5\w])([\u4e00-\u9fa5])`([^`\n]*)`/g,function(m,前,符,参){if(已注册函数[符])return 前+调用函数(符,参);return m});
+  果=果.replace(/^([\u4e00-\u9fa5])(?:[ \t]+([^\n]*))?$/gm,function(m,符,参){if(已注册函数[符])return 调用函数(符,参||'');return m});
+  var 行码=[];
+  果=果.replace(/`([^`\n]+)`/g,function(m,c){行码.push(c);return '§§行§§'+(行码.length-1)+'§§'});
+  for(var i=6;i>=1;i--){var re=new RegExp('^'+'#'.repeat(i)+' (.+)$','gm');果=果.replace(re,'<h'+i+'>$1</h'+i+'>')}
+  果=果.replace(/^---+$/gm,'<hr>');
+  果=果.replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img src="$2" alt="$1">');
+  果=果.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank">$1</a>');
+  果=果.replace(/\*\*\*([^*]+)\*\*\*/g,'<strong><em>$1</em></strong>');
+  果=果.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+  果=果.replace(/\*([^*\n]+)\*/g,'<em>$1</em>');
+  果=果.replace(/~~([^~]+)~~/g,'<del>$1</del>');
+  果=果.replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>');
+  果=果.replace(/(\|[^\n]+\|\n\|[-:\s|]+\|\n(\|[^\n]+\|\n?)+)/g,function(块){
+    var 行=块.trim().split('\n');
+    var 头=行[0].split('|').slice(1,-1).map(function(s){return s.trim()});
+    var 体=行.slice(2).map(function(r){return r.split('|').slice(1,-1).map(function(s){return s.trim()})});
+    var h='<table><thead><tr>';
+    头.forEach(function(c){h+='<th>'+c+'</th>'});
+    h+='</tr></thead><tbody>';
+    体.forEach(function(r){h+='<tr>';r.forEach(function(c){h+='<td>'+c+'</td>'});h+='</tr>'});
+    return h+'</tbody></table>';
+  });
+  var 行数组=果.split('\n'),栈=[],出=[];
+  for(var i2=0;i2<行数组.length;i2++){
+    var 行2=行数组[i2];
+    var 无=行2.match(/^(\s*)[-*+]\s+(.+)/);
+    var 有=行2.match(/^(\s*)\d+\.\s+(.+)/);
+    if(无||有){
+      var m2=无||有,深=m2[1].length,标签=无?'ul':'ol';
+      while(栈.length&&栈[栈.length-1].深>=深)出.push('</'+栈.pop().标签+'>');
+      if(!栈.length||栈[栈.length-1].深<深){出.push('<'+标签+'>');栈.push({深:深,标签:标签})}
+      出.push('<li>'+m2[2]+'</li>');
+    }else{
+      while(栈.length)出.push('</'+栈.pop().标签+'>');
+      出.push(行2);
+    }
+  }
+  while(栈.length)出.push('</'+栈.pop().标签+'>');
+  果=出.join('\n');
+  果=果.split(/\n\n+/).map(function(b){
+    b=b.trim();
+    if(!b)return '';
+    if(/^<(h\d|ul|ol|li|blockquote|hr|table|pre|div|section|article|img|iframe|svg|video|audio|canvas|form|details|p|input|button|select|textarea|details|figure|nav|aside|header|footer|meter|progress|small|span|sup|sub)/i.test(b))return b;
+    if(b.indexOf('§§')===0)return b;
+    return '<p>'+b+'</p>';
+  }).join('\n');
+  果=果.replace(/§§行§§(\d+)§§/g,function(m,i){return '<code>'+行码[+i]+'</code>'});
+  果=果.replace(/§§代§§(\d+)§§/g,function(m,i){var b=代码块[+i];var 净=b.码.replace(/</g,'&lt;').replace(/>/g,'&gt;');return '<pre class="语-'+b.语+'"><code>'+净+'</code></pre>'});
+  return 果;
+}
+function 调用函数(符,参){
+  try{var fn=window[符];if(typeof fn==='function')return fn(参)||''}
+  catch(e){return '<span style="color:#dc2626">['+符+'错: '+转义HTML(e.message)+']</span>'}
+  return '【'+符+'】`'+参+'`';
+}
+var 功能表=[
+  {类:'基础 Markdown',项:[
+    {符:'广',名:'一级标题',说:'# 标题',默:'欢迎使用DeepSeekMD'},
+    {符:'文',名:'二级标题',说:'## 标题',默:'第二章'},
+    {符:'章',名:'三级标题',说:'### 标题',默:'小节'},
+    {符:'节',名:'四级标题',说:'#### 标题',默:'细节'},
+    {符:'题',名:'五级标题',说:'##### 标题',默:'小题'},
+    {符:'滤',名:'六级标题',说:'###### 标题',默:'细目'},
+    {符:'突',名:'粗体',说:'**文本**',默:'重要文字'},
+    {符:'斜',名:'斜体',说:'*文本*',默:'强调文字'},
+    {符:'划',名:'删除线',说:'~~文本~~',默:'删除文字'},
+    {符:'码',名:'行内代码',说:'`code`',默:'console.log'},
+    {符:'链',名:'超链接',说:'[文](URL)',默:'GitHub,https://github.com'},
+    {符:'图',名:'图片',说:'![](URL)',默:'示例,https://picsum.photos/300/200'},
+    {符:'表',名:'表格',说:'数据表格',默:'信息表'},
+    {符:'引',名:'引用',说:'> 引用',默:'知识就是力量'},
+    {符:'列',名:'无序列表',说:'- 项',默:'食物表,苹果,香蕉,橙子'},
+    {符:'序',名:'有序列表',说:'1. 项',默:'步骤表,第一步,第二步,第三步'},
+    {符:'楼',名:'分割线',说:'---',默:''},
+    {符:'段',名:'段落',说:'<p>段落',默:'段一,这是一个段落'}
+  ]},
+  {类:'表单组件',项:[
+    {符:'入',名:'文本框',说:'文本输入',默:'姓名,请输入,齐庄'},
+    {符:'密',名:'密码框',说:'密码输入',默:'密码,请输入密码,123456'},
+    {符:'邮',名:'邮箱框',说:'邮箱输入',默:'邮箱,name@example.com,2500@2500.ai'},
+    {符:'电',名:'电话框',说:'电话输入',默:'电话,138-0000-0000'},
+    {符:'数',名:'数字框',说:'数字输入',默:'年龄,0,120,25'},
+    {符:'滑',名:'滑动条',说:'范围滑动',默:'音量,0,100,70'},
+    {符:'期',名:'日期框',说:'日期选择',默:'生日,2026-06-01'},
+    {符:'刻',名:'时间框',说:'时间选择',默:'时间,12:00'},
+    {符:'颜',名:'颜色框',说:'颜色选择',默:'主题色,#19319d'},
+    {符:'盼',名:'下拉框',说:'下拉选择',默:'城市,北京,上海,广州,深圳,成都,杭州'},
+    {符:'复',名:'复选框',说:'多选',默:'爱好,阅读,运动,旅行,音乐,编程'},
+    {符:'单',名:'单选框',说:'单选',默:'性别,男,女,其他'},
+    {符:'域',名:'文本域',说:'多行文本',默:'内容,请输入多行,4'},
+    {符:'钮',名:'按钮',说:'点击按钮',默:'按钮一,点我,alert("Hi!")'},
+    {符:'进',名:'进度条',说:'进度显示',默:'进度,65,100'},
+    {符:'量',名:'计量条',说:'计量显示',默:'电池,72,100,0'},
+    {符:'页',名:'标签页',说:'标签切换',默:'页签,首页,文档,关于'},
+    {符:'树',名:'树形',说:'树状展示',默:'树一'},
+    {符:'折',名:'折叠面板',说:'折叠展开',默:'折一,点我展开,这是折叠内容'}
+  ]},
+  {类:'代码运行',项:[
+    {符:'愿',名:'运行 MD',说:'执行MD',默:'愿一,# Hello'},
+    {符:'建',名:'运行 HTML',说:'执行HTML',默:'建一,<b style="color:red">红字</b>'},
+    {符:'样',名:'运行 CSS',说:'应用样式',默:'样一,.样例{color:#19319d}'},
+    {符:'玖',名:'运行 JS',说:'执行JS',默:'玖一,1+2*3'},
+    {符:'绘',名:'运行 SVG',说:'渲染SVG',默:'绘一'},
+    {符:'画',名:'运行 Canvas',说:'绘制Canvas',默:'画一'},
+    {符:'查',名:'模拟 SQL',说:'模拟查询',默:'查一,SELECT * FROM users;'}
+  ]},
+  {类:'图表可视',项:[
+    {符:'柱',名:'柱状图',说:'柱状对比',默:'柱一,一月:65,二月:59,三月:80,四月:81,五月:56,六月:70'},
+    {符:'饼',名:'饼图',说:'占比饼图',默:'饼一,Chrome:65,Firefox:15,Safari:12,Edge:5,其他:3'},
+    {符:'线',名:'折线图',说:'趋势折线',默:'线一'},
+    {符:'雷',名:'雷达图',说:'多维雷达',默:'雷一'},
+    {符:'环',名:'环形图',说:'环形统计',默:'环一,72'},
+    {符:'仪',名:'仪表盘',说:'仪表指针',默:'仪一,68'},
+    {符:'积',名:'面积图',说:'填充面积',默:'积一'},
+    {符:'散',名:'散点图',说:'散点分布',默:'散一'},
+    {符:'气',名:'气泡图',说:'气泡分布',默:'气一'},
+    {符:'热',名:'热力图',说:'热度图',默:'热一'},
+    {符:'云',名:'词云',说:'词语云',默:'云一'},
+    {符:'漏',名:'漏斗图',说:'漏斗流失',默:'漏一'},
+    {符:'瀑',名:'瀑布图',说:'瀑布对比',默:'瀑一'}
+  ]},
+  {类:'多媒体',项:[
+    {符:'音',名:'汉符音',说:'中文乐谱',默:'音一,１１５５６６５'},
+    {符:'声',名:'音频MP3',说:'MP3播放',默:'声一'},
+    {符:'影',名:'视频',说:'视频播放',默:'影一'},
+    {符:'视',名:'MP4视频',说:'MP4播放器',默:'视一'},
+    {符:'录',名:'摄像录制',说:'录制视频',默:'录一'},
+    {符:'屏',名:'录屏',说:'屏幕录制',默:'屏一'},
+    {符:'话',名:'语音录制',说:'录制音频',默:'话一'},
+    {符:'签',名:'签名板',说:'签名画布',默:'签一'},
+    {符:'艺',名:'UTF 艺术',说:'ASCII字画',默:'艺一'},
+    {符:'维',名:'二维码',说:'生成二维码',默:'维一,https://github.com'},
+    {符:'徽',名:'徽章',说:'状态徽章',默:'徽一,v1.3.6,#19319d'}
+  ]},
+  {类:'Web API',项:[
+    {符:'通',名:'系统通知',说:'桌面通知',默:'通一,问候,你好DeepSeekMD'},
+    {符:'说',名:'语音合成',说:'文字转语音',默:'说一,你好世界'},
+    {符:'听',名:'语音识别',说:'语音转文字',默:'听一'},
+    {符:'拍',名:'摄像头',说:'拍照录像',默:'拍一'},
+    {符:'位',名:'地理位置',说:'获取位置',默:'位一'},
+    {符:'贴',名:'剪贴板',说:'剪贴操作',默:'贴一,Hello DeepSeekMD'},
+    {符:'幕',名:'全屏',说:'全屏切换',默:'幕一'}
+  ]},
+  {类:'实用工具',项:[
+    {符:'随',名:'随机数',说:'随机生成',默:'随一,1,1000'},
+    {符:'唯',名:'UUID',说:'唯一标识',默:'唯一'},
+    {符:'编',名:'Base64编',说:'加密',默:'编一,Hello DeepSeekMD'},
+    {符:'解',名:'Base64解',说:'解密',默:'解一,SGVsbG8='},
+    {符:'格',名:'JSON格式',说:'美化',默:'格一,{"name":"李四","age":25}'},
+    {符:'戳',名:'时间戳',说:'时间转换',默:'戳一'},
+    {符:'算',名:'计算器',说:'表达式',默:'算一,(25+17)*3'},
+    {符:'骰',名:'骰子',说:'随机骰子',默:'骰一,3'},
+    {符:'钟',名:'时钟',说:'实时时钟',默:'钟一'},
+    {符:'历',名:'日历',说:'月历',默:'历一'},
+    {符:'办',名:'待办',说:'任务清单',默:'办一'},
+    {符:'评',名:'评分',说:'星级评分',默:'评一,4'},
+    {符:'轴',名:'时间轴',说:'事件轴',默:'轴一'},
+    {符:'卡',名:'信息卡',说:'信息卡片',默:'卡一,标题,描述文字,🎨'},
+    {符:'存',名:'本地存储',说:'存数据',默:'我的名字,李四'},
+    {符:'取',名:'本地读取',说:'读数据',默:'我的名字'},
+    {符:'翻',名:'文本反转',说:'反转字符',默:'翻一,DeepSeekMD很棒'},
+    {符:'大',名:'转大写',说:'大写',默:'大一,hello world'},
+    {符:'小',名:'转小写',说:'小写',默:'小一,HELLO WORLD'},
+    {符:'哈',名:'哈希值',说:'字符哈希',默:'哈一,Hello'},
+    {符:'镜',名:'镜像字',说:'左右镜像',默:'镜一,DeepSeekMD'},
+    {符:'旦',名:'摩尔斯码',说:'摩尔斯编码',默:'旦一,SOS'}
+  ]},
+  {类:'交互与游戏',项:[
+    {符:'秒',名:'秒表',说:'计时秒表',默:'秒一'},
+    {符:'倒',名:'倒计时',说:'倒计时器',默:'倒一,60'},
+    {符:'抽',名:'抽奖',说:'抽奖转盘',默:'抽一,一等奖,二等奖,三等奖,参与奖,五等奖,六等奖'},
+    {符:'键',名:'键盘键',说:'键盘展示',默:'键一,Ctrl+S,Ctrl+Enter,F9,F11'},
+    {符:'叠',名:'轮播',说:'图片轮播',默:'叠一'},
+    {符:'玩',名:'贪吃蛇',说:'WSAD/方向键控制',默:'玩一'},
+    {符:'骨',名:'掷骰子',说:'掷两颗骰子',默:'骨一'},
+    {符:'五',名:'五子棋',说:'15x15棋盘',默:'五一'},
+    {符:'投',名:'投票',说:'投票统计',默:'投一,猫,狗,鸟,鱼'},
+    {符:'学',名:'问答题',说:'学习问答',默:'学一,HTML 全称是?,Hyper Text Markup Language'},
+    {符:'答',名:'答案折叠',说:'隐藏答案',默:'答一,点我看答案,答案是42'},
+    {符:'问',名:'提问',说:'问题展示',默:'问一,你叫什么名字?'}
+  ]},
+  {类:'视觉元素',项:[
+    {符:'色',名:'色板',说:'配色板',默:'色一,#19319d'},
+    {符:'式',名:'公式',说:'数学公式',默:'式一,E = mc^2'},
+    {符:'棋',名:'棋盘',说:'国际象棋',默:'棋一'},
+    {符:'灯',名:'红绿灯',说:'信号灯',默:'灯一,绿'},
+    {符:'框',名:'装饰框',说:'边框装饰',默:'框一,这是装饰边框内容'},
+    {符:'宴',名:'菜单',说:'菜单卡',默:'宴一'},
+    {符:'标',名:'标签组',说:'标签组',默:'标一,热门,新品,限时,特价,推荐'},
+    {符:'海',名:'横幅',说:'大型横幅',默:'海一,🎨 DeepSeekMD,1.3.6 可运行的 Markdown'},
+    {符:'局',名:'数独',说:'数独网格',默:'局一'},
+    {符:'迷',名:'迷宫',说:'迷宫示意',默:'迷一'},
+    {符:'盒',名:'信息盒',说:'信息盒子',默:'盒一,ℹ️,温馨提示,欢迎使用DeepSeekMD'},
+    {符:'盘',名:'仪表板',说:'数据仪表板',默:'盘一'},
+    {符:'书',名:'书卡',说:'书籍介绍',默:'书一,DeepSeekMD实战,李四,一本实用的编程书'},
+    {符:'弹',名:'弹窗',说:'弹出对话框',默:'弹一,Hello DeepSeekMD!'},
+    {符:'地',名:'地图',说:'地图占位',默:'地一,39.9042,116.4074'},
+    {符:'波',名:'波形',说:'音频波形',默:'波一'},
+    {符:'花',名:'花艺',说:'花束图',默:'花一,#19319d,#db2777,#7c3aed'},
+    {符:'集',名:'集合',说:'分组集合',默:'集一,任务一,任务二,任务三'}
+  ]},
+  {类:'通知提醒',项:[
+    {符:'警',名:'警告',说:'警告框',默:'警一,这是警告'},
+    {符:'错',名:'错误',说:'错误框',默:'错一,发生错误'},
+    {符:'好',名:'成功',说:'成功框',默:'好一,操作成功'},
+    {符:'信',名:'信息',说:'信息提醒',默:'信一,温馨提示'},
+    {符:'喜',名:'恭喜',说:'庆祝消息',默:'喜一,Bingo!'},
+    {符:'念',名:'想法',说:'想法气泡',默:'念一,💡 灵感,我有个想法'},
+    {符:'思',名:'名言',说:'名言警句',默:'思一,知识就是力量'},
+    {符:'问',名:'提问',说:'问题展示',默:'问二,你叫什么名字?'},
+    {符:'注',名:'注释',说:'inline 注释',默:'注一,这是 tooltip 说明'},
+    {符:'释',名:'脚注',说:'脚注引用',默:'释一,1,这是脚注内容'}
+  ]},
+  {类:'布局与动画',项:[
+    {符:'行',名:'横排',说:'横向排列',默:'行一,项一,项二,项三,项四'},
+    {符:'网',名:'网格',说:'网格布局',默:'网一,A,B,C,D,E,F'},
+    {符:'巨',名:'巨数',说:'超大数字',默:'巨一,2026'},
+    {符:'微',名:'小字',说:'小号文字',默:'微一,微型注解'},
+    {符:'闪',名:'闪烁',说:'闪烁文字',默:'闪一,闪烁文字'},
+    {符:'滚',名:'滚动',说:'滚动字幕',默:'滚一,这是滚动字幕'},
+    {符:'渐',名:'渐变文字',说:'彩色渐变',默:'渐一,渐变彩字,#19319d+#db2777+#7c3aed'},
+    {符:'圈',名:'圈号',说:'圆圈标记',默:'圈一,1'},
+    {符:'旋',名:'旋转',说:'旋转元素',默:'旋一,⭐'},
+    {符:'跳',名:'跳动',说:'跳动文字',默:'跳一,跳动!'},
+    {符:'摇',名:'摇晃',说:'摇晃元素',默:'摇一,摇晃中'},
+    {符:'飞',名:'飘动',说:'飘动图标',默:'飞一,✈️'},
+    {符:'心',名:'心动',说:'跳动心',默:'心一,❤'},
+    {符:'字',名:'样式文字',说:'彩色文字',默:'字一,样式文字,#c4401a,18'},
+    {符:'圆',名:'圆形',说:'彩色圆',默:'圆一,#19319d,60'},
+    {符:'方',名:'方形',说:'彩色方',默:'方一,#c4401a,60'},
+    {符:'三',名:'三角',说:'三角形',默:'三一,#059669,60'},
+    {符:'横',名:'横分隔',说:'带文字横线',默:'横一,章节分隔,#19319d'},
+    {符:'竖',名:'竖分隔',说:'垂直线',默:'竖一,#19319d,40'},
+    {符:'距',名:'间距',说:'垂直空隙',默:'距一,30'},
+    {符:'空',名:'占位',说:'空白占位',默:'空一,200,100'}
+  ]},
+  {类:'身份卡片',项:[
+    {符:'印',名:'印章',说:'印章效果',默:'印一,已认证'},
+    {符:'旗',名:'旗帜',说:'旗帜横幅',默:'旗一,关注我们'},
+    {符:'票',名:'门票',说:'票券效果',默:'票一,演唱会,2026-06-01,VIP-001'},
+    {符:'牌',名:'名牌',说:'名牌挂卡',默:'牌一,张三,工程师'},
+    {符:'头',名:'头像',说:'字母头像',默:'头一,Z'},
+    {符:'群',名:'头像群',说:'多头像',默:'群一,张三,李四,王五,赵六'}
+  ]},
+  {类:'四季天象',项:[
+    {符:'春',名:'春',说:'春天卡',默:'春一,桃红柳绿万物苏'},
+    {符:'夏',名:'夏',说:'夏天卡',默:'夏一,蝉鸣荷绿暑炎天'},
+    {符:'秋',名:'秋',说:'秋天卡',默:'秋一,枫红菊黄稻浪香'},
+    {符:'冬',名:'冬',说:'冬天卡',默:'冬一,梅雪松柏迎新春'},
+    {符:'月',名:'月相',说:'月亮阶段',默:'月一,满月'},
+    {符:'日',名:'天气',说:'晴雨阴',默:'日一,晴'},
+    {符:'星',名:'星星',说:'闪烁星星',默:'星一,5'},
+    {符:'天',名:'天空',说:'蓝天白云',默:'天一,蓝天白云'},
+    {符:'雨',名:'下雨',说:'雨景动画',默:'雨一'},
+    {符:'雪',名:'下雪',说:'雪景动画',默:'雪一'},
+    {符:'风',名:'清风',说:'风景动画',默:'风一,清风徐来'}
+  ]},
+  {类:'吉祥福寿',项:[
+    {符:'龙',名:'龙',说:'飞龙在天',默:'龙一'},
+    {符:'凤',名:'凤',说:'凤鸣朝阳',默:'凤一'},
+    {符:'福',名:'福字',说:'福',默:'福一'},
+    {符:'财',名:'财',说:'财源滚滚',默:'财一,发'},
+    {符:'寿',名:'寿',说:'寿字',默:'寿一'},
+    {符:'笑',名:'笑脸',说:'开心',默:'笑一,😀'},
+    {符:'哭',名:'哭脸',说:'伤心',默:'哭一,😭'},
+    {符:'怒',名:'怒脸',说:'生气',默:'怒一,😡'},
+    {符:'困',名:'困脸',说:'困倦',默:'困一,😴'}
+  ]}
+];
+function 构建预览(主体){
+  return '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">'+
+'<style>'+
+'*{box-sizing:border-box;margin:0;padding:0}'+
+'body{font-family:宋体,SimSun,serif;padding:20px;line-height:1.7;color:'+(暗?'#e8eaed':'#1f2937')+';background:'+(暗?'#1c1e22':'#fff')+';font-size:12px}'+
+'h1,h2,h3,h4,h5,h6{margin:14px 0 8px;font-weight:700;color:'+(暗?'#e8eaed':'#111')+'}'+
+'h1{font-size:22px;border-bottom:2px solid #19319d;padding-bottom:6px;color:'+(暗?'#79a6ff':'#19319d')+'}'+
+'h2{font-size:18px;border-bottom:1px solid '+(暗?'#3a3f48':'#e0e0e0')+';padding-bottom:4px}'+
+'h3{font-size:14px;color:'+(暗?'#79a6ff':'#19319d')+'}'+
+'h4{font-size:13px}h5,h6{font-size:12px}'+
+'p{margin:6px 0}'+
+'a{color:'+(暗?'#79a6ff':'#19319d')+';text-decoration:none}a:hover{text-decoration:underline}'+
+'ul,ol{margin:6px 0;padding-left:24px}li{margin:2px 0}'+
+'blockquote{border-left:4px solid #19319d;padding:6px 12px;margin:8px 0;background:'+(暗?'#2a3a5c':'#eef2fc')+';color:'+(暗?'#cfd6e0':'#555')+';border-radius:0 4px 4px 0}'+
+'code{background:'+(暗?'#353944':'#f5f3f0')+';padding:1px 5px;border-radius:3px;font-family:monospace;font-size:12px;color:'+(暗?'#ffa37a':'#c4401a')+'}'+
+'pre{background:'+(暗?'#1c1e22':'#282c34')+';color:'+(暗?'#cfd6e0':'#abb2bf')+';padding:10px 14px;border-radius:6px;overflow-x:auto;margin:8px 0;line-height:1.5;font-size:12px}pre code{background:transparent;color:inherit;padding:0}'+
+'hr{border:none;height:1px;background:linear-gradient(90deg,transparent,#19319d,transparent);margin:16px 0}'+
+'img{max-width:100%;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.1)}'+
+'table{border-collapse:collapse;width:100%;margin:8px 0;box-shadow:0 1px 3px rgba(0,0,0,.08);border-radius:4px;overflow:hidden;font-size:12px}'+
+'th,td{border:1px solid '+(暗?'#3a3f48':'#e0e0e0')+';padding:6px 10px;text-align:left}'+
+'th{background:linear-gradient(135deg,#19319d,#c4401a);color:#fff;font-weight:500}'+
+'tr:nth-child(even){background:'+(暗?'#252830':'#fafafa')+'}tr:hover{background:'+(暗?'#2a3a5c':'#eef2fc')+'}'+
+'.輸{padding:5px 9px;border:1px solid '+(暗?'#3a3f48':'#ddd')+';border-radius:4px;margin:3px 2px;font-size:12px;outline:none;transition:border .2s;background:'+(暗?'#252830':'#fff')+';color:'+(暗?'#e8eaed':'#333')+';font-family:宋体,SimSun}'+
+'.輸:focus{border-color:#19319d;box-shadow:0 0 0 3px rgba(25,49,157,.1)}'+
+'.輸色{width:50px;height:26px;padding:2px}'+
+'.輸組{display:flex;gap:10px;flex-wrap:wrap;margin:3px 0}'+
+'.選{display:inline-flex;align-items:center;gap:4px;cursor:pointer;font-size:12px}'+
+'textarea.輸{width:100%;resize:vertical;font-family:inherit}'+
+'.滑組{display:flex;align-items:center;gap:10px;margin:4px 0}'+
+'.滑條{flex:1}'+
+'.滑值{background:#19319d;color:#fff;padding:2px 10px;border-radius:10px;font-weight:700;min-width:40px;text-align:center;font-size:12px}'+
+'.鈕{padding:5px 12px;background:'+(暗?'#252830':'#fff')+';color:#19319d;border:1px solid #19319d;border-radius:4px;cursor:pointer;margin:2px;font-size:12px;transition:all .2s;font-family:宋体,SimSun}'+
+'.鈕:hover{background:#19319d;color:#fff}'+
+'.鈕.主{background:#19319d;color:#fff}.鈕.主:hover{background:#c4401a;border-color:#c4401a}'+
+'.進條{position:relative;width:100%;height:18px;background:'+(暗?'#353944':'#f0f0f0')+';border-radius:9px;overflow:hidden;margin:3px 0}'+
+'.進填{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#19319d,#c4401a);transition:width .4s}'+
+'.進文{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,.2)}'+
+'.頁容{margin:6px 0}.頁組{display:flex;border-bottom:2px solid '+(暗?'#3a3f48':'#e0e0e0')+';gap:2px}'+
+'.頁籤{padding:5px 14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s;border-radius:4px 4px 0 0;font-size:12px;color:'+(暗?'#b0b6c0':'#666')+'}'+
+'.頁籤:hover{background:'+(暗?'#2a3a5c':'#eef2fc')+'}'+
+'.頁籤.活{border-color:#19319d;color:#19319d;font-weight:500;background:'+(暗?'#2a3a5c':'#eef2fc')+'}'+
+'.頁內{display:none;padding:12px;background:'+(暗?'#252830':'#fafafa')+';border-radius:0 0 6px 6px;border:1px solid '+(暗?'#3a3f48':'#e0e0e0')+';border-top:none;font-size:12px}'+
+'.頁內.活{display:block}'+
+'.樹{font-family:monospace;font-size:12px}.樹項{margin:1px 0}'+
+'.樹頭{display:flex;align-items:center;gap:5px;padding:2px 6px;cursor:pointer;border-radius:3px}'+
+'.樹頭:hover{background:'+(暗?'#2a3a5c':'#eef2fc')+'}'+
+'.樹頭 span:first-child{width:12px;font-size:12px;color:'+(暗?'#b0b6c0':'#888')+';transition:transform .2s}'+
+'.樹子{margin-left:14px;border-left:1px dashed '+(暗?'#3a3f48':'#ddd')+';padding-left:8px}'+
+'.樹項.合 .樹子{display:none}.樹項.合 .樹頭 span:first-child{transform:rotate(-90deg)}'+
+'.折疊{background:'+(暗?'#2a3a5c':'#eef2fc')+';padding:6px 10px;border-radius:6px;border:1px solid #19319d;margin:6px 0;font-size:12px}'+
+'.折疊 summary{cursor:pointer;font-weight:500;color:#19319d}.折疊 div{margin-top:6px}'+
+'.碼塊{border:1px solid '+(暗?'#3a3f48':'#e0e0e0')+';border-radius:6px;overflow:hidden;margin:6px 0;background:'+(暗?'#252830':'#fafafa')+'}'+
+'.碼塊.错{border-color:#dc2626}'+
+'.碼頭{background:#282c34;color:#abb2bf;padding:5px 10px;font-size:12px;font-family:monospace;display:flex;align-items:center;gap:8px}'+
+'.碼塊.错 .碼頭{background:#dc2626;color:#fff}.碼塊 pre{margin:0;border-radius:0}'+
+'.帆布{background:'+(暗?'#252830':'#f8f8f8')+';border-radius:6px;display:block;margin:3px 0}'+
+'.音樂{background:'+(暗?'linear-gradient(135deg,#2a3a5c,#1c1e22)':'linear-gradient(135deg,#eef2fc,#fff1ea)')+';padding:12px;border-radius:8px;margin:6px 0;border:1px solid #19319d}'+
+'.音譜{font-size:20px;letter-spacing:3px;margin-bottom:8px;color:'+(暗?'#ffa37a':'#c4401a')+';text-align:center;background:'+(暗?'#252830':'#fff')+';padding:8px;border-radius:4px}'+
+'.音譜 span{display:inline-block;padding:2px 4px}'+
+'.藝術{font-family:monospace;background:'+(暗?'#1c1e22':'#282c34')+';color:#98c379;padding:14px;border-radius:6px;white-space:pre;line-height:1.4;overflow-x:auto;font-size:12px}'+
+'.維碼{background:#fff;padding:6px;border:1px solid '+(暗?'#3a3f48':'#e0e0e0')+';border-radius:4px;display:block;margin:0 auto}'+
+'.徽章{display:inline-block;color:#fff;padding:2px 9px;border-radius:9px;font-size:12px;font-weight:500;margin:0 2px}'+
+'.卡片{background:'+(暗?'#252830':'#fff')+';border:1px solid '+(暗?'#3a3f48':'#e0e0e0')+';border-radius:6px;padding:8px 12px;margin:5px 0;box-shadow:0 1px 3px rgba(0,0,0,.04);font-size:12px;color:'+(暗?'#e8eaed':'#333')+'}'+
+'.卡片.错{border-color:#dc2626;color:#dc2626;background:'+(暗?'#3a1e1e':'#fef2f2')+'}'+
+'.信息卡{display:flex;gap:12px;padding:10px;background:'+(暗?'linear-gradient(135deg,#2a3a5c,#252830)':'linear-gradient(135deg,#eef2fc,#fff)')+';border:1px solid #19319d;border-radius:8px;margin:6px 0}'+
+'.信息圖{font-size:32px}.信息體 h4{margin:0 0 4px;color:#19319d;font-size:13px}.信息體 p{margin:0;color:'+(暗?'#b0b6c0':'#666')+';font-size:12px}'+
+'.图表{background:'+(暗?'#252830':'#fafafa')+';border-radius:6px;max-width:100%;height:auto;display:block;margin:4px 0}'+
+'.鐘{font-family:monospace;font-size:26px;font-weight:700;color:#61dafb;text-align:center;padding:10px;background:#282c34;border-radius:6px;margin:6px 0;letter-spacing:2px}'+
+'.日歷{background:'+(暗?'#252830':'#fff')+';border:1px solid '+(暗?'#3a3f48':'#e0e0e0')+';border-radius:8px;padding:10px;margin:6px 0;max-width:300px}'+
+'.日頭{text-align:center;font-weight:700;color:#19319d;margin-bottom:6px;font-size:13px}'+
+'.日格{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}'+
+'.日周{text-align:center;padding:3px;font-size:12px;color:'+(暗?'#b0b6c0':'#666')+';font-weight:500}'+
+'.日天,.日天空{text-align:center;padding:5px 0;border-radius:4px;font-size:12px;cursor:pointer;transition:background .2s;color:'+(暗?'#e8eaed':'#333')+'}'+
+'.日天:hover{background:'+(暗?'#2a3a5c':'#eef2fc')+'}.日天.今{background:#19319d;color:#fff;font-weight:700}'+
+'.待辦{background:'+(暗?'#252830':'#fff')+';border:1px solid '+(暗?'#3a3f48':'#e0e0e0')+';border-radius:6px;padding:8px;margin:6px 0;font-size:12px}'+
+'.待頭{font-weight:700;color:#19319d;margin-bottom:6px;display:flex;align-items:center}'+
+'.待表{list-style:none;padding:0}'+
+'.待表 li{padding:4px 0;border-bottom:1px solid '+(暗?'#3a3f48':'#f0f0f0')+';transition:opacity .2s}'+
+'.待表 li.done{opacity:.5;text-decoration:line-through}'+
+'.待表 label{cursor:pointer;display:flex;align-items:center;gap:5px}'+
+'.評分{display:flex;align-items:center;padding:3px 0}'+
+'.時軸{padding:8px 0 8px 18px;position:relative}'+
+'.時軸::before{content:"";position:absolute;left:5px;top:0;bottom:0;width:2px;background:'+(暗?'#3a3f48':'#e0e0e0')+'}'+
+'.時項{position:relative;margin-bottom:10px}'+
+'.時點{position:absolute;left:-16px;top:3px;width:10px;height:10px;background:'+(暗?'#252830':'#fff')+';border:2px solid '+(暗?'#3a3f48':'#ccc')+';border-radius:50%}'+
+'.時點.亮{background:#19319d;border-color:#19319d;box-shadow:0 0 8px #19319d}'+
+'.時內{padding:3px 8px;background:'+(暗?'#252830':'#fafafa')+';border-radius:4px}'+
+'.時內 strong{color:#19319d;font-size:12px}.時內 p{margin:2px 0 0;color:'+(暗?'#b0b6c0':'#666')+';font-size:12px}'+
+'.計時{text-align:center;background:#282c34;border-radius:8px;padding:14px;margin:6px 0}'+
+'.計時顯{font-family:monospace;font-size:30px;color:#10b981;letter-spacing:3px;text-shadow:0 0 10px rgba(16,185,129,.5)}'+
+'.倒計{text-align:center;background:'+(暗?'#2a3a5c':'#eef2fc')+';border-radius:8px;padding:14px;margin:6px 0;border:2px solid #19319d}'+
+'.倒顯{font-family:monospace;font-size:36px;color:#19319d;font-weight:700}'+
+'.鍵容{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}'+
+'.鍵組{display:inline-flex;align-items:center;gap:3px;padding:5px 9px;background:'+(暗?'#353944':'#f5f5f5')+';border-radius:6px}'+
+'.鍵位{font-family:monospace;background:'+(暗?'#252830':'#fff')+';border:1px solid '+(暗?'#3a3f48':'#ccc')+';border-bottom-width:2px;padding:2px 7px;border-radius:4px;font-size:12px;box-shadow:inset 0 -1px 0 rgba(0,0,0,.1);color:'+(暗?'#e8eaed':'#333')+'}'+
+'.鍵加{color:'+(暗?'#b0b6c0':'#888')+';font-size:12px}'+
+'.色板{display:flex;gap:0;margin:6px 0;border-radius:6px;overflow:hidden;border:1px solid '+(暗?'#3a3f48':'#ccc')+'}'+
+'.色塊{flex:1;height:56px;position:relative;display:flex;align-items:flex-end;justify-content:center;padding-bottom:3px}'+
+'.色塊 span{font-size:12px;color:#fff;text-shadow:0 0 2px rgba(0,0,0,.5);font-family:monospace}'+
+'.公式{text-align:center;background:'+(暗?'#252830':'#f8f8f8')+';padding:14px;border-radius:6px;margin:6px 0}'+
+'.棋盤{display:grid;grid-template-columns:repeat(8,28px);grid-template-rows:repeat(8,28px);width:224px;margin:6px 0;border:2px solid #8b4513;box-shadow:0 2px 8px rgba(0,0,0,.2)}'+
+'.棋格{display:flex;align-items:center;justify-content:center;font-size:20px}'+
+'.紅綠燈{display:inline-flex;flex-direction:column;gap:6px;padding:10px;background:#2a2a2a;border-radius:8px;margin:6px 0}'+
+'.燈泡{width:26px;height:26px;border-radius:50%;transition:all .3s}'+
+'.裝飾框{position:relative;padding:14px 22px;background:'+(暗?'#2a3a5c':'#eef2fc')+';border:2px solid #19319d;border-radius:6px;margin:8px 0}'+
+'.飾角{position:absolute;color:#19319d;font-size:12px}'+
+'.飾角.左上{top:-8px;left:-4px}.飾角.右上{top:-8px;right:-4px}.飾角.左下{bottom:-8px;left:-4px}.飾角.右下{bottom:-8px;right:-4px}'+
+'.菜單{background:'+(暗?'#3a2a1e':'#fffdf5')+';border:1px solid #d4a574;border-radius:6px;padding:8px;margin:6px 0}'+
+'.菜項{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #d4a574}.菜項:last-child{border-bottom:none}'+
+'.菜名{font-weight:700;color:'+(暗?'#ffa37a':'#5a3e1e')+'}.菜說{color:'+(暗?'#b0b6c0':'#888')+';font-size:12px;margin-top:2px}'+
+'.菜價{color:#dc2626;font-weight:700;font-size:14px}'+
+'.標容{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0}'+
+'.標籤{color:#fff;padding:2px 9px;border-radius:11px;font-size:12px;font-weight:500}'+
+'.橫幅{background:linear-gradient(135deg,#19319d,#c4401a);color:#fff;padding:20px;border-radius:8px;margin:6px 0;text-align:center;box-shadow:0 4px 12px rgba(25,49,157,.3)}'+
+'.數獨{display:grid;grid-template-columns:repeat(9,24px);grid-template-rows:repeat(9,24px);width:216px;margin:6px 0;border:2px solid '+(暗?'#b0b6c0':'#333')+'}'+
+'.數格{border:1px solid '+(暗?'#3a3f48':'#ddd')+';display:flex;align-items:center;justify-content:center;font-weight:700;color:'+(暗?'#e8eaed':'#333')+';font-size:12px;background:'+(暗?'#252830':'#fff')+'}'+
+'.數格.左{border-left:2px solid '+(暗?'#b0b6c0':'#333')+'}.數格.上{border-top:2px solid '+(暗?'#b0b6c0':'#333')+'}'+
+'.信息盒{display:flex;gap:10px;padding:10px;background:'+(暗?'#1e3a5c':'#e0f2fe')+';border-left:4px solid #0ea5e9;border-radius:4px;margin:6px 0}'+
+'.盒圖{font-size:22px}'+
+'.盒容 strong{color:'+(暗?'#7dd3fc':'#0369a1')+';display:block;margin-bottom:2px;font-size:12px}'+
+'.盒容 p{margin:0;color:'+(暗?'#cfd6e0':'#334155')+';font-size:12px}'+
+'.儀表板{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px;margin:6px 0}'+
+'.儀板卡{background:'+(暗?'#252830':'#fff')+';border:1px solid '+(暗?'#3a3f48':'#e0e0e0')+';border-radius:6px;padding:10px;box-shadow:0 1px 3px rgba(0,0,0,.04)}'+
+'.儀板數{font-size:20px;font-weight:700;color:#19319d}'+
+'.儀板標{color:'+(暗?'#b0b6c0':'#666')+';font-size:12px;margin-top:2px}'+
+'.儀板升{color:#10b981;font-size:12px;margin-top:3px}.儀板降{color:#dc2626;font-size:12px;margin-top:3px}'+
+'.書卡{display:flex;gap:10px;padding:8px;background:'+(暗?'#252830':'#fff')+';border:1px solid '+(暗?'#3a3f48':'#e0e0e0')+';border-radius:6px;margin:5px 0;box-shadow:0 1px 4px rgba(0,0,0,.05)}'+
+'.書封{font-size:34px;padding:3px}'+
+'.書容 h4{color:#19319d;margin:0;font-size:13px}'+
+'.書作{color:'+(暗?'#b0b6c0':'#888')+';font-size:12px;margin:2px 0}'+
+'.書簡{margin:3px 0 0;font-size:12px;line-height:1.5;color:'+(暗?'#cfd6e0':'#444')+'}'+
+'.地圖{text-align:center;background:'+(暗?'linear-gradient(135deg,#1e3a5c,#252830)':'linear-gradient(135deg,#dbeafe,#bfdbfe)')+';padding:14px;border-radius:8px;margin:6px 0;border:1px dashed #3b82f6;font-size:12px;color:'+(暗?'#cfd6e0':'#1f2937')+'}'+
+'.骨骰{text-align:center;padding:12px;background:'+(暗?'#2a3a5c':'#eef2fc')+';border-radius:8px;margin:6px 0;color:'+(暗?'#e8eaed':'#1f2937')+'}'+
+'.骨一{display:inline-flex;width:46px;height:46px;align-items:center;justify-content:center;color:#fff;font-size:24px;font-weight:700;border-radius:8px;margin:0 5px;box-shadow:0 2px 6px rgba(0,0,0,.2)}'+
+'.波形{margin:6px 0}'+
+'.遊戲容{text-align:center;margin:6px 0}'+
+'.五子棋容{margin:6px 0}'+
+'.抽獎容{margin:10px 0}'+
+'.輪播 .輪星.活{background:#fff!important}'+
+'.錄容,.屏容,.話容{background:'+(暗?'#252830':'#fafafa')+';padding:8px;border-radius:6px;margin:6px 0;border:1px solid '+(暗?'#3a3f48':'#e0e0e0')+'}'+
+'.簽名容{background:'+(暗?'#252830':'#fafafa')+';padding:8px;border-radius:6px;margin:6px 0}'+
+'.視頻容{margin:6px 0}'+
+'.提醒{padding:8px 12px;border-radius:6px;margin:6px 0;font-size:12px;border-left:4px solid}'+
+'.提醒.警告{background:'+(暗?'#3a2e1e':'#fffbeb')+';border-color:#d97706;color:'+(暗?'#fbbf24':'#92400e')+'}'+
+'.提醒.错误{background:'+(暗?'#3a1e1e':'#fef2f2')+';border-color:#dc2626;color:'+(暗?'#f87171':'#991b1b')+'}'+
+'.提醒.成功{background:'+(暗?'#1e3a2e':'#f0fdf4')+';border-color:#059669;color:'+(暗?'#34d399':'#065f46')+'}'+
+'.提醒.信息{background:'+(暗?'#1e3a5c':'#eff6ff')+';border-color:#2563eb;color:'+(暗?'#7dd3fc':'#1e40af')+'}'+
+'.行容{display:flex;gap:6px;margin:6px 0;flex-wrap:wrap}'+
+'.行單{flex:1;background:'+(暗?'#2a3a5c':'#eef2fc')+';padding:8px 12px;border-radius:6px;text-align:center;font-size:12px;color:'+(暗?'#e8eaed':'#19319d')+';border:1px solid '+(暗?'#3a3f48':'#dbeafe')+'}'+
+'.網格{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin:6px 0}'+
+'.網格項{padding:14px;border-radius:6px;text-align:center;color:#fff;font-weight:700;font-size:12px}'+
+'.巨數{font-size:60px;font-weight:700;color:#19319d;text-align:center;line-height:1;padding:14px;letter-spacing:3px;text-shadow:0 4px 12px rgba(25,49,157,.2)}'+
+'.微文{font-size:12px;color:'+(暗?'#b0b6c0':'#888')+';opacity:.8}'+
+'@keyframes 闪烁{50%{opacity:.3}}'+
+'.閃文{animation:闪烁 1s infinite;color:#dc2626;font-weight:700}'+
+'.滾條{overflow:hidden;background:'+(暗?'#252830':'#f5f5f5')+';padding:6px 0;border-radius:6px;margin:6px 0}'+
+'.滾內{display:inline-block;white-space:nowrap;padding-left:100%;animation:滾 12s linear infinite;color:#19319d;font-weight:500;font-size:12px}'+
+'@keyframes 滾{from{transform:translateX(0)}to{transform:translateX(-100%)}}'+
+'.漸文{font-size:18px;font-weight:700}'+
+'.圈標{display:inline-flex;width:24px;height:24px;align-items:center;justify-content:center;background:#19319d;color:#fff;border-radius:50%;font-weight:700;font-size:12px;margin:0 2px}'+
+'@keyframes 旋{from{transform:rotate(0)}to{transform:rotate(360deg)}}'+
+'.旋轉{display:inline-block;animation:旋 2s linear infinite}'+
+'@keyframes 跳{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}'+
+'.跳動{display:inline-block;animation:跳 .6s ease infinite;color:#19319d;font-weight:700}'+
+'@keyframes 摇{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}'+
+'.搖晃{display:inline-block;animation:摇 .4s ease infinite}'+
+'@keyframes 飞{0%{transform:translateX(0)}50%{transform:translateX(20px) translateY(-4px)}100%{transform:translateX(0)}}'+
+'.飛動{display:inline-block;animation:飞 2s ease infinite}'+
+'@keyframes 雨落{from{transform:translateY(-20px)}to{transform:translateY(160px)}}'+
+'@keyframes 雪落{from{transform:translateY(-20px) rotate(0)}to{transform:translateY(160px) rotate(360deg)}}'+
+'.印章{display:inline-block;color:#dc2626;border:2px solid #dc2626;padding:3px 12px;border-radius:4px;font-weight:700;transform:rotate(-8deg);font-size:12px;background:rgba(220,38,38,.05)}'+
+'.旗幟{display:inline-block;background:linear-gradient(135deg,#dc2626,#f59e0b);color:#fff;padding:6px 14px;border-radius:0 12px 12px 0;font-weight:500;font-size:12px;margin:4px 0;position:relative;padding-left:18px}'+
+'.票券{display:inline-flex;background:'+(暗?'#252830':'#fff')+';border:1px solid '+(暗?'#3a3f48':'#e0e0e0')+';border-radius:6px;overflow:hidden;margin:6px 0;box-shadow:0 2px 6px rgba(0,0,0,.08)}'+
+'.票左{padding:10px 14px;background:linear-gradient(135deg,#19319d,#c4401a);color:#fff}'+
+'.票虚{width:1px;border-left:2px dashed '+(暗?'#3a3f48':'#ccc')+';margin:6px 0}'+
+'.票右{padding:10px 14px;color:'+(暗?'#e8eaed':'#333')+'}'+
+'.票名{font-weight:700;font-size:13px}.票期{font-size:12px;opacity:.85;margin-top:3px}.票座{font-family:monospace;font-size:14px;font-weight:700}'+
+'.名牌{display:inline-block;background:linear-gradient(135deg,#19319d,#2563eb);color:#fff;padding:8px 18px;border-radius:6px;margin:4px;text-align:center;box-shadow:0 2px 6px rgba(25,49,157,.3)}'+
+'.牌名{font-size:14px;font-weight:700}.牌職{font-size:12px;opacity:.85;margin-top:2px}'+
+'.頭像{display:inline-flex;width:40px;height:40px;align-items:center;justify-content:center;color:#fff;border-radius:50%;font-weight:700;font-size:14px;margin:2px;box-shadow:0 2px 6px rgba(0,0,0,.15)}'+
+'.頭像.小{width:28px;height:28px;font-size:12px;margin-left:-6px;border:2px solid '+(暗?'#252830':'#fff')+'}'+
+'.頭群{display:inline-flex;align-items:center;padding-left:6px}'+
+'.投票{background:'+(暗?'#252830':'#fff')+';padding:10px;border-radius:6px;border:1px solid '+(暗?'#3a3f48':'#e0e0e0')+';margin:6px 0}'+
+'.投項{cursor:pointer;margin:5px 0;padding:5px;border-radius:4px;transition:background .2s}'+
+'.投項:hover{background:'+(暗?'#2a3a5c':'#eef2fc')+'}'+
+'.投標{font-size:12px;margin-bottom:3px;color:'+(暗?'#e8eaed':'#333')+'}'+
+'.投條{height:6px;background:'+(暗?'#3a3f48':'#f0f0f0')+';border-radius:3px;overflow:hidden}'+
+'.投填{height:100%;transition:width .4s;border-radius:3px}'+
+'.測驗{background:'+(暗?'#252830':'#fff')+';padding:10px;border-radius:6px;border:1px solid '+(暗?'#3a3f48':'#e0e0e0')+';margin:6px 0}'+
+'.測題{font-weight:700;color:#19319d;margin-bottom:6px;font-size:12px}'+
+'.答案{background:'+(暗?'#252830':'#fafafa')+';padding:6px 10px;border-radius:6px;border:1px dashed #19319d;margin:5px 0;font-size:12px}'+
+'.答案 summary{cursor:pointer;color:#19319d;font-weight:500}'+
+'.提問{background:'+(暗?'#3a2e1e':'#fffbeb')+';color:'+(暗?'#fbbf24':'#92400e')+';padding:8px 12px;border-radius:6px;border-left:4px solid #d97706;margin:5px 0;font-size:12px}'+
+'.集合{margin:6px 0}'+
+'.集項{background:'+(暗?'#252830':'#fff')+';border:1px solid '+(暗?'#3a3f48':'#e0e0e0')+';padding:6px 10px;margin:4px 0;border-radius:0 4px 4px 0;font-size:12px;color:'+(暗?'#e8eaed':'#333')+'}'+
+'.想法{position:relative;background:'+(暗?'#2a3a5c':'#eef2fc')+';padding:10px;border-radius:12px;margin:8px 0 12px;border:1px solid '+(暗?'#3a3f48':'#dbeafe')+';font-size:12px;color:'+(暗?'#e8eaed':'#333')+'}'+
+'.想內{font-size:12px}'+
+'.想角{position:absolute;bottom:-8px;left:18px;width:0;height:0;border-style:solid;border-width:8px 8px 0 0;border-color:'+(暗?'#2a3a5c':'#eef2fc')+' transparent transparent transparent}'+
+'.名言{background:'+(暗?'#252830':'#fafafa')+';border-left:4px solid #19319d;padding:8px 12px;font-style:italic;color:'+(暗?'#cfd6e0':'#555')+';margin:6px 0;font-size:12px}'+
+'@keyframes 心跳{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}'+
+'.心動{display:inline-block;color:#dc2626;font-size:18px;animation:心跳 1s ease infinite}'+
+'.慶賀{padding:12px;border-radius:8px;text-align:center;font-weight:700;font-size:14px;margin:6px 0}'+
+'.慶賀.喜{background:linear-gradient(135deg,#f59e0b,#dc2626);color:#fff}'+
+'</style>'+
+'</head><body>'+
+主体+
+'<script>'+
+'window.切页=function(id,idx,el){var 真容=el.closest(".頁容");真容.querySelectorAll(".頁籤").forEach(function(t){t.classList.remove("活")});el.classList.add("活");真容.querySelectorAll(".頁內").forEach(function(c){c.classList.remove("活")});var 内=真容.querySelector("#"+id+"_"+idx);if(内)内.classList.add("活")};'+
+'window.父演奏=function(谱){parent.postMessage({类型:"演奏",谱:谱},"*")};'+
+'window.父停奏=function(){parent.postMessage({类型:"停奏"},"*")};'+
+'window.父通知=function(标,内){parent.postMessage({类型:"通知",标:标,内:内},"*")};'+
+'window.父朗读=function(文){parent.postMessage({类型:"朗读",文:文},"*")};'+
+'window.父听=function(id){var R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R){document.getElementById(id).textContent="浏览器不支持语音识别";return}var r=new R();r.lang="zh-CN";r.continuous=false;r.onresult=function(e){document.getElementById(id).textContent="识别: "+e.results[0][0].transcript};r.onerror=function(e){document.getElementById(id).textContent="错误: "+e.error};r.start();document.getElementById(id).textContent="正在聆听…"};'+
+'window.摄流={};'+
+'window.父开摄=function(id){navigator.mediaDevices.getUserMedia({video:true}).then(function(s){window.摄流[id]=s;document.getElementById(id+"_摄").srcObject=s}).catch(function(e){alert("无法开启: "+e.message)})};'+
+'window.父拍照=function(id){var v=document.getElementById(id+"_摄"),c=document.getElementById(id);if(!v.videoWidth)return alert("请先开启摄像头");c.width=v.videoWidth;c.height=v.videoHeight;c.getContext("2d").drawImage(v,0,0);c.style.display="block"};'+
+'window.父关摄=function(id){if(window.摄流[id]){window.摄流[id].getTracks().forEach(function(t){t.stop()});delete window.摄流[id]}document.getElementById(id+"_摄").srcObject=null};'+
+'window.父位=function(id){var e=document.getElementById(id);e.textContent="定位中…";if(!navigator.geolocation){e.textContent="不支持";return}navigator.geolocation.getCurrentPosition(function(p){e.innerHTML="纬度: <strong>"+p.coords.latitude.toFixed(4)+"</strong><br>经度: <strong>"+p.coords.longitude.toFixed(4)+"</strong><br>精度: "+Math.round(p.coords.accuracy)+"米"},function(err){e.textContent="失败: "+err.message})};'+
+'window.父贴=function(文){if(navigator.clipboard){navigator.clipboard.writeText(文).then(function(){alert("已复制: "+文)}).catch(function(){alert("复制失败")})}else{alert("不支持")}};'+
+'window.父幕=function(){if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen().catch(function(){})};'+
+'window.父加办=function(id){var 输=document.getElementById(id+"_新");var 表=document.getElementById(id+"_表");if(!输.value.trim())return;var li=document.createElement("li");li.innerHTML="<label><input type=\\"checkbox\\" onchange=\\"this.parentElement.parentElement.classList.toggle(\'done\',this.checked)\\"> "+输.value+"</label>";表.appendChild(li);输.value=""};'+
+'window.录数据={};'+
+'window.父录开=function(id){if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){alert("当前浏览器/环境不支持 getUserMedia API,请使用 HTTPS 或最新 Chrome/Edge");return}navigator.mediaDevices.getUserMedia({video:true,audio:true}).then(function(s){var v=document.getElementById(id+"_預");v.srcObject=s;var rec=new MediaRecorder(s);var 块=[];rec.ondataavailable=function(e){if(e.data&&e.data.size>0)块.push(e.data)};rec.onstop=function(){var blob=new Blob(块,{type:"video/webm"});var url=URL.createObjectURL(blob);var 播=document.getElementById(id+"_播");播.src=url;播.style.display="block";if(window.录数据[id])window.录数据[id].blob=blob,window.录数据[id].url=url};rec.start();window.录数据[id]={rec:rec,流:s,块:块};document.getElementById(id+"_態").textContent="● 录制中...";document.getElementById(id+"_態").style.color="#dc2626"}).catch(function(e){alert("录制失败: "+e.message+"\\n请允许摄像头/麦克风权限")})};'+
+'window.父录停=function(id){var d=window.录数据[id];if(!d)return;if(d.rec&&d.rec.state!=="inactive")d.rec.stop();if(d.流)d.流.getTracks().forEach(function(t){t.stop()});var v=document.getElementById(id+"_預");if(v)v.srcObject=null;document.getElementById(id+"_態").textContent="● 已停止";document.getElementById(id+"_態").style.color="#19319d"};'+
+'window.父录下=function(id){var d=window.录数据[id];if(!d||!d.url)return alert("请先录制完成再下载");var a=document.createElement("a");a.href=d.url;a.download="录像_"+Date.now()+".webm";document.body.appendChild(a);a.click();document.body.removeChild(a)};'+
+'window.屏数据={};'+
+'window.父屏开=function(id){if(!navigator.mediaDevices||!navigator.mediaDevices.getDisplayMedia){alert("当前浏览器不支持屏幕录制");return}navigator.mediaDevices.getDisplayMedia({video:true,audio:true}).then(function(s){var v=document.getElementById(id+"_預");v.srcObject=s;var rec=new MediaRecorder(s);var 块=[];rec.ondataavailable=function(e){if(e.data&&e.data.size>0)块.push(e.data)};rec.onstop=function(){var blob=new Blob(块,{type:"video/webm"});var url=URL.createObjectURL(blob);var 播=document.getElementById(id+"_播");播.src=url;播.style.display="block";if(window.屏数据[id])window.屏数据[id].blob=blob,window.屏数据[id].url=url};rec.start();window.屏数据[id]={rec:rec,流:s,块:块};document.getElementById(id+"_態").textContent="● 录屏中...";document.getElementById(id+"_態").style.color="#dc2626"}).catch(function(e){alert("录屏失败: "+e.message)})};'+
+'window.父屏停=function(id){var d=window.屏数据[id];if(!d)return;if(d.rec&&d.rec.state!=="inactive")d.rec.stop();if(d.流)d.流.getTracks().forEach(function(t){t.stop()});var v=document.getElementById(id+"_預");if(v)v.srcObject=null;document.getElementById(id+"_態").textContent="● 已停止";document.getElementById(id+"_態").style.color="#19319d"};'+
+'window.父屏下=function(id){var d=window.屏数据[id];if(!d||!d.url)return alert("请先录屏完成再下载");var a=document.createElement("a");a.href=d.url;a.download="录屏_"+Date.now()+".webm";document.body.appendChild(a);a.click();document.body.removeChild(a)};'+
+'window.话数据={};'+
+'window.父话开=function(id){if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){alert("不支持");return}navigator.mediaDevices.getUserMedia({audio:true}).then(function(s){var AC=window.AudioContext||window.webkitAudioContext;var ac=new AC();var src=ac.createMediaStreamSource(s);var ana=ac.createAnalyser();ana.fftSize=256;src.connect(ana);var buf=new Uint8Array(ana.frequencyBinCount);var cv=document.getElementById(id+"_波");var cx=cv.getContext("2d");var 块=[];var rec=new MediaRecorder(s);rec.ondataavailable=function(e){if(e.data&&e.data.size>0)块.push(e.data)};rec.onstop=function(){var blob=new Blob(块,{type:"audio/webm"});var url=URL.createObjectURL(blob);var 播=document.getElementById(id+"_播");播.src=url;播.style.display="block";if(window.话数据[id])window.话数据[id].blob=blob,window.话数据[id].url=url};rec.start();window.话数据[id]={rec:rec,流:s,ac:ac,块:块,运:true};function draw(){var d=window.话数据[id];if(!d||!d.运)return;requestAnimationFrame(draw);ana.getByteFrequencyData(buf);cx.fillStyle="#f5f5f5";cx.fillRect(0,0,cv.width,cv.height);var w=cv.width/buf.length;for(var i=0;i<buf.length;i++){var h=(buf[i]/255)*cv.height;cx.fillStyle="#19319d";cx.fillRect(i*w,cv.height-h,w-1,h)}}draw();document.getElementById(id+"_態").textContent="🎤 录音中...";document.getElementById(id+"_態").style.color="#dc2626"}).catch(function(e){alert("录音失败: "+e.message+"\\n请允许麦克风权限")})};'+
+'window.父话停=function(id){var d=window.话数据[id];if(!d)return;d.运=false;if(d.rec&&d.rec.state!=="inactive")d.rec.stop();if(d.流)d.流.getTracks().forEach(function(t){t.stop()});if(d.ac)d.ac.close();document.getElementById(id+"_態").textContent="● 已停止";document.getElementById(id+"_態").style.color="#19319d"};'+
+'window.父话下=function(id){var d=window.话数据[id];if(!d||!d.url)return alert("请先录音完成再下载");var a=document.createElement("a");a.href=d.url;a.download="录音_"+Date.now()+".webm";document.body.appendChild(a);a.click();document.body.removeChild(a)};'+
+'window.签数据={};'+
+'window.父签初=function(id){var c=document.getElementById(id);if(!c)return;if(c.dataset.签已初)return;c.dataset.签已初="1";var ctx=c.getContext("2d");ctx.strokeStyle="#333";ctx.lineWidth=2.5;ctx.lineCap="round";ctx.lineJoin="round";var 画=false,lx=0,ly=0;function 取坐标(e){var r=c.getBoundingClientRect();var sx=c.width/r.width;var sy=c.height/r.height;var cx,cy;if(e.touches&&e.touches.length>0){cx=e.touches[0].clientX;cy=e.touches[0].clientY}else if(e.changedTouches&&e.changedTouches.length>0){cx=e.changedTouches[0].clientX;cy=e.changedTouches[0].clientY}else{cx=e.clientX;cy=e.clientY}return [(cx-r.left)*sx,(cy-r.top)*sy]}function 始(p){画=true;lx=p[0];ly=p[1]}function 动(p){if(!画)return;ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(p[0],p[1]);ctx.stroke();lx=p[0];ly=p[1]}function 止(){画=false}c.addEventListener("mousedown",function(e){e.preventDefault();始(取坐标(e))});c.addEventListener("mousemove",function(e){if(!画)return;e.preventDefault();动(取坐标(e))});c.addEventListener("mouseup",止);c.addEventListener("mouseleave",止);document.addEventListener("mouseup",止);c.addEventListener("touchstart",function(e){e.preventDefault();始(取坐标(e))},{passive:false});c.addEventListener("touchmove",function(e){e.preventDefault();动(取坐标(e))},{passive:false});c.addEventListener("touchend",function(e){e.preventDefault();止()},{passive:false});c.addEventListener("touchcancel",止);window.签数据[id]={ctx:ctx}};'+
+'window.父签清=function(id){var c=document.getElementById(id);if(!c)return;c.getContext("2d").clearRect(0,0,c.width,c.height)};'+
+'window.父签存=function(id){var c=document.getElementById(id);if(!c)return;var a=document.createElement("a");a.href=c.toDataURL();a.download="签名_"+Date.now()+".png";document.body.appendChild(a);a.click();document.body.removeChild(a)};'+
+'window.秒数据={};'+
+'window.父秒开=function(btn,id){var d=window.秒数据[id]||(window.秒数据[id]={起:0,累:0,tid:null,动:false});if(d.动){d.累+=Date.now()-d.起;d.动=false;clearInterval(d.tid);btn.innerHTML="▶ 继续"}else{d.起=Date.now();d.动=true;btn.innerHTML="⏸ 暂停";d.tid=setInterval(function(){var 总=d.累+(Date.now()-d.起);var m=Math.floor(总/60000),s=Math.floor((总%60000)/1000),ms=Math.floor((总%1000)/10);var 显=document.getElementById(id+"_顯");if(显)显.textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")+"."+String(ms).padStart(2,"0")},50)}};'+
+'window.父秒重=function(id){window.秒数据[id]={累:0,起:0,动:false,tid:null};var e=document.getElementById(id+"_顯");if(e)e.textContent="00:00.00"};'+
+'window.倒数据={};'+
+'window.父倒开=function(id){var d=window.倒数据[id]||(window.倒数据[id]={余:Number(document.getElementById(id).dataset.总),tid:null});if(d.tid)return;d.tid=setInterval(function(){d.余--;var e=document.getElementById(id+"_顯");if(e)e.textContent=d.余;if(d.余<=0){clearInterval(d.tid);d.tid=null;if(e){e.textContent="⏰";e.style.color="#10b981"}alert("倒计时结束!")}},1000)};'+
+'window.父倒停=function(id){var d=window.倒数据[id];if(d&&d.tid){clearInterval(d.tid);d.tid=null}};'+
+'window.父倒重=function(id,秒){window.倒数据[id]={余:秒,tid:null};var e=document.getElementById(id+"_顯");if(e){e.textContent=秒;e.style.color="#19319d"}};'+
+'window.父抽=function(id,数){var 盘=document.getElementById(id+"_盘");var 果=document.getElementById(id+"_果");果.textContent="";var idx=Math.floor(Math.random()*数);var 当前=parseFloat(盘.dataset.角||0);var 目标=当前+1440+(360-(360/数)*idx-(360/数)/2);盘.dataset.角=目标;盘.style.transform="rotate("+目标+"deg)";setTimeout(function(){果.textContent="🎉 恭喜获得: "+盘.querySelectorAll("text")[idx].textContent},4100)};'+
+'window.叠数据={};'+
+'window.父叠=function(id,方向,总){var d=window.叠数据[id]||(window.叠数据[id]={i:0});d.i=(d.i+方向+总)%总;var c=document.getElementById(id);c.querySelectorAll(".輪張").forEach(function(e,j){e.style.opacity=(j===d.i?1:0);e.classList.toggle("活",j===d.i)});c.querySelectorAll(".輪星").forEach(function(e,j){e.style.background="rgba(255,255,255,"+(j===d.i?1:0.5)+")";e.classList.toggle("活",j===d.i)})};'+
+'window.玩数据={};'+
+'window.父玩=function(id){var c=document.getElementById(id);if(!c)return;c.tabIndex=0;c.focus();var ctx=c.getContext("2d");var old=window.玩数据[id];if(old){if(old.tid)clearInterval(old.tid);if(old.键处理)c.removeEventListener("keydown",old.键处理);if(old.点击处理)c.removeEventListener("click",old.点击处理)}var 格=15,宽=Math.floor(c.width/格),高=Math.floor(c.height/格);var 蛇=[{x:5,y:5},{x:4,y:5},{x:3,y:5}],方={x:1,y:0},食={x:10,y:10},分=0;function 新食(){do{食.x=Math.floor(Math.random()*宽);食.y=Math.floor(Math.random()*高)}while(蛇.some(function(s){return s.x===食.x&&s.y===食.y}))}function 绘(){ctx.fillStyle="#1a1a1a";ctx.fillRect(0,0,c.width,c.height);蛇.forEach(function(s,i){if(i===0){ctx.fillStyle="#34d399";ctx.fillRect(s.x*格,s.y*格,格-1,格-1);ctx.fillStyle="#10b981";ctx.fillRect(s.x*格+3,s.y*格+3,格-7,格-7)}else{ctx.fillStyle="#10b981";ctx.fillRect(s.x*格,s.y*格,格-1,格-1)}});ctx.fillStyle="#dc2626";ctx.beginPath();ctx.arc(食.x*格+格/2,食.y*格+格/2,格/2-1,0,Math.PI*2);ctx.fill();if(document.activeElement!==c){ctx.fillStyle="rgba(0,0,0,.6)";ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle="#fff";ctx.font="bold 16px Arial";ctx.textAlign="center";ctx.fillText("点击画布获取焦点",c.width/2,c.height/2);ctx.font="12px Arial";ctx.fillText("方向键/WSAD 控制",c.width/2,c.height/2+24)}}function 动(){if(document.activeElement!==c){return}var 头={x:蛇[0].x+方.x,y:蛇[0].y+方.y};if(头.x<0||头.x>=宽||头.y<0||头.y>=高||蛇.some(function(s){return s.x===头.x&&s.y===头.y})){clearInterval(d.tid);d.tid=null;ctx.fillStyle="rgba(0,0,0,.7)";ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle="#fff";ctx.font="bold 24px Arial";ctx.textAlign="center";ctx.fillText("游戏结束",c.width/2,c.height/2-10);ctx.font="16px Arial";ctx.fillText("得分: "+分,c.width/2,c.height/2+20);return}蛇.unshift(头);if(头.x===食.x&&头.y===食.y){分+=10;document.getElementById(id+"_分").textContent=分;新食()}else{蛇.pop()}绘()}function 键处理(e){if(document.activeElement!==c)return;var k=e.key.toLowerCase();var 旧=方;if((k==="arrowup"||k==="w")&&方.y===0)方={x:0,y:-1};else if((k==="arrowdown"||k==="s")&&方.y===0)方={x:0,y:1};else if((k==="arrowleft"||k==="a")&&方.x===0)方={x:-1,y:0};else if((k==="arrowright"||k==="d")&&方.x===0)方={x:1,y:0};if(方!==旧)e.preventDefault()}function 点击处理(e){c.focus();var r=c.getBoundingClientRect();var cx=(e.clientX-r.left)*(c.width/r.width);var cy=(e.clientY-r.top)*(c.height/r.height);var 头x=蛇[0].x*格+格/2;var 头y=蛇[0].y*格+格/2;var dx=cx-头x,dy=cy-头y;if(Math.abs(dx)>Math.abs(dy)){if(dx>0&&方.x===0)方={x:1,y:0};else if(dx<0&&方.x===0)方={x:-1,y:0}}else{if(dy>0&&方.y===0)方={x:0,y:1};else if(dy<0&&方.y===0)方={x:0,y:-1}}}c.addEventListener("keydown",键处理);c.addEventListener("click",点击处理);var d=window.玩数据[id]={tid:setInterval(动,150),键处理:键处理,点击处理:点击处理};document.getElementById(id+"_分").textContent=0;新食();绘()};'+
+'window.五状态={};'+
+'window.父五初=function(id){var c=document.getElementById(id);if(!c)return;var ctx=c.getContext("2d");var N=15,格=c.width/(N+1);var 状=window.五状态[id]={棋:[],当:1};function 绘(){ctx.fillStyle="#dcb27a";ctx.fillRect(0,0,c.width,c.height);ctx.strokeStyle="#5d3a1a";ctx.lineWidth=1;for(var i=1;i<=N;i++){ctx.beginPath();ctx.moveTo(格,i*格);ctx.lineTo(N*格,i*格);ctx.stroke();ctx.beginPath();ctx.moveTo(i*格,格);ctx.lineTo(i*格,N*格);ctx.stroke()}[[4,4],[12,4],[8,8],[4,12],[12,12]].forEach(function(p){ctx.beginPath();ctx.arc(p[0]*格,p[1]*格,3,0,Math.PI*2);ctx.fillStyle="#5d3a1a";ctx.fill()});状.棋.forEach(function(s){ctx.beginPath();ctx.arc(s.x*格,s.y*格,格*0.4,0,Math.PI*2);var g=ctx.createRadialGradient(s.x*格-格*0.15,s.y*格-格*0.15,1,s.x*格,s.y*格,格*0.4);if(s.c===1){g.addColorStop(0,"#666");g.addColorStop(1,"#000")}else{g.addColorStop(0,"#fff");g.addColorStop(1,"#ccc")}ctx.fillStyle=g;ctx.fill();ctx.strokeStyle="#333";ctx.lineWidth=1;ctx.stroke()})}状.绘=绘;function 胜(x,y,cc){var 方向=[[1,0],[0,1],[1,1],[1,-1]];for(var i=0;i<4;i++){var dx=方向[i][0],dy=方向[i][1],数=1;for(var s=1;s<5;s++){if(状.棋.some(function(p){return p.x===x+dx*s&&p.y===y+dy*s&&p.c===cc}))数++;else break}for(var s=1;s<5;s++){if(状.棋.some(function(p){return p.x===x-dx*s&&p.y===y-dy*s&&p.c===cc}))数++;else break}if(数>=5)return true}return false}if(!c.dataset.五初){c.dataset.五初="1";c.addEventListener("click",function(e){var r=c.getBoundingClientRect();var x=Math.round((e.clientX-r.left)*(c.width/r.width)/格);var y=Math.round((e.clientY-r.top)*(c.height/r.height)/格);if(x<1||x>N||y<1||y>N)return;if(状.棋.some(function(s){return s.x===x&&s.y===y}))return;状.棋.push({x:x,y:y,c:状.当});绘();if(胜(x,y,状.当)){var 态=document.getElementById(id+"_態");if(态){态.textContent="🎉 "+(状.当===1?"黑":"白")+"棋胜利!";态.style.color="#dc2626"}return}状.当=状.当===1?2:1;var 态=document.getElementById(id+"_態");if(态)态.textContent=(状.当===1?"⚫ 黑":"⚪ 白")+"棋落子"})}绘()};'+
+'window.父五重=function(id){var 状=window.五状态[id];if(!状)return;状.棋=[];状.当=1;状.绘();var 态=document.getElementById(id+"_態");if(态){态.textContent="⚫ 黑棋先手";态.style.color="#19319d"}};'+
+'window.父五撤=function(id){var 状=window.五状态[id];if(!状||状.棋.length===0)return;状.棋.pop();状.当=状.当===1?2:1;状.绘();var 态=document.getElementById(id+"_態");if(态){态.textContent=(状.当===1?"⚫ 黑":"⚪ 白")+"棋落子";态.style.color="#19319d"}};'+
+'window.父投=function(id,idx){var c=document.getElementById(id);var 项=c.querySelectorAll(".投項")[idx];var 旧=项.querySelector(".投標 span");var n=Math.min(99,parseInt(旧.textContent)+1);旧.textContent=n+"%";项.querySelector(".投填").style.width=n+"%"};'+
+'window.父学=function(id,答){var 输=document.getElementById(id+"_答");var 果=document.getElementById(id+"_果");if(输.value.trim().toLowerCase()===答.toLowerCase()){果.innerHTML="<span style=\\"color:#059669;font-weight:bold\\">✓ 答对了!</span>"}else{果.innerHTML="<span style=\\"color:#dc2626\\">✗ 答错了,正确答案: "+答+"</span>"}};'+
+'<'+'/script>'+
+'</body></html>';
+}
+function 更新预览(){
+  if(!脑)return;
+  var 源=脑.getValue();
+  var html=解析MD(源);
+  $('预览框').srcdoc=构建预览(html);
+  更新大纲(源);
+  更新字数(源);
+}
+window.addEventListener('message',function(e){
+  var d=e.data;if(!d||!d.类型)return;
+  if(d.类型==='演奏')演奏汉符音(d.谱);
+  else if(d.类型==='停奏')停奏();
+  else if(d.类型==='通知')发通知(d.标,d.内);
+  else if(d.类型==='朗读')朗读(d.文);
+});
+var 演奏源=[];
+function 演奏汉符音(谱){
+  if(!音上下文)音上下文=new (window.AudioContext||window.webkitAudioContext)();
+  停奏();
+  var 映={'壹':2093,'贰':2349,'叁':2637,'肆':2794,'伍':3136,'陆':3520,'柒':3951,'一':1047,'二':1175,'三':1319,'四':1397,'五':1568,'六':1760,'七':1976,'１':523,'２':587,'３':659,'４':698,'５':784,'６':880,'７':988,'①':262,'②':294,'③':330,'④':349,'⑤':392,'⑥':440,'⑦':494,'㈠':131,'㈡':147,'㈢':165,'㈣':175,'㈤':196,'㈥':220,'㈦':247,'龥':0,'·':0,'〇':0,' ':0};
+  var t=音上下文.currentTime+0.05,长=0.3;
+  for(var i=0;i<谱.length;i++){
+    var c=谱[i],f=映[c];
+    if(f===undefined)continue;
+    if(c==='〇'){t+=长*2;continue;}
+    if(f>0){
+      var osc=音上下文.createOscillator(),g=音上下文.createGain();
+      osc.type='triangle';osc.frequency.value=f;
+      osc.connect(g);g.connect(音上下文.destination);
+      g.gain.setValueAtTime(0.25,t);
+      g.gain.exponentialRampToValueAtTime(0.001,t+长*0.95);
+      osc.start(t);osc.stop(t+长);
+      演奏源.push(osc);
+    }
+    t+=长;
+  }
+  终('🎵 正在演奏: '+谱,'好');
+}
+function 停奏(){演奏源.forEach(function(o){try{o.stop()}catch(_){}});演奏源=[]}
+function 发通知(标,内){
+  if(!('Notification' in window)){提('浏览器不支持通知');return}
+  if(Notification.permission==='granted'){new Notification(标,{body:内});终('📢 已发送通知: '+标,'好')}
+  else{Notification.requestPermission().then(function(p){if(p==='granted')new Notification(标,{body:内});else 提('已拒绝通知权限')})}
+}
+function 朗读(文){
+  var s=window.speechSynthesis;
+  if(!s){提('不支持语音合成');return}
+  s.cancel();
+  var u=new SpeechSynthesisUtterance(文);u.lang='zh-CN';s.speak(u);
+  终('🔊 正在朗读: '+文,'好');
+}
+var 默认内容='#### 🎨 DeepSeekMD v1.3.6 · 可卷可运行的markdown\n> 一款将 **Markdown** 与 **HTML** 融合的尝试 —— 让你的文档 **动** 起来！\n#### 单文件 HTML · 100% 开源 · 按 Ctrl+U 查看源码\n## ✨ 三种调用语法\n1. 标准式: `【符】`参数,参数2``\n2. 简略式: `符`参数,参数2``\n3. 行首式: 行首单字 + 空格 + 参数(无需反引号)\n## 📋 表单组件 - 注意第一个参数是 ID\n- 姓名: 【入】`姓名,请输入姓名,齐庄`\n- 密码: 【密】`密码,请输入,888888`\n- 邮箱: 【邮】`邮箱,name@example.com,2500@2500.ai`\n- 年龄: 【数】`年龄,0,120,25`\n- 音量: 【滑】`音量,0,100,70`\n- 颜色: 【颜】`主题色,#19319d`\n- 城市: 【盼】`城市,北京,上海,广州,深圳,成都,杭州`\n- 性别: 【单】`性别,男,女,其他`\n- 爱好: 【复】`爱好,阅读,运动,旅行,音乐,编程`\n- 进度: 【进】`进度,65,100`\n- 评分: 【量】`评分,72,100,0`\n## 🎵 汉符音·小星星\n【音】`小星,１１５５６６５４４３３２２１５５４４３３２５５４４３３２１１５５６６５４４３３２２１`\n## 📊 数据可视化\n【柱】`月销售,一月:65,二月:59,三月:80,四月:81,五月:56,六月:70`\n【饼】`浏览器,Chrome:65,Firefox:15,Safari:12,Edge:5,其他:3`\n【环】`完成度,82`\n【仪】`仪表,75`\n## 🛠️ 实用工具\n【钟】`时钟`\n【骰】`掷骰,3`\n【唯】`我的UUID`\n【算】`计算,(25+17)*3`\n【编】`编码,Hello DeepSeekMD`\n## 🎬 多媒体\n【签】`签名板`\n【录】`视频录制`\n【话】`录音器`\n## ⏱️ 计时\n【秒】`秒表一`\n【倒】`倒计时,30`\n## 🎲 互动\n【抽】`抽奖大转盘,一等奖,二等奖,三等奖,谢谢参与,五等奖,六等奖`\n【玩】`贪吃蛇`\n【五】`五子棋`\n【投】`喜欢的动物,猫,狗,鸟,鱼`\n## 🌸 四季天象\n【春】`春景` 【夏】`夏景` 【秋】`秋景` 【冬】`冬景`\n【日】`晴天,晴` 【月】`月相,满月` 【星】`五星,5`\n【雨】`雨景` 【雪】`雪景` 【风】`风景,清风徐来`\n## 🎏 吉祥福寿\n【福】`福字` 【寿】`寿字` 【财】`财字,发`\n【龙】`龙图` 【凤】`凤图`\n【笑】`笑脸,😀` 【哭】`哭脸,😭` 【怒】`怒脸,😡`\n## 🔤 形状\n【圆】`蓝圆,#19319d,60` 【方】`红方,#c4401a,60` 【三】`绿三,#059669,60`\n【字】`样式字,DeepSeekMD,#c4401a,18`\n【横】`章节分隔,#19319d`\n## 🎨 视觉\n【海】`头条,🎨 DeepSeekMD,1.3.6 让 Markdown 动起来`\n【标】`标签,热门,新品,限时,特价,推荐`\n【棋】`棋盘`\n【局】`数独`\n【盘】`仪表板`\n## 📦 卡片与盒子\n【卡】`产品卡,DeepSeekMD,可运行的 Markdown,🎨`\n【盒】`提示盒,ℹ️,温馨提示,欢迎使用 DeepSeekMD!`\n【书】`推荐书,DeepSeekMD实战,李四,一本带你玩转可运行Markdown的指南`\n## 🎭 动画与样式\n【海】`横幅,🎨 DeepSeekMD,1.3.6 可运行的 Markdown`\n【渐】`渐变,DeepSeekMD很棒,#19319d+#c4401a+#7c3aed`\n【跳】`跳动文字,🎉 Hello!`\n【旋】`旋转,⭐`\n【闪】`闪烁,⚡警告⚡`\n【滚】`滚动,这是从右向左滚动的字幕,可用于公告播报`\n## 🏷️ 身份\n【头】`头像一,Z`\n【群】`成员群,齐庄,李四,张三,赵六,小七`\n【牌】`名牌,齐庄,首席工程师`\n【票】`门票,DeepSeekMD大会,2026-06-01,VIP-001`\n【印】`认证章,已认证`\n## 📢 提醒\n【信】`提示一,这是一条信息`\n【好】`成功一,操作已成功完成`\n【警】`警告一,请注意此操作不可逆`\n【错】`错误一,服务暂时不可用`\n【喜】`恭喜一,恭喜你已学会 DeepSeekMD!`\n## 📚 学习\n【学】`小测,Markdown 的扩展名是?,md`\n【答】`揭晓,点我查看答案,DeepSeekMD 是一款可运行的 Markdown 工具`\n【问】`问题,你今天学了什么?`\n## 🌐 Web API\n【通】`通知一,问候,你好 DeepSeekMD`\n【说】`朗读一,你好世界,欢迎使用 DeepSeekMD`\n【位】`定位`\n【维】`二维码,https://github.com`\n## 🎯 简略式语法演示\n钟`时钟二`\n## 🎯 行首式语法演示\n海 行首式横幅,无需反引号\n## 🎵 五种音阶\n壹贰叁肆伍陆柒 / 一二三四五六七 / １２３４５６７ / ①②③④⑤⑥⑦ / ㈠㈡㈢㈣㈤㈥㈦\n【音】`五音,壹贰叁肆伍陆柒一二三四五六七１２３４５６７①②③④⑤⑥⑦㈠㈡㈢㈣㈤㈥㈦`\n楼\n在你的项目使用的方式： &lt;script src=&quot;https://asiide.com/js/asimarkdown.js&quot;&gt;&lt;/script&gt; \n楼\n“卷”是指在别人的基础上迭代，请在 http://deepseekmd.com 里卷asimarkdown\n楼\n【惯】所有软件都用deepseek等llm重写一遍 使用方式： http://asi+扩展名.com\n楼\n欢迎关注 2500.ai\n楼\n*http://2500.ai 制作 ❤️ · DeepSeekMD v1.3.6 © 2026*\n';
+require.config({paths:{vs:'https://unpkg.com/monaco-editor@0.52.2/min/vs'}});
+require(['vs/editor/editor.main'],function(){
+  monaco.editor.defineTheme('naoyuyanTheme',{base:'vs',inherit:true,rules:[{token:'keyword',foreground:'19319d',fontStyle:'bold'},{token:'string',foreground:'059669'},{token:'comment',foreground:'999999',fontStyle:'italic'},{token:'number',foreground:'2563eb'}],colors:{'editor.background':'#fafbfc','editor.foreground':'#1f2937','editor.lineHighlightBackground':'#eef2fc','editorCursor.foreground':'#19319d','editorLineNumber.foreground':'#bbb','editorLineNumber.activeForeground':'#19319d'}});
+  monaco.editor.defineTheme('naoyuyanThemeDark',{base:'vs-dark',inherit:true,rules:[{token:'keyword',foreground:'79a6ff',fontStyle:'bold'},{token:'string',foreground:'34d399'},{token:'comment',foreground:'888888',fontStyle:'italic'},{token:'number',foreground:'60a5fa'}],colors:{'editor.background':'#1c1e22','editor.foreground':'#e8eaed','editor.lineHighlightBackground':'#2a3a5c','editorCursor.foreground':'#79a6ff','editorLineNumber.foreground':'#666','editorLineNumber.activeForeground':'#79a6ff'}});
+  monaco.languages.register({id:'runmd'});
+  monaco.languages.setMonarchTokensProvider('runmd',{tokenizer:{root:[[/^#+ .+$/,'keyword'],[/【[^】]+】/,'keyword'],[/`[^`]+`/,'string'],[/\*\*[^*]+\*\*/,'keyword'],[/\*[^*]+\*/,'string'],[/\[.+\]\(.+\)/,'string'],[/^>.+$/,'comment'],[/^[-*+] /,'keyword'],[/^\d+\. /,'keyword'],[/^---+$/,'comment'],[/```[\s\S]*?```/,'string']]}});
+  脑=monaco.editor.create($('编辑器'),{value:默认内容,language:'runmd',theme:'naoyuyanTheme',fontSize:12,fontFamily:'宋体,SimSun,monospace',lineNumbers:'on',wordWrap:'on',minimap:{enabled:false},scrollBeyondLastLine:false,automaticLayout:true,padding:{top:8,bottom:8},smoothScrolling:true,cursorBlinking:'smooth',renderWhitespace:'selection',tabSize:2});
+  源码脑=monaco.editor.create($('源码编辑器'),{value:'// 点击左侧功能面板中的「符号」可查看对应函数源码\n// 所有函数都是独立声明,第一个参数都是 ID\n\nfunction 广(参){\n  var p=参解(参,"一级标题");\n  return "# "+p[0];\n}\n\n// 调用示例:\n// 广("我的标题"); // => "# 我的标题"',language:'javascript',theme:'naoyuyanTheme',readOnly:true,fontSize:12,lineNumbers:'on',minimap:{enabled:false},automaticLayout:true,scrollBeyondLastLine:false,padding:{top:6},wordWrap:'on',fontFamily:'宋体,SimSun,monospace'});
+  脑.onDidChangeModelContent(function(){已改=true;$('保存态').textContent='● 未保存';clearTimeout(防抖时);防抖时=setTimeout(更新预览,300)});
+  脑.onDidChangeCursorPosition(function(e){$('光标').textContent='行:'+e.position.lineNumber+' 列:'+e.position.column});
+  初始化();
+});
+function 初始化(){
+  渲染功能表();渲染速查();渲染AI提示();
+  绑事件();绑分隔条();
+  更新预览();加载设置();
+  终('🎨 DeepSeekMD v1.3.6 已就绪','好');
+  终('💡 三种语法: 【符】`参` | 符`参` | 行首式 符 参','信');
+  终('📐 拖拽栏间分隔条可调整大小, 双击可折叠','信');
+  状('就绪');
+}
+function 渲染功能表(){
+  var 容=$('功能列表');容.innerHTML='';
+  功能表.forEach(function(类){
+    var d=document.createElement('div');d.className='类';
+    var html='<div class="类头"><span class="箭">▼</span>'+类.类+'<span class="计">'+类.项.length+'</span></div><div class="类内">';
+    类.项.forEach(function(i){
+      var 默值=(i.默||'').replace(/"/g,'&quot;');
+      html+='<div class="项" data-符="'+i.符+'" data-名="'+i.名+'" title="'+i.说+'"><span class="符" title="点击查看源码">'+i.符+'</span><span class="名" title="点击插入">'+i.名+'</span><input class="参" value="'+默值+'" placeholder="参数" title="参数"><button class="运" title="运行示例">▶</button></div>';
+    });
+    html+='</div>';d.innerHTML=html;容.appendChild(d);
+  });
+  容.querySelectorAll('.类头').forEach(function(h){h.onclick=function(){h.parentElement.classList.toggle('合')}});
+  容.querySelectorAll('.项').forEach(function(项){
+    项.querySelector('.符').onclick=function(e){e.stopPropagation();查看源码(项.dataset.符)};
+    项.querySelector('.名').onclick=function(e){e.stopPropagation();插入符号(项)};
+    项.querySelector('.运').onclick=function(e){e.stopPropagation();运行单个(项)};
+    项.querySelector('.参').onclick=function(e){e.stopPropagation()};
+  });
+}
+function 渲染速查(){
+  $('速查').innerHTML=
+'<div class="卡"><strong style="color:var(--主)">📌 三种语法</strong><div style="margin-top:6px;line-height:1.8;font-size:12px"><div>1. <code>【符】`参`</code></div><div>2. <code>符`参`</code></div><div>3. 行首: <code>符 参数</code></div><div>4. 单字行: <code>符</code></div></div></div>'+
+'<div class="卡"><strong style="color:var(--主)">🎵 汉符音</strong><div style="margin-top:6px;line-height:1.8;font-size:12px"><div>超高: <code>壹贰叁肆伍陆柒</code></div><div>高音: <code>一二三四五六七</code></div><div>中音: <code>１２３４５６７</code></div><div>低音: <code>①②③④⑤⑥⑦</code></div><div>超低: <code>㈠㈡㈢㈣㈤㈥㈦</code></div></div></div>'+
+'<div class="卡"><strong style="color:var(--主)">🔑 快捷键</strong><div style="margin-top:6px;line-height:1.8;font-size:12px"><div><span class="键">Ctrl+S</span> 保存</div><div><span class="键">Ctrl+Enter</span> 渲染</div><div><span class="键">F5</span> 刷新预览</div><div><span class="键">F9</span> 运行全部</div><div><span class="键">Ctrl+T</span> 切换主题</div></div></div>'+
+'<div class="卡"><strong style="color:var(--主)">⚠️ 参数规则</strong><div style="margin-top:6px;line-height:1.7;font-size:12px;color:var(--次)"><div>• 第一个参数始终是 ID</div><div>• JS 可用 $("#ID") 取该元素</div><div>• 所有参数都有默认值</div></div></div>'+
+'<div class="卡"><strong style="color:var(--主)">🧭 方位按钮</strong><div style="margin-top:6px;line-height:1.7;font-size:12px;color:var(--次)"><div>西: 左栏 · 东: 右栏</div><div>北: 上面板 · 南: 下面板</div><div>心: 编辑器 · 旁: 预览</div><div>聊: AI · 摩/侧: 大纲/速查</div></div></div>';
+}
+function 渲染AI提示(){
+  var 提示=['帮我写个简介','生成周报模板','解释【音】函数','创建倒计时组件','演奏小星星','新增【告】函数'];
+  var 组=$('提示组');
+  提示.forEach(function(p){var b=document.createElement('button');b.textContent=p;b.onclick=function(){$('问话').value=p;$('问话').focus()};组.appendChild(b)});
+}
+function 查看源码(符){
+  var fn=window[符];
+  if(typeof fn!=='function'){终('⚠️ 符【'+符+'】 不是函数','警');return}
+  var src=fn.toString();
+  var 展示='// ═══════════════════════════════════════════\n// 函数名: '+符+'\n// 第一个参数为 ID, 后续参数依次跟随\n// ═══════════════════════════════════════════\n\n'+src+'\n\n// 调用示例:\n// '+符+'("ID,参数1,参数2");';
+  切终端视图('源码');
+  if(源码脑)源码脑.setValue(展示);
+  终('📖 已显示 【'+符+'】 源码 (共 '+src.length+' 字符)','信');
+}
+function 插入符号(项){
+  var 符=项.dataset.符,参=项.querySelector('.参').value;
+  var 文='【'+符+'】`'+参+'`';
+  if(脑){脑.executeEdits('插入',[{range:脑.getSelection(),text:文,forceMoveMarkers:true}]);脑.focus()}
+  终('✎ 已插入 【'+符+'】 '+项.dataset.名,'信');
+}
+function 运行单个(项){
+  var 符=项.dataset.符,参=项.querySelector('.参').value;
+  var fn=window[符];
+  if(typeof fn!=='function'){提('该符号暂未实现');return}
+  try{
+    var 结=fn(参);
+    var 结果HTML=typeof 结==='string'&&结.indexOf('<')!==0&&结.indexOf('#')===0?解析MD(结):(结||'');
+    $('预览框').srcdoc=构建预览('<div style="padding:20px"><h2 style="color:#19319d;border-bottom:2px solid #19319d;padding-bottom:6px">运行 【'+符+'】 '+项.dataset.名+'</h2><p style="color:#888;font-size:12px;margin:8px 0 16px">参数: <code>'+转义HTML(参)+'</code></p>'+结果HTML+'</div>');
+    终('▶ 运行 【'+符+'】 成功','好');
+  }catch(e){终('✗ 运行 【'+符+'】 失败: '+e.message,'错')}
+}
+function 切终端视图(视图){
+  var 日志=$('终端'),源码=$('源码容器');
+  document.querySelectorAll('[data-视图]').forEach(function(b){b.classList.remove('活')});
+  if(视图==='源码'){日志.style.display='none';源码.style.display='flex';document.querySelector('[data-视图="源码"]').classList.add('活');if(源码脑)setTimeout(function(){源码脑.layout()},50)}
+  else{日志.style.display='';源码.style.display='none';document.querySelector('[data-视图="日志"]').classList.add('活')}
+}
+function 更新大纲(源){
+  var 行=源.split('\n'),纲=[];
+  行.forEach(function(l,i){var m=l.match(/^(#{1,4})\s+(.+)/);if(m)纲.push({级:m[1].length,文:m[2],行:i+1})});
+  var 容=$('大纲');
+  if(纲.length===0){容.innerHTML='<div style="color:var(--次);text-align:center;padding:16px">暂无标题</div>';return}
+  容.innerHTML=纲.map(function(n){return '<div class="纲项 h'+n.级+'" data-行="'+n.行+'">'+(n.级>1?'▸ ':'')+转义HTML(n.文)+'</div>'}).join('');
+  容.querySelectorAll('.纲项').forEach(function(e){e.onclick=function(){脑.revealLineInCenter(+e.dataset.行);脑.setPosition({lineNumber:+e.dataset.行,column:1});脑.focus()}});
+}
+function 更新字数(源){
+  var 字=源.replace(/\s/g,'').length,词=源.split(/\s+/).filter(Boolean).length;
+  $('字数').textContent='字 '+字+' / 词 '+词;
+}
+function 绑事件(){
+  document.querySelectorAll('.菜').forEach(function(m){m.querySelector('button').onclick=function(e){e.stopPropagation();var 开=m.classList.contains('开');document.querySelectorAll('.菜').forEach(function(x){x.classList.remove('开')});if(!开)m.classList.add('开')}});
+  document.addEventListener('click',function(){document.querySelectorAll('.菜').forEach(function(m){m.classList.remove('开')})});
+  document.querySelectorAll('[data-做]').forEach(function(e){e.onclick=function(ev){ev.stopPropagation();执行动作(e.dataset.做)}});
+  document.querySelectorAll('[data-视图]').forEach(function(b){b.onclick=function(){切终端视图(b.dataset.视图)}});
+  document.querySelectorAll('[data-模式]').forEach(function(b){b.onclick=function(){document.querySelectorAll('[data-模式]').forEach(function(x){x.classList.remove('活')});document.querySelectorAll('[data-模式="'+b.dataset.模式+'"]').forEach(function(x){x.classList.add('活')});设模式(b.dataset.模式)}});
+  document.querySelectorAll('[data-关]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();切换面板(b.dataset.关)}});
+  document.querySelectorAll('[data-恢复]').forEach(function(b){b.onclick=function(){切换面板(b.dataset.恢复,true)}});
+  document.addEventListener('keydown',function(e){
+    var c=e.ctrlKey||e.metaKey;
+    if(c&&e.key==='s'){e.preventDefault();执行动作('保存')}
+    else if(c&&e.key==='Enter'){e.preventDefault();执行动作('运行')}
+    else if(c&&e.key==='n'){e.preventDefault();执行动作('新建')}
+    else if(c&&e.key==='o'){e.preventDefault();执行动作('打开')}
+    else if(c&&e.key==='t'){e.preventDefault();执行动作('切换主题')}
+    else if(e.key==='F5'){e.preventDefault();执行动作('刷新预览')}
+    else if(e.key==='F9'){e.preventDefault();执行动作('运行全部')}
+    else if(e.key==='F11'){e.preventDefault();执行动作('全屏')}
+    else if(e.key==='Escape'){关闭弹()}
+  });
+  $('搜索框').oninput=function(e){
+    var k=e.target.value.toLowerCase();
+    document.querySelectorAll('.项').forEach(function(项){var t=(项.dataset.名+项.dataset.符).toLowerCase();项.style.display=!k||t.indexOf(k)!==-1?'':'none'});
+    if(k)document.querySelectorAll('.类').forEach(function(c){c.classList.remove('合')});
+  };
+  $('密钥').onchange=function(e){try{localStorage.setItem('RM_密钥',e.target.value)}catch(_){};提('密钥已保存')};
+  $('模型').onchange=function(e){$('模型显').textContent=e.target.value;try{localStorage.setItem('RM_模型',e.target.value)}catch(_){}};
+  $('发送').onclick=发消息;
+  $('问话').onkeydown=function(e){if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();发消息()}};
+}
+function 绑分隔条(){
+  绑垂直('垂直分左',function(){return $('左栏')},false,'左栏');
+  绑垂直('垂直分中',function(){return $('编辑块')},false,'预览块');
+  绑垂直('垂直分右',function(){return $('右栏')},true,'右栏');
+  绑水平('水平分左',function(){return $('终端块')},true,'终端块');
+  绑水平('水平分中',function(){return $('聊块')},true,'聊块');
+  绑水平('水平分右',function(){return $('速查块')},true,'速查块');
+}
+function 绑垂直(分id,获取目标,反向,双击目标){
+  var 分=$(分id);if(!分)return;
+  分.addEventListener('mousedown',function(e){
+    e.preventDefault();
+    var 目标=获取目标();if(!目标)return;
+    var 起X=e.clientX,起宽=目标.offsetWidth;
+    分.classList.add('拖');document.body.style.userSelect='none';document.body.style.cursor='ew-resize';
+    function 移(ev){var 差=ev.clientX-起X;if(反向)差=-差;var 新=Math.max(80,Math.min(1200,起宽+差));目标.style.width=新+'px';if(脑&&脑.layout)脑.layout();if(源码脑&&源码脑.layout)源码脑.layout()}
+    function 停(){分.classList.remove('拖');document.body.style.userSelect='';document.body.style.cursor='';document.removeEventListener('mousemove',移);document.removeEventListener('mouseup',停)}
+    document.addEventListener('mousemove',移);document.addEventListener('mouseup',停);
+  });
+  分.addEventListener('dblclick',function(){切换面板(双击目标)});
+}
+function 绑水平(分id,获取目标,反向,双击目标){
+  var 分=$(分id);if(!分)return;
+  分.addEventListener('mousedown',function(e){
+    e.preventDefault();
+    var 目标=获取目标();if(!目标)return;
+    var 起Y=e.clientY,起高=目标.offsetHeight;
+    分.classList.add('拖');document.body.style.userSelect='none';document.body.style.cursor='ns-resize';
+    function 移(ev){var 差=ev.clientY-起Y;if(反向)差=-差;var 新=Math.max(50,Math.min(800,起高+差));目标.style.height=新+'px';if(脑&&脑.layout)脑.layout();if(源码脑&&源码脑.layout)源码脑.layout()}
+    function 停(){分.classList.remove('拖');document.body.style.userSelect='';document.body.style.cursor='';document.removeEventListener('mousemove',移);document.removeEventListener('mouseup',停)}
+    document.addEventListener('mousemove',移);document.addEventListener('mouseup',停);
+  });
+  分.addEventListener('dblclick',function(){切换面板(双击目标)});
+}
+function 切换面板(面板id,强制显示){
+  var 面板=$(面板id);if(!面板)return;
+  var 隐=面板.classList.contains('隐');
+  var 要显示=强制显示===true?true:(强制显示===false?false:隐);
+  if(要显示){面板.classList.remove('隐');同步分隔条();隐浮按(面板id);提('✓ 已恢复 '+面板id)}
+  else{面板.classList.add('隐');同步分隔条();显浮按(面板id);提('✕ 已隐藏 '+面板id)}
+  setTimeout(function(){if(脑&&脑.layout)脑.layout();if(源码脑&&源码脑.layout)源码脑.layout()},50);
+}
+function 同步分隔条(){
+  var 左栏隐=$('左栏').classList.contains('隐'),右栏隐=$('右栏').classList.contains('隐');
+  var 功能隐=$('功能块').classList.contains('隐'),终端隐=$('终端块').classList.contains('隐');
+  var 大纲隐=$('大纲块').classList.contains('隐'),速查隐=$('速查块').classList.contains('隐');
+  var 编辑隐=$('编辑块').classList.contains('隐'),预览隐=$('预览块').classList.contains('隐'),聊隐=$('聊块').classList.contains('隐');
+  $('垂直分左').classList.toggle('隐',左栏隐);
+  $('垂直分右').classList.toggle('隐',右栏隐);
+  $('垂直分中').classList.toggle('隐',编辑隐||预览隐);
+  $('水平分左').classList.toggle('隐',功能隐||终端隐);
+  $('水平分右').classList.toggle('隐',大纲隐||速查隐);
+  $('水平分中').classList.toggle('隐',聊隐);
+}
+function 显浮按(面板id){var b=$('浮_'+面板id);if(b)b.classList.add('显')}
+function 隐浮按(面板id){var b=$('浮_'+面板id);if(b)b.classList.remove('显')}
+function 设模式(模式){
+  var 编=$('编辑块'),预=$('预览块'),分=$('垂直分中');
+  编.classList.remove('隐');预.classList.remove('隐');分.classList.remove('隐');
+  编.style.flex='';预.style.flex='';编.style.width='';预.style.width='';
+  if(模式==='代码'){预.classList.add('隐');分.classList.add('隐');编.style.flex='1';编.style.width='auto';隐浮按('预览块')}
+  else if(模式==='预览'){编.classList.add('隐');分.classList.add('隐');预.style.flex='1';预.style.width='auto';隐浮按('编辑块')}
+  else{编.style.width='50%';预.style.flex='1';隐浮按('编辑块');隐浮按('预览块')}
+  setTimeout(function(){if(脑&&脑.layout)脑.layout()},50);
+  终('🔀 切换模式: '+模式,'信');
+}
+function 执行动作(动){
+  document.querySelectorAll('.菜').forEach(function(m){m.classList.remove('开')});
+  switch(动){
+    case '新建':新建();break;case '打开':打开文件();break;case '保存':保存();break;case '另存':另存为();break;
+    case '导出HTML':导出HTML();break;case '导出MD':另存为();break;case '打印':打印();break;
+    case '撤销':if(脑)脑.trigger('','undo');break;case '重做':if(脑)脑.trigger('','redo');break;
+    case '查找':if(脑)脑.trigger('','actions.find');break;case '替换':if(脑)脑.trigger('','editor.action.startFindReplaceAction');break;
+    case '格式化':if(脑)脑.trigger('','editor.action.formatDocument');break;
+    case '切换主题':切主题();break;case '切换左栏':切换面板('左栏');break;case '切换右栏':切换面板('右栏');break;case '切换聊天':切换面板('聊块');break;
+    case '重置布局':重置布局();break;case '全屏':切全屏();break;case '刷新预览':更新预览();提('预览已刷新');break;
+    case '运行':更新预览();提('已运行');break;case '运行全部':运行全部();break;
+    case '清空终端':$('终端').innerHTML='';提('终端已清空');break;
+    case '展开全部':document.querySelectorAll('.类').forEach(function(c){c.classList.remove('合')});break;
+    case '折叠全部':document.querySelectorAll('.类').forEach(function(c){c.classList.add('合')});break;
+    case '插入模板':插入模板();break;case '汉符音示例':插入汉符音示例();break;
+    case '生成示例':if(脑)脑.setValue(默认内容);break;
+    case '扩展函数':打开扩展函数();break;case '字数统计':显字数统计();break;
+    case '新对话':对话=[];$('消息区').innerHTML='<div class="消息 系">💬 新对话已开始</div>';break;
+    case '清空对话':if(confirm('确定清空所有对话?')){对话=[];$('消息区').innerHTML=''}break;
+    case '导出对话':导出对话();break;
+    case '使用指南':显指南();break;case '语法手册':显语法手册();break;
+    case '函数手册':显函数手册();break;case '汉符音手册':显汉符音手册();break;
+    case '快捷键表':显快捷键();break;case '关于':显关于();break;
+    default:提('未实现: '+动);
+  }
+}
+function 新建(){
+  if(已改&&!confirm('当前文档未保存,确定新建?'))return;
+  if(脑)脑.setValue('# 新文档\n\n开始编辑吧...\n');
+  当前文件='未命名.md';$('文件名').textContent=当前文件;
+  已改=false;$('保存态').textContent='已保存';
+}
+function 打开文件(){
+  var i=document.createElement('input');i.type='file';i.accept='.md,.markdown,.txt';
+  i.onchange=function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){if(脑)脑.setValue(ev.target.result);当前文件=f.name;$('文件名').textContent=当前文件;已改=false;$('保存态').textContent='已保存';提('已打开: '+f.name);终('📂 打开: '+f.name,'好')};r.readAsText(f)};
+  i.click();
+}
+function 保存(){
+  if(!脑)return;
+  try{localStorage.setItem('RM_文档',脑.getValue())}catch(_){}
+  已改=false;$('保存态').textContent='已保存';提('已保存到本地');终('💾 保存成功','好');
+}
+function 另存为(){
+  if(!脑)return;
+  var 内=脑.getValue();
+  var b=new Blob([内],{type:'text/markdown'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=当前文件.endsWith('.md')?当前文件:'未命名.md';a.click();
+  URL.revokeObjectURL(a.href);提('已下载');
+}
+function 导出HTML(){
+  if(!脑)return;
+  var html='<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>'+当前文件+'</title><style>body{font-family:宋体,SimSun,serif;max-width:900px;margin:40px auto;padding:20px;line-height:1.7;color:#333;font-size:12px}h1{border-bottom:2px solid #19319d;color:#19319d}h2{border-bottom:1px solid #eee}h3{color:#19319d}blockquote{border-left:4px solid #19319d;padding:8px 16px;background:#eef2fc;border-radius:0 4px 4px 0}code{background:#f5f5f5;padding:2px 6px;border-radius:3px;color:#c4401a}pre{background:#282c34;color:#abb2bf;padding:16px;border-radius:6px;overflow-x:auto}table{border-collapse:collapse;width:100%}th,td{border:1px solid #e0e0e0;padding:8px}th{background:#19319d;color:#fff}img{max-width:100%}</style></head><body>'+解析MD(脑.getValue())+'</body></html>';
+  var b=new Blob([html],{type:'text/html'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=当前文件.replace(/\.[^.]+$/,'')+'.html';a.click();
+  提('HTML 已导出');
+}
+function 打印(){try{$('预览框').contentWindow.print()}catch(_){window.print()}}
+function 切主题(){
+  暗=!暗;
+  document.body.classList.toggle('暗',暗);
+  if(脑)脑.updateOptions({theme:暗?'naoyuyanThemeDark':'naoyuyanTheme'});
+  if(源码脑)源码脑.updateOptions({theme:暗?'naoyuyanThemeDark':'naoyuyanTheme'});
+  try{localStorage.setItem('RM_暗',暗?'1':'')}catch(_){}
+  更新预览();
+  提(暗?'🌙 暗色主题':'☀️ 亮色主题');
+}
+function 切全屏(){if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen().catch(function(){})}
+function 重置布局(){
+  ['左栏','右栏','功能块','终端块','大纲块','速查块','编辑块','预览块','聊块'].forEach(function(id){$(id).classList.remove('隐')});
+  $('左栏').style.width='';$('右栏').style.width='';$('编辑块').style.width='50%';
+  $('终端块').style.height='';$('速查块').style.height='';$('聊块').style.height='';
+  同步分隔条();
+  document.querySelectorAll('.浮按').forEach(function(b){b.classList.remove('显')});
+  设模式('分屏');提('✓ 布局已重置');
+}
+function 运行全部(){
+  var 示=[];
+  功能表.forEach(function(类){
+    if(类.类==='Web API'||类.类==='代码运行')return;
+    示.push('<h2>'+类.类+'</h2>');
+    类.项.forEach(function(i){
+      var fn=window[i.符];if(typeof fn!=='function')return;
+      try{
+        var 结=fn(i.默||'');
+        if(typeof 结==='string'&&结.length>0)示.push('<div style="margin:10px 0"><strong style="color:#19319d">【'+i.符+'】 '+i.名+'</strong><div style="margin:4px 0 0 10px">'+(结.indexOf('<')===0?结:解析MD(结))+'</div></div>');
+      }catch(e){示.push('<div style="color:#dc2626">'+i.名+': '+e.message+'</div>')}
+    });
+  });
+  var html='<div style="padding:20px"><h1>🎨 DeepSeekMD 全部示例</h1>'+示.join('')+'</div>';
+  $('预览框').srcdoc=构建预览(html);
+  提('🎉 全部示例已展示');终('⏩ 运行全部示例完成','好');
+}
+function 插入模板(){
+  var 模板='\n## 📋 新章节\n\n这里是内容...\n\n### 表格\n\n| 项目 | 数值 | 说明 |\n|---|---|---|\n| A | 100 | 优 |\n| B | 80 | 良 |\n\n### 数据图表\n\n【柱】`月度柱图`\n\n### 待办清单\n\n【办】`新清单`\n';
+  if(脑)脑.trigger('','type',{text:模板});
+}
+function 插入汉符音示例(){
+  var 乐=[{名:'小星星',谱:'１１５５６６５４４３３２２１５５４４３３２５５４４３３２１１５５６６５４４３３２２１'},{名:'欢乐颂',谱:'３３４５５４３２１１２３３２２３３４５５４３２１１２３２１１'},{名:'粉刷匠',谱:'５３５３２３４２４２１２３１５３５３２３４２１３５１'},{名:'两只老虎',谱:'１２３１１２３１３４５〇３４５〇'}];
+  var h='<h3>🎵 选择乐谱插入</h3>';
+  乐.forEach(function(l,i){h+='<div class="卡" style="cursor:pointer" onclick="插谱('+i+')"><strong>'+l.名+'</strong><div style="color:var(--次);margin-top:4px;font-size:14px">'+l.谱+'</div></div>'});
+  window.插谱=function(i){if(脑)脑.trigger('','type',{text:'【音】`'+乐[i].名+','+乐[i].谱+'`\n'});关闭弹()};
+  打弹('🎵 汉符音乐库',h);
+}
+function 显字数统计(){
+  if(!脑)return;
+  var s=脑.getValue();
+  var 字=s.length,无空=s.replace(/\s/g,'').length,行=s.split('\n').length;
+  var 中文=(s.match(/[\u4e00-\u9fa5]/g)||[]).length,英文=(s.match(/[a-zA-Z]+/g)||[]).length;
+  打弹('📊 字数统计','<table><tr><td>总字符</td><td><strong>'+字+'</strong></td></tr><tr><td>不含空白</td><td><strong>'+无空+'</strong></td></tr><tr><td>行数</td><td><strong>'+行+'</strong></td></tr><tr><td>中文字数</td><td><strong style="color:var(--主)">'+中文+'</strong></td></tr><tr><td>英文单词</td><td><strong>'+英文+'</strong></td></tr></table>');
+}
+function 显指南(){
+  打弹('📖 使用指南','<h3>快速开始</h3><ol><li>在<strong>编辑器</strong>中写 Markdown</li><li>右侧自动<strong>实时预览</strong></li><li>点击左侧功能项的<strong>符号</strong>查看源码</li><li>点击<strong>名称</strong>插入语法</li><li>修改<strong>参数输入框</strong>后点 ▶ 运行</li></ol><h3>三种语法形式</h3><pre>1. 标准式: 【符】`参数,参数2`\n2. 简略式: 符`参数,参数2`\n3. 行首式: 符 参数,参数2   (无需反引号)\n4. 单字行: 符</pre><h3>参数规则</h3><ul><li>第一个参数始终是<strong>元素 ID</strong></li><li>JS 中可用 <code>document.getElementById("ID")</code> 取到元素</li><li>所有参数都有默认值,可省略</li></ul>');
+}
+function 显语法手册(){
+  打弹('📝 语法手册','<h3>1️⃣ 标准式</h3><pre>【入】`姓名,请输入,齐庄`</pre><p>使用全角中括号 + 反引号包围参数</p><h3>2️⃣ 简略式</h3><pre>入`姓名,请输入,齐庄`</pre><p>单字符 + 反引号包围参数</p><h3>3️⃣ 行首式</h3><pre>钟 时钟一\n钟</pre><p>行首单字符 + 空格 + 参数, 或仅有一个单字符的行</p><h3>4️⃣ Markdown 原生</h3><pre># 标题\n**粗体** *斜体* ~~删除~~\n- 列表项\n1. 有序项\n[链接](URL)\n![图片](URL)\n| 表 | 格 |\n|---|---|</pre>');
+}
+function 显函数手册(){
+  var h='<h3>函数列表 (共 '+功能表.reduce(function(s,c){return s+c.项.length},0)+' 个)</h3>';
+  功能表.forEach(function(类){
+    h+='<h4 style="color:var(--主);margin-top:12px">'+类.类+'</h4><table>';
+    类.项.forEach(function(i){h+='<tr><td style="padding:4px;width:40px"><span style="background:var(--主);color:#fff;padding:2px 6px;border-radius:3px;font-weight:bold">'+i.符+'</span></td><td style="padding:4px">'+i.名+'</td><td style="padding:4px;color:var(--次)">'+i.说+'</td></tr>'});
+    h+='</table>';
+  });
+  打弹('📘 函数手册',h);
+}
+function 显汉符音手册(){
+  打弹('🎵 汉符音手册','<h3>五种音阶</h3><table style="width:100%"><tr><td><strong>超高音</strong></td><td style="font-size:16px">壹 贰 叁 肆 伍 陆 柒</td></tr><tr><td><strong>高音</strong></td><td style="font-size:16px">一 二 三 四 五 六 七</td></tr><tr><td><strong>中音</strong></td><td style="font-size:16px">１ ２ ３ ４ ５ ６ ７</td></tr><tr><td><strong>低音</strong></td><td style="font-size:16px">① ② ③ ④ ⑤ ⑥ ⑦</td></tr><tr><td><strong>超低音</strong></td><td style="font-size:16px">㈠ ㈡ ㈢ ㈣ ㈤ ㈥ ㈦</td></tr></table><h3>特殊符号</h3><ul><li><code>·</code> — 空音(跳过)</li><li><code>〇</code> — 停顿(长休)</li></ul><h3>示例</h3><p><strong>小星星:</strong> <code>１１５５６６５４４３３２２１</code></p><p><strong>使用:</strong> <code>【音】`乐曲名,乐谱`</code></p>');
+}
+function 显快捷键(){
+  打弹('⌨️ 快捷键','<table><tr><td><span class="键">Ctrl+N</span></td><td>新建</td></tr><tr><td><span class="键">Ctrl+O</span></td><td>打开</td></tr><tr><td><span class="键">Ctrl+S</span></td><td>保存</td></tr><tr><td><span class="键">Ctrl+Z</span></td><td>撤销</td></tr><tr><td><span class="键">Ctrl+Y</span></td><td>重做</td></tr><tr><td><span class="键">Ctrl+F</span></td><td>查找</td></tr><tr><td><span class="键">Ctrl+H</span></td><td>替换</td></tr><tr><td><span class="键">Ctrl+Enter</span></td><td>渲染/发送</td></tr><tr><td><span class="键">Ctrl+T</span></td><td>切换主题</td></tr><tr><td><span class="键">F5</span></td><td>刷新预览</td></tr><tr><td><span class="键">F9</span></td><td>运行全部</td></tr><tr><td><span class="键">F11</span></td><td>全屏</td></tr><tr><td><span class="键">Esc</span></td><td>关闭弹窗</td></tr></table>');
+}
+function 显关于(){
+  打弹('ℹ️ 关于 DeepSeekMD','<div style="text-align:center;padding:16px"><div style="font-size:48px">🎨</div><h2 style="color:var(--主);margin:8px 0">DeepSeekMD v1.3.6</h2><p style="color:var(--次)">可卷可运行的markdown</p><hr style="margin:16px 0"><p>将 Markdown 与 html/css/js/node.js/python/脑语言/2500 融合的尝试</p><p style="margin-top:12px;color:var(--次);font-size:12px">鸣谢：markdown创造者、一致班、cc、deepseek、豆包</p><p style="margin-top:8px;color:var(--次);font-size:12px">官网: <a href="http://2500.ai" target="_blank" style="color:var(--主);text-decoration:none">http://2500.ai</a></p><p style="margin-top:4px;color:var(--次);font-size:12px">示例: <a href="http://asimarkdown.com" target="_blank" style="color:var(--主);text-decoration:none">http://asimarkdown.com</a></p><p style="margin-top:4px;color:var(--次);font-size:12px">项目: <a href="http://deepseekmd.com" target="_blank" style="color:var(--主);text-decoration:none">http://deepseekmd.com</a> 可卷可运行的markdown</p><p style="margin-top:8px;color:var(--次);font-size:12px">20260525 齐庄</p><p style="margin-top:12px;color:var(--次);font-size:12px">© 2026 DeepSeekMD · 用 DeepSeek 实时对 Markdown 扩展</p> </div>');
+}
+function 打开扩展函数(){
+  打弹('✨ 扩展新函数','<p>你可以写一个新的单字函数,扩展 DeepSeekMD 的功能。</p><p>示例 - 创建一个【告】函数显示彩色圆:</p><textarea id="扩展代码" style="width:100%;height:200px;padding:10px;border:1px solid var(--线);border-radius:4px;font-family:monospace;font-size:12px" placeholder="写入你的函数...">function 圆(参){\n  var p=参解(参,"圆id","#19319d");\n  return \'<div id="\'+p[0]+\'" style="width:80px;height:80px;border-radius:50%;background:\'+p[1]+\';display:inline-block;margin:4px;box-shadow:0 2px 8px rgba(0,0,0,.2)"></div>\';\n}</textarea><div style="margin-top:12px"><button class="钮 主" onclick="执行扩展()">注册</button><button class="钮" onclick="关闭弹()">取消</button></div><p style="color:var(--次);font-size:12px;margin-top:10px">⚠️ 函数名必须是单个汉字,返回 HTML 字符串或 Markdown 文本。</p>');
+}
+window.执行扩展=function(){
+  var 代码=document.getElementById('扩展代码').value;
+  try{
+    (0,eval)(代码);
+    var 名=代码.match(/function\s+(\S+)\s*\(/);
+    if(名&&名[1]){
+      已注册函数[名[1]]=true;
+      终('✓ 函数 【'+名[1]+'】 已注册','好');
+      提('✓ 扩展成功,可在文档中使用 【'+名[1]+'】`参数`');
+    }
+    关闭弹();
+  }catch(e){终('✗ 扩展失败: '+e.message,'错');提('扩展失败: '+e.message)}
+};
+function 导出对话(){
+  if(对话.length===0){提('暂无对话');return}
+  var 文=对话.map(function(m){return '## '+(m.role==='user'?'👤 我':'🤖 AI')+'\n\n'+m.content}).join('\n\n---\n\n');
+  var b=new Blob(['# DeepSeekMD 对话记录\n\n导出时间: '+new Date().toLocaleString()+'\n\n---\n\n'+文],{type:'text/markdown'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='对话_'+Date.now()+'.md';a.click();
+  提('对话已导出');
+}
+var AI系统提示='你是 DeepSeekMD v1.3.6 的贴心助手。DeepSeekMD 是一款「可运行的 Markdown」尝试。\n\n## 扩展语法\n支持三种形式调用单字函数:\n1. 【符】`id,参数1,参数2`\n2. 符`id,参数1,参数2`\n3. 行首: 符 id,参数1,参数2\n\n## 重要约定\n第一个参数始终是元素 ID,后续JS可用 document.getElementById(ID) 获取。\n\n## 常用函数\n- 标题: 广(h1) 文(h2) 章(h3) 节(h4)\n- 样式: 突(粗体) 斜(斜体) 划(删除) 码(行内码)\n- 表单: 入 密 邮 数 滑 期 颜 盼 复 单 域 钮\n- 图表: 柱 饼 线 雷 环 仪 积 散 气 热 云 漏 瀑\n- 多媒体: 音(汉符音) 声 影 视 录 屏 话 签\n- 工具: 钟 历 办 算 骰 随 唯 编 解 翻 大 小 哈\n- 游戏: 秒 倒 抽 玩 骨 棋 局 迷 投 学\n- 视觉: 海 标 框 盒 盘 书 灯 票 牌 头 群\n- 动画: 闪 滚 渐 旋 跳 摇 飞 心\n\n## 汉符音\n5 种音阶: 超高(壹贰叁肆伍陆柒) 高(一二三四五六七) 中(１２３４５６７) 低(①②③④⑤⑥⑦) 超低(㈠㈡㈢㈣㈤㈥㈦)\n\n## 任务\n- 优先使用 DeepSeekMD 语法回答(让内容可运行)\n- 用户想创建新单字函数时,给出完整 JS 代码\n- 用中文简洁回答';
+async function 发消息(){
+  var 输=$('问话'),问=输.value.trim();if(!问)return;
+  var 钥=$('密钥').value.trim(),区=$('消息区');
+  function 加消息(角色,内容){var d=document.createElement('div');d.className='消息 '+(角色==='user'?'我':角色==='assistant'?'AI':'系');d.innerHTML=角色==='user'?转义HTML(内容):解析MD(内容);区.appendChild(d);区.scrollTop=区.scrollHeight;return d}
+  加消息('user',问);对话.push({role:'user',content:问});输.value='';
+  if(!钥){加消息('assistant','⚠️ 请先在右上角输入 **DeepSeek API Key** 启用 AI 功能。\n\n你可以访问 [DeepSeek 开放平台](https://platform.deepseek.com) 获取 Key。\n\n---\n\n💡 即使没有 API Key,你也可以:\n- 点击左侧功能项的 **符号** 查看源码\n- 点击 **名称** 插入到文档\n- 按 **F9** 运行全部示例\n- 按 **Ctrl+Enter** 渲染预览');return}
+  var AI元=加消息('assistant','<span class="脉">思考中...</span>');
+  try{
+    var 响=await fetch('https://api.deepseek.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+钥},body:JSON.stringify({model:$('模型').value,messages:[{role:'system',content:AI系统提示}].concat(对话.slice(-10)),stream:true,temperature:0.7})});
+    if(!响.ok)throw new Error('HTTP '+响.status);
+    var 读=响.body.getReader(),解=new TextDecoder(),完='';
+    while(true){
+      var r=await 读.read();if(r.done)break;
+      var 块=解.decode(r.value);
+      块.split('\n').forEach(function(行){
+        if(行.indexOf('data: ')===0){
+          var 数据=行.slice(6);if(数据==='[DONE]')return;
+          try{var j=JSON.parse(数据);var c=j.choices&&j.choices[0]&&j.choices[0].delta&&j.choices[0].delta.content;if(c){完+=c;AI元.innerHTML=解析MD(完);区.scrollTop=区.scrollHeight}}catch(_){}
+        }
+      });
+    }
+    对话.push({role:'assistant',content:完});终('🤖 AI 响应完成','好');
+  }catch(e){AI元.innerHTML='<span style="color:#dc2626">❌ '+转义HTML(e.message)+'</span>\n\n请检查:\n- API Key 是否正确\n- 网络是否通畅';终('AI 错误: '+e.message,'错')}
+}
+function 加载设置(){
+  try{
+    var 密=localStorage.getItem('RM_密钥');if(密)$('密钥').value=密;
+    var 模=localStorage.getItem('RM_模型');if(模){$('模型').value=模;$('模型显').textContent=模}
+    var 暗存=localStorage.getItem('RM_暗');if(暗存){暗=false;切主题()}
+    var 文=localStorage.getItem('RM_文档');if(文&&文.trim()&&confirm('检测到上次未保存的内容,是否恢复?')){if(脑)脑.setValue(文)}
+  }catch(_){}
+}
+window.addEventListener('beforeunload',function(e){if(已改){e.preventDefault();e.returnValue=''}});
+document.addEventListener('dragover',function(e){e.preventDefault()});
+document.addEventListener('drop',function(e){e.preventDefault();var f=e.dataTransfer.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){if(脑)脑.setValue(ev.target.result);当前文件=f.name;$('文件名').textContent=f.name;提('已导入: '+f.name)};r.readAsText(f)});
+// 鸣谢：markdown创造者、一致班、cc、deepseek、豆包
+// http://deepseekmd.com 可卷可运行的markdown
+// 20260525 齐庄
+</script>
+</body></html>
