@@ -1,0 +1,401 @@
+<!DOCTYPE html><html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="deepseekide.com 鲸IDE">
+<meta name="author" content="齐庄">
+<meta name="keywords" content="naoyuyan.com deepseekmd.com deepSeekide.com xuniren.com 虚拟人 asi7.com 卷王">
+<meta name="description" content="《用2500单字统一命名》：创作不易，使用本源码需要保留这些版权声明，谢谢您的支持！">
+<title>asimarkdown.com 可卷可运行的markdown</title>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html,
+body {
+    height: 100%;
+    font-family: 宋体, SimSun, serif;
+    background: #f0f0f0;
+    overflow: hidden;
+}
+.顶 {
+    height: 42px;
+    background: linear-gradient(135deg, #19319d, #c4401a);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+    z-index: 10;
+    position: relative;
+}
+.顶 h1 {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.顶 .组 {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.顶 button {
+    background: rgba(255, 255, 255, .2);
+    border: 1px solid rgba(255, 255, 255, .3);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+    white-space: nowrap;
+}
+.顶 button:hover {
+    background: rgba(255, 255, 255, .3);
+}
+.主 {
+    display: flex;
+    height: calc(100vh - 42px);
+    position: relative;
+}
+.编 {
+    width: 50%;
+    min-width: 200px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+.预 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    overflow: hidden;
+}
+/* 分隔条 */
+.隔 {
+    width: 10px;
+    min-width: 10px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    background: #e8eaed;
+    cursor: col-resize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 5;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: background .15s;
+}
+.隔:hover {
+    background: #d4d7dc;
+}
+.隔:active,
+.隔.拖中 {
+    background: #c0c4cc;
+}
+.隔::before {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 36px;
+    border-radius: 1px;
+    background: #b0b5bd;
+    pointer-events: none;
+    transition: background .15s, height .15s;
+}
+.隔:hover::before {
+    background: #8a9099;
+    height: 48px;
+}
+.隔.拖中::before {
+    background: #6a7078;
+    height: 56px;
+}
+.条 {
+    height: 28px;
+    background: #e8eaed;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #555;
+    border-bottom: 1px solid #ccc;
+}
+.条 .标 {
+    font-weight: 700;
+    color: #19319d;
+}
+textarea {
+    flex: 1;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    resize: none;
+    font-family: 'Courier New', Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    outline: none;
+    background: #fafbfc;
+    color: #1f2937;
+}
+iframe {
+    flex: 1;
+    width: 100%;
+    border: none;
+    background: #fff;
+}
+.状 {
+    font-size: 11px;
+    color: #888;
+}
+/* 拖拽时 body 状态 */
+body.拖拽中 {
+    cursor: col-resize !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+}
+</style>
+</head>
+<body>
+<div class="顶">
+<h1>📝 asimarkdown · 可卷可运行的markdown</h1>
+<span style="font-size:11px;opacity:.8;margin-left:8px;white-space:nowrap;">&lt;script src=&quot;https://asiide.com/js/asimarkdown.js&quot;&gt;&lt;/script&gt;</span>
+<div class="组">
+    <button onclick="切暗()">🌓 暗色</button>
+    <button onclick="下载HTML()">⬇ 导出 HTML</button>
+    <button onclick="加示例()">📋 加载示例</button>
+</div>
+</div>
+<div class="主" id="主容器">
+<div class="编" id="编辑器面板">
+    <div class="条">
+	<span class="标">📝 Markdown 编辑器</span>
+	<span class="状" id="状">实时渲染中…</span>
+    </div>
+    <textarea id="md" placeholder="在这里输入 Markdown,支持【唐】`参数` 扩展语法..."></textarea>
+</div>
+<div class="隔" id="分隔条" title="拖拽调整宽度 · 双击重置"></div>
+<div class="预" id="预览面板">
+    <div class="条">
+	<span class="标">👁 渲染预览</span>
+	<span class="状">asimarkdown v1.3.6</span>
+    </div>
+    <iframe id="预" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-downloads"></iframe>
+</div>
+</div>
+<!-- 引入 asimarkdown 工具库 -->
+<script src="https://asiide.com/js/asimarkdown.js">
+</script>
+<script>
+/**
+ * asimarkdown.js v1.3.6 - 可卷可运行的markdown
+ * 基于脑语言 1.3.6 规范
+ * 作者: 齐庄
+ * 在这里卷： http://deepseekmd.com
+ * 这有示例： http://asimarkdown.com
+ * 官网:  http://2500.ai
+ * 使用方法:
+ * <script src="https://asiide.com/js/asimarkdown.js"><\/script>
+ * script脚本里: 
+ *       var html = asimarkdown(html);
+ *       var html = asimarkdown(html, {dark:true, full:true});
+ *       asimarkdown.register('唐', function(参){...});
+ * 支持三种语法:(【唐】指2500单字)
+ * 1. 标准式: 【唐】`参数,参数2`
+ * 2. 简略式: 唐`参数,参数2`
+ * 3. 行首式: 唐 参数,参数2 (无需反引号)
+ * 鸣谢：markdown创造者、一致班、cc、deepseek、豆包
+ * 20260525 齐庄
+ */
+var 暗模式 = false;
+var 示例内容 = '# 🎨 asimarkdown 示例\n\n> 一个**可卷可运行的markdown**,让文档动起来!\n\n## ✨ 三种调用语法(【唐】指2500单字)\n\n1. 标准式: `【唐】`id,参数``\n2. 简略式: 唐`id,参数`\n3. 行首式: 唐 + 空格 + id + 参数\n\n## 📋 表单组件\n\n- 姓名: 【入】`姓名,请输入,齐庄`\n- 密码: 【密】`密码,***,abc123`\n- 数字: 【数】`年龄,0,120,28`\n- 滑块: 【滑】`音量,0,100,65`\n- 颜色: 【颜】`主题,#c4401a`\n- 城市: 【盼】`城市,北京,上海,广州,深圳`\n- 性别: 【单】`性别,男,女,其他`\n- 进度: 【进】`进度,75,100`\n\n## 🎵 汉符音 - 小星星\n\n【音】`小星,１１５５６６５４４３３２２１`\n\n## 📊 数据图表\n\n【柱】`月销售,一月:65,二月:80,三月:95,四月:72,五月:88`\n\n【饼】`市场,产品A:35,产品B:25,产品C:20,产品D:20`\n\n【环】`完成度,82`\n\n## 🎲 互动元素\n\n【钟】`时钟`\n\n【倒】`倒计时,30`\n\n【抽】`大转盘,一等奖,二等奖,三等奖,谢谢参与,五等奖,再来一次`\n\n## 🎨 视觉装饰\n\n【海】`横幅,🎨 asimarkdown,让 Markdown 飞起来`\n\n【标】`标签,热门,新品,限时,特价,推荐`\n\n【福】`福字`\n\n## 🌸 季节\n\n春`春景,桃红柳绿万物苏` 夏`夏景,蝉鸣荷绿暑炎天`\n\n秋`秋景,枫红菊黄稻浪香` 冬`冬景,梅雪松柏迎新春`\n\n## 🎭 动画\n\n【跳】`跳,🎉 Hello!` 【旋】`旋,⭐` 【闪】`闪,⚡警告⚡`\n\n## 💼 实用工具\n\n【唯】`UUID生成`\n\n【算】`计算,(100+50)*3-25`\n\n【骰】`骰子,3`\n\n## 📢 提醒\n\n【好】`成功,操作完成!`\n\n【警】`警告,请注意此操作`\n\n## 🎮 游戏\n\n【玩】`贪吃蛇`\n\n## 📋 列表与表格\n\n| 项目 | 数值 | 评级 |\n|---|---|---|\n| A | 100 | ⭐⭐⭐⭐⭐ |\n| B | 85 | ⭐⭐⭐⭐ |\n| C | 72 | ⭐⭐⭐ |\n\n---\n\n*Powered by asimarkdown v1.3.6*\n\n> 官网 http://2500ai.com\n';
+var md = document.getElementById('md'),
+    预览 = document.getElementById('预'),
+    状 = document.getElementById('状');
+function 渲染() {
+    状.textContent = '正在渲染…';
+    try {
+	var html = asimarkdown(md.value, { dark: 暗模式 });
+	预览.srcdoc = html;
+	状.textContent = '✓ 已渲染 (' + md.value.length + ' 字符)';
+    } catch (e) {
+	状.textContent = '✗ ' + e.message;
+    }
+}
+var 计时;
+md.addEventListener('input', function() {
+    clearTimeout(计时);
+    计时 = setTimeout(渲染, 300);
+});
+function 切暗() {
+    暗模式 = !暗模式;
+    渲染();
+}
+function 下载HTML() {
+    var html = asimarkdown(md.value, { dark: 暗模式 });
+    var b = new Blob([html], { type: 'text/html;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(b);
+    a.download = 'asimarkdown_' + Date.now() + '.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+}
+function 加示例() {
+    md.value = 示例内容;
+    渲染();
+}
+// 注册一个自定义扩展函数演示
+asimarkdown.register('彩', function(参) {
+    var p = asimarkdown.helpers.参解(参, '彩id', '彩虹');
+    var 色 = ['red', 'orange', '#dc0', 'green', '#2ad', 'blue', 'purple'];
+    var 文 = p[1].split('');
+    return '<span id="' + p[0] + '" style="font-weight:bold;font-size:18px">' +
+	文.map(function(c, i) { return '<span style="color:' + 色[i % 色.length] + '">' + c +
+		'</span>' }).join('') +
+	'</span>';
+});
+// ==================== 拖拽分隔条功能 ====================
+var 分隔条 = document.getElementById('分隔条');
+var 编辑器面板 = document.getElementById('编辑器面板');
+var 主容器 = document.getElementById('主容器');
+var iframe元素 = document.getElementById('预');
+var 拖拽中 = false;
+var 起始X = 0;
+var 起始宽百分比 = 50; // 初始 50%
+// 设置左边面板宽度
+function 设置左边宽(百分比) {
+    // 限制在 18% ~ 82% 之间
+    var 限制后 = Math.max(18, Math.min(82, 百分比));
+    编辑器面板.style.width = 限制后 + '%';
+    return 限制后;
+}
+// 获取当前左边面板宽度百分比
+function 获取左边宽百分比() {
+    var 容器宽 = 主容器.clientWidth;
+    if (容器宽 <= 0) return 50;
+    var 面板宽 = 编辑器面板.getBoundingClientRect().width;
+    return (面板宽 / 容器宽) * 100;
+}
+// 鼠标拖拽开始
+function 开始拖拽(e) {
+    if (拖拽中) return;
+    拖拽中 = true;
+    起始X = e.clientX;
+    起始宽百分比 = 获取左边宽百分比();
+    分隔条.classList.add('拖中');
+    document.body.classList.add('拖拽中');
+    // ★ 关键：禁止鼠标事件穿透到 iframe ★
+    iframe元素.style.setProperty('pointer-events', 'none', 'important');
+    e.preventDefault();
+}
+// 鼠标移动
+function 拖拽移动(e) {
+    if (!拖拽中) return;
+    var 容器宽 = 主容器.clientWidth;
+    if (容器宽 <= 0) return;
+    var 偏移X = e.clientX - 起始X;
+    var 偏移百分比 = (偏移X / 容器宽) * 100;
+    var 新百分比 = 起始宽百分比 + 偏移百分比;
+    起始宽百分比 = 设置左边宽(新百分比);
+    起始X = e.clientX; // 增量更新，避免累积误差
+}
+// 拖拽结束
+function 结束拖拽(e) {
+    if (!拖拽中) return;
+    拖拽中 = false;
+    分隔条.classList.remove('拖中');
+    document.body.classList.remove('拖拽中');
+    // 恢复 iframe 鼠标事件
+    iframe元素.style.setProperty('pointer-events', 'auto', 'important');
+}
+// 双击重置为 50/50
+function 双击重置(e) {
+    起始宽百分比 = 设置左边宽(50);
+}
+// 鼠标事件
+分隔条.addEventListener('mousedown', 开始拖拽);
+document.addEventListener('mousemove', 拖拽移动);
+document.addEventListener('mouseup', 结束拖拽);
+分隔条.addEventListener('dblclick', 双击重置);
+// 触摸事件（移动端支持）
+分隔条.addEventListener('touchstart', function(e) {
+    if (拖拽中) return;
+    if (e.touches.length === 1) {
+	拖拽中 = true;
+	起始X = e.touches[0].clientX;
+	起始宽百分比 = 获取左边宽百分比();
+	分隔条.classList.add('拖中');
+	document.body.classList.add('拖拽中');
+	iframe元素.style.setProperty('pointer-events', 'none', 'important');
+	e.preventDefault();
+    }
+}, { passive: false });
+document.addEventListener('touchmove', function(e) {
+    if (!拖拽中) return;
+    if (e.touches.length === 1) {
+	var 容器宽 = 主容器.clientWidth;
+	if (容器宽 <= 0) return;
+	var 偏移X = e.touches[0].clientX - 起始X;
+	var 偏移百分比 = (偏移X / 容器宽) * 100;
+	var 新百分比 = 起始宽百分比 + 偏移百分比;
+	起始宽百分比 = 设置左边宽(新百分比);
+	起始X = e.touches[0].clientX;
+    }
+    e.preventDefault();
+}, { passive: false });
+document.addEventListener('touchend', function(e) {
+    if (!拖拽中) return;
+    结束拖拽(e);
+});
+// 窗口失去焦点时安全结束拖拽
+window.addEventListener('blur', function() {
+    if (拖拽中) {
+	结束拖拽();
+    }
+});
+// 初始加载示例
+加示例();
+//## 三、使用说明
+//### 基本用法
+//```javascript
+//// 返回完整 HTML 文档(默认)
+//var html = asimarkdown('# 你好\n\n【钟】`时钟`');
+//// 仅返回正文 HTML (不含 <html><head>)
+//var html = asimarkdown(mdText, { full: false });
+//// 暗色主题
+//var html = asimarkdown(mdText, { dark: true });
+//```
+//### API 接口
+//| 方法 | 说明 |
+//|---|---|
+//| `asimarkdown(md, opts)` | 主函数,返回 HTML |
+//| `asimarkdown.parse(md)` | 仅解析,返回正文 HTML |
+//| `asimarkdown.wrap(html, opts)` | 包装为完整 HTML 文档 |
+//| `asimarkdown.register(符, fn)` | 注册自定义单字函数 |
+//| `asimarkdown.call(符, 参)` | 直接调用某个单字函数 |
+//| `asimarkdown.fn['广']('标题')` | 直接访问函数库 |
+//| `asimarkdown.helpers.参解(...)` | 工具函数 |
+//| `asimarkdown.version` | 版本号 |
+//### 关键特性
+//- **180+ 单字函数**:广文章节、柱饼线雷、音视频游戏全保留
+//- **3 种语法形式**:“【唐】`id,参`”、“唐`id,参`”、“行首时：唐 id,参数”
+//- **完全自包含**:渲染输出的 HTML 内嵌所有交互脚本,可直接保存为 .html 文件运行
+//- **可扩展**:通过 `asimarkdown.register()` 注册新单字函数
+//- **零依赖**:纯 JavaScript 实现,无需任何第三方库
+//将 `asimarkdown.js` 和 `index.html` 放在同一目录,用浏览器打开 `index.html` 即可看到完整效果。
+// 鸣谢：markdown创造者、一致班、cc、deepseek、豆包
+// http://deepseekmd.com 可卷可运行的markdown
+// 20260525 齐庄
+</script>
+</body></html>
