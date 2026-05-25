@@ -7,7 +7,6 @@ asimarkdown v1.3.6: Initial experimental release, highly incomplete. For further
 - Live Demo: [deepseekmd.com](http://deepseekmd.com)
 - More Examples: [asimarkdown.com](http://asimarkdown.com)
 - Homepage & Project Hub: [2500.ai](http://2500.ai) and [2500ai.com](http://2500ai.com)
-- Author's blog & other projects: same domain as above
 ---
 # DeepSeekMD v1.3.6
 > **Rollable & Runnable Markdown** — A creative experiment that fuses Markdown, HTML components, live preview and an AI assistant into one.
@@ -93,9 +92,9 @@ Enter your **DeepSeek API Key** in the upper-right corner of the editor to enabl
 ---
 ## 📜 License
 When using the source code of this project, you **must retain the copyright notice** (including author, links, etc.) that appears in the source code header. Refer to the header comments in the source file for the exact terms.
-> Made with ❤️ by Qizhuang · © 2026 DeepSeekMD (unofficial, based on Brain Language 1.3.6)
+> Made with ❤️ by Qizhuang · © 2026 DeepSeekMD (unofficial, based on naoyuyan 1.3.6)
 ---
 ## 🙏 Acknowledgements
 Thanks to the creator of Markdown, Yizhiban, cc, DeepSeek, Doubao, and all the partners who provided inspiration for this project.
 ---
-**Roll it up, make your Markdown come alive!**
+** Use deepseekMD, which extends Markdown in real time with deepseek, to make your Markdown content come alive! **
