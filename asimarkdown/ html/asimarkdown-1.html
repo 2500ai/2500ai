@@ -366,34 +366,6 @@ window.addEventListener('blur', function() {
 });
 // 初始加载示例
 加示例();
-//## 三、使用说明
-//### 基本用法
-//```javascript
-//// 返回完整 HTML 文档(默认)
-//var html = asimarkdown('# 你好\n\n【钟】`时钟`');
-//// 仅返回正文 HTML (不含 <html><head>)
-//var html = asimarkdown(mdText, { full: false });
-//// 暗色主题
-//var html = asimarkdown(mdText, { dark: true });
-//```
-//### API 接口
-//| 方法 | 说明 |
-//|---|---|
-//| `asimarkdown(md, opts)` | 主函数,返回 HTML |
-//| `asimarkdown.parse(md)` | 仅解析,返回正文 HTML |
-//| `asimarkdown.wrap(html, opts)` | 包装为完整 HTML 文档 |
-//| `asimarkdown.register(符, fn)` | 注册自定义单字函数 |
-//| `asimarkdown.call(符, 参)` | 直接调用某个单字函数 |
-//| `asimarkdown.fn['广']('标题')` | 直接访问函数库 |
-//| `asimarkdown.helpers.参解(...)` | 工具函数 |
-//| `asimarkdown.version` | 版本号 |
-//### 关键特性
-//- **180+ 单字函数**:广文章节、柱饼线雷、音视频游戏全保留
-//- **3 种语法形式**:“【唐】`id,参`”、“唐`id,参`”、“行首时：唐 id,参数”
-//- **完全自包含**:渲染输出的 HTML 内嵌所有交互脚本,可直接保存为 .html 文件运行
-//- **可扩展**:通过 `asimarkdown.register()` 注册新单字函数
-//- **零依赖**:纯 JavaScript 实现,无需任何第三方库
-//将 `asimarkdown.js` 和 `index.html` 放在同一目录,用浏览器打开 `index.html` 即可看到完整效果。
 // 鸣谢：markdown创造者、一致班、cc、deepseek、豆包
 // http://deepseekmd.com 可卷可运行的markdown
 // 20260525 齐庄
